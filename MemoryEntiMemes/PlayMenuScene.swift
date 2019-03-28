@@ -11,20 +11,21 @@ import SpriteKit
 
 protocol PlayMenuSceneDelegate: class {
     func back(sender: PlayMenuScene)
+    func goToGame(sender: PlayMenuScene, level: Levels)
 }
 
 class PlayMenuScene: SKScene, ButtonDelegate {
     
-    static let buttonWidth: CGFloat = 200.0
+    static let buttonWidth: CGFloat = 150.0
     static let buttonHeight: CGFloat = 50.0
     
     weak var playMenuDelegate: PlayMenuSceneDelegate?
     
     private var label : SKLabelNode?
     
-    var playButton: Button?
-    var settingsButton: Button?
-    var aboutButton: Button?
+    var easyButton: Button?
+    var mediumButton: Button?
+    var hardButton: Button?
     
     //swipes
     var swipeRight = UISwipeGestureRecognizer()
@@ -53,49 +54,49 @@ class PlayMenuScene: SKScene, ButtonDelegate {
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
         
-       /* backButton.setText(text: "BACK")
+        backButton.setText(text: "BACK")
         backButton.fillColor = .red
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.position = CGPoint(x: (view.frame.width / 2.0) - (PlayMenuScene.buttonWidth / 2.0), y: 100)
-        addChild(backButton)*/
+        addChild(backButton)
         
-        playButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu * 1.1, height: MenuScene.heightButton_MainMenu*1.1), cornerRadius:30)
-        settingsButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
+        easyButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
+        mediumButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
         
-        aboutButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
+        hardButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
         self.backgroundColor = SKColor(named: "ENTI")! //el ! es per saber si existeix o no. No sap si existeix o no
         //play
-        if let playButton = playButton{
-            playButton.fillColor = SKColor(named: "BotonPlay")!//.darkGray //SKColor(named: "nombre")
+        if let easyButton = easyButton{
+            easyButton.fillColor = SKColor(named: "BotonPlay")!//.darkGray //SKColor(named: "nombre")
             //playButton.alpha = 0.5
-            playButton.strokeColor = .darkGray
-            playButton.setText(text: "Easy")
-            playButton.isUserInteractionEnabled = true
-            playButton.delegate = self
-            playButton.position = CGPoint(x: view.frame.width / 2.0 - (MenuScene.widthButton_MainMenu*1.1 / 2.0), y: view.frame.height*0.35)
-            addChild(playButton)
+            easyButton.strokeColor = .darkGray
+            easyButton.setText(text: "Easy")
+            easyButton.isUserInteractionEnabled = true
+            easyButton.delegate = self
+            easyButton.position = CGPoint(x: view.frame.width / 2.0 - (PlayMenuScene.buttonWidth / 2.0), y: view.frame.height*0.35)
+            addChild(easyButton)
         }
         
         //Options
-        if let settingsButton = settingsButton{
-            settingsButton.fillColor = SKColor(named: "BotonOption")!//.gray
-            settingsButton.strokeColor = .white
-            settingsButton.setText(text: "Medium")
-            settingsButton.isUserInteractionEnabled = true
-            settingsButton.delegate = self
-            settingsButton.position = CGPoint(x: view.frame.width/2.0 - MenuScene.widthButton_MainMenu/2.0, y: playButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
-            addChild(settingsButton)
+        if let mediumButon = mediumButton{
+            mediumButon.fillColor = SKColor(named: "BotonPlay")!//.gray
+            mediumButon.strokeColor = .darkGray
+            mediumButon.setText(text: "Medium")
+            mediumButon.isUserInteractionEnabled = true
+            mediumButon.delegate = self
+            mediumButon.position = CGPoint(x: view.frame.width/2.0 - PlayMenuScene.buttonWidth/2.0, y: easyButton!.position.y - (PlayMenuScene.buttonHeight + 20))
+            addChild(mediumButon)
         }
         //about
-        if let aboutButton = aboutButton{
-            aboutButton.fillColor = SKColor(named: "BotonOption")!//.gray
-            aboutButton.strokeColor = .white
-            aboutButton.setText(text: "Hard")
-            aboutButton.isUserInteractionEnabled = true
-            aboutButton.delegate = self
-            aboutButton.position = CGPoint(x: view.frame.width / 2.0 - MenuScene.widthButton_MainMenu / 2.0, y: settingsButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
-            addChild(aboutButton)
+        if let hardButtton = hardButton{
+            hardButtton.fillColor = SKColor(named: "BotonPlay")!//.gray
+            hardButtton.strokeColor = .darkGray
+            hardButtton.setText(text: "Hard")
+            hardButtton.isUserInteractionEnabled = true
+            hardButtton.delegate = self
+            hardButtton.position = CGPoint(x: view.frame.width / 2.0 - PlayMenuScene.buttonWidth / 2.0, y: mediumButton!.position.y - (PlayMenuScene.buttonHeight + 20))
+            addChild(hardButtton)
         }
         
         /*let logo = SKSpriteNode(imageNamed: "logo_enti")
@@ -116,6 +117,22 @@ class PlayMenuScene: SKScene, ButtonDelegate {
     func onTap(sender: Button) {
         if sender == backButton {
             playMenuDelegate?.back(sender: self)
+        }
+        else if sender == easyButton{
+            if let playMenuDelegate = self.playMenuDelegate {
+                playMenuDelegate.goToGame(sender: self, level: Levels.easy)
+            }
+            print("easyButton")
+        }else if sender == mediumButton{
+            if let playMenuDelegate = self.playMenuDelegate {
+                playMenuDelegate.goToGame(sender: self, level: Levels.medium)
+            }
+            print("mediumButton")
+        }else if sender == hardButton{
+            if let playMenuDelegate = self.playMenuDelegate {
+                playMenuDelegate.goToGame(sender: self, level: Levels.hard)
+            }
+            print("hardButton")
         }
     }
     

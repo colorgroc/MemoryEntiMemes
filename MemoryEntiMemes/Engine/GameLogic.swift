@@ -6,7 +6,7 @@
 //  Copyright © 2019 cat.enti. All rights reserved.
 //
 enum Levels: Int{
-    case easy = 16, medium = 20, hard = 32
+    case easy = 10, medium = 18, hard = 26
 }
 class GameLogic {
  
@@ -15,9 +15,7 @@ class GameLogic {
     var selectedCard: Card?
     var level = Levels.easy
     let textures = ["", "", ""]
-    
-    init() {
-        
+    //var levelNumber: Int = 1
     
     func reset(){
         //resetear
@@ -28,11 +26,14 @@ class GameLogic {
         
         for i in 0..<level.rawValue / 2{
              //init(ID: String, special: Bool, estado: Int, textureFrontName: String, textureBackName: String) {
-            let card1 = Card(ID: i, special: false, estado: 1, textureFrontName: "cardTextureFront", textureBackName: "cardTextureBack")
-             let card2 = Card(ID: i + level.rawValue / 2, special: false, estado: 1, textureFrontName: "cardTextureFront", textureBackName: "cardTextureBack")
+            let card1 = Card(ID: i, special: false, estado: 1, textureFrontName: tempTextures[i], textureBackName: "cardTextureBack")
+             let card2 = Card(ID: i + level.rawValue / 2, special: false, estado: 1, textureFrontName: tempTextures[i], textureBackName: "cardTextureBack")
             cards.append(card1)
             cards.append(card2)
+            cards.shuffle()
         }
+        
+        //for()
         
     }
     func move(){
@@ -41,5 +42,6 @@ class GameLogic {
     func DidWin()->Bool{
         return false
     }
+        
 }
-}
+

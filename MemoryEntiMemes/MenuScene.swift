@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 protocol MenuSceneDelegate: class {
-    func goToGame(sender: MenuScene)
+    func goToGameSelector(sender: MenuScene)
     func goToAbout(sender: MenuScene)
     func goToSettings(sender: MenuScene)
 }
@@ -139,7 +139,7 @@ class MenuScene: SKScene, ButtonDelegate {
     func onTap(sender: Button) {
         if sender == playButton{
             if let menuDelegate = self.menuDelegate {
-                menuDelegate.goToGame(sender: self)
+                menuDelegate.goToGameSelector(sender: self)
             }
             print("playButton")
         }else if sender == settingsButton{

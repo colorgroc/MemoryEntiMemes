@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDelegate, AboutSceneDelegate, PlayMenuSceneDelegate {
+class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDelegate, AboutSceneDelegate, PlayMenuSceneDelegate, GameSceneDelegate {
  
 
     override func viewDidLoad() {
@@ -61,7 +61,7 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
         }
     }
     
-    func goToGame(sender: MenuScene) {
+    func goToGameSelector(sender: MenuScene) {
         if let view = self.view as? SKView {
             let scene = PlayMenuScene(size: view.frame.size)
             scene.playMenuDelegate = self
@@ -77,6 +77,18 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
         if let view = self.view as? SKView {
             let scene = SettingsScene(size: view.frame.size)
             scene.settingsDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
+    }
+    func goToGame(sender: PlayMenuScene, level: Levels) {
+        if let view = self.view as? SKView {
+            let scene = GameScene(size: view.frame.size)
+            scene.level = level
+            scene.gameSceneDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -119,9 +131,20 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
     }
+    func back(sender: GameScene) {
+        if let view = self.view as? SKView {
+            let scene = PlayMenuScene(size: view.frame.size)
+            scene.playMenuDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
+        }
+    }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false //true
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
