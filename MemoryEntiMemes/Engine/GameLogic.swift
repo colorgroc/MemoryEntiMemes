@@ -18,7 +18,7 @@ class GameLogic {
     
     init() {
         
-    }
+    
     func reset(){
         //resetear
         cards = [Card]()
@@ -41,4 +41,5 @@ class GameLogic {
     func DidWin()->Bool{
         return false
     }
+}
 }
