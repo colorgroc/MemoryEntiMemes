@@ -24,7 +24,7 @@ class GameLogic {
         cards = [Card]()
         var tempTextures = textures
         tempTextures.shuffle()
-        let number = Int.random(in: 0 ..< level.rawValue / 2)
+        //let number = Int.random(in: 0 ..< level.rawValue / 2)
         
         for i in 0..<level.rawValue / 2{
              //init(ID: String, special: Bool, estado: Int, textureFrontName: String, textureBackName: String) {
