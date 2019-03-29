@@ -14,10 +14,18 @@ class GameLogic {
     var points: Int = 0
     var selectedCard: Card?
     var level = Levels.easy
-    let textures = ["", "", ""]
-    //var levelNumber: Int = 1
+    let textures = ["a", "b", "c", "d", "e", "f", "g"] //opsar aqui totes les textures que poden sortir
     
     func reset(){
+        if level == Levels.easy{
+            //textures = []
+        }
+        else if level == Levels.medium{
+            //textures = []
+        }
+        else if level == Levels.medium{
+            //textures = []
+        }
         //resetear
         cards = [Card]()
         var tempTextures = textures
@@ -32,8 +40,6 @@ class GameLogic {
             cards.append(card2)
             cards.shuffle()
         }
-        
-        //for()
         
     }
     func move(){

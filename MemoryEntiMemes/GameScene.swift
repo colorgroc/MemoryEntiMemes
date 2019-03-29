@@ -19,26 +19,39 @@ class GameScene: SKScene, ButtonDelegate {
     
     weak var gameSceneDelegate: GameSceneDelegate?
     
-    private var label : SKLabelNode?
+    //private var label : SKLabelNode?
     
     private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
     
     var level = Levels.easy
     var gL: GameLogic?
-    
+    var separation: CGFloat?
+    var cardsTextures = [SKSpriteNode]()
    /* override init() {
         
     }*/
     
     override func didMove(to view: SKView) {
+        /*
+ 
+ */
         if(level == Levels.easy){
+            print("easy")
+            separation = 5
+            for i in 0..<gL!.cards.count{
+                
+                //cardsTextures.append(gL!.cards[i].textureFrontName)
+            }
+            //hacer for recorriendo la lista cards de gameLogic i ponerles posicion para printarlos
             //addChild()
         }
         else if(level == Levels.medium){
             print("medium")
+            separation = 3
         }
         else if(level == Levels.hard){
             print("hard")
+            separation = 1
         }
         backButton.setText(text: "BACK")
         backButton.fillColor = .red
