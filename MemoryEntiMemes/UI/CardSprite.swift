@@ -10,7 +10,20 @@ import SpriteKit
 
 class CardSprite: SKSpriteNode {
     //guardareme referencia carta seleccionada? var selectedCard: Card?
-    let textureFront, textureBack: SKTexture
+    var textureFront:String = ""
+    var textureBack:String = ""
+    
+    func setTextures(front: String ,back:String)->Void{
+        textureBack = back
+        textureFront = front
+    }
+    /*func setTextureToDefault(back: String) ->Void{
+        textureBack = back
+    }
+    func setFrontTexture(){
+        
+    }*/
+    /*
     init(size: CGSize, textureFront: SKTexture, textureBack: SKTexture) {
         self.textureFront = textureFront
         self.textureBack = textureBack
@@ -19,5 +32,8 @@ class CardSprite: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
+    }*/
+    
+    
+    
 }

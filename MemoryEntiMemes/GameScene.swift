@@ -16,6 +16,7 @@ class GameScene: SKScene, ButtonDelegate {
     
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
+    static let cardSizeEasy: CGFloat = 80.0
     
     weak var gameSceneDelegate: GameSceneDelegate?
     
@@ -25,34 +26,41 @@ class GameScene: SKScene, ButtonDelegate {
     
     var level = Levels.easy
     var gL: GameLogic?
-    var separation: CGFloat?
-    var cardsTextures = [SKSpriteNode]()
-   /* override init() {
-        
-    }*/
-    
+    //var separation: CGFloat?
+    //var xPos: CGFloat = 0
+    var cardsTextures = [CardSprite]()
     override func didMove(to view: SKView) {
-        /*
- 
- */
+
+        gL = GameLogic()
+        gL?.reset()
         if(level == Levels.easy){
             print("easy")
-            separation = 5
-            for i in 0..<gL!.cards.count{
-                
-                //cardsTextures.append(gL!.cards[i].textureFrontName)
+            //separation = 5
+            if let count = gL?.cards.count{
+                 //print(count)
+            for i in 0..<count{
+                if let textName = gL?.cards[i].textureFrontName{
+                let card = CardSprite(imageNamed: textName)
+                    card.size = CGSize(width: GameScene.cardSizeEasy, height: GameScene.cardSizeEasy) // poner variable size en easy
+                    cardsTextures.append(card);
+                    addChild(card)
+                    CardsPositions()
+                    //xPos = xPos + separation
+                }
             }
-            //hacer for recorriendo la lista cards de gameLogic i ponerles posicion para printarlos
-            //addChild()
+            }
         }
         else if(level == Levels.medium){
             print("medium")
-            separation = 3
+            //separation = 3
         }
         else if(level == Levels.hard){
             print("hard")
-            separation = 1
+            //separation = 1
         }
+        
+        
+        
         backButton.setText(text: "BACK")
         backButton.fillColor = .red
         backButton.isUserInteractionEnabled = true
@@ -74,6 +82,33 @@ class GameScene: SKScene, ButtonDelegate {
             label.run(SKAction.fadeIn(withDuration: 2.0))
         }*/
     }
+    
+    func CardsPositions()->Void{
+        for i in 0..<cardsTextures.count{
+            if level == Levels.easy{
+                let numCol = 3
+                let separation: CGFloat = 25
+                if i < numCol {
+                    if i == 0{
+                        cardsTextures[i].position = CGPoint(x: GameScene.cardSizeEasy - separation, y: view!.frame.height - 50)
+                    }
+                    else{
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separation, y: view!.frame.height - 50)
+                    }
+                }
+                else if i < numCol*2{
+                    if(i == numCol){
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - GameScene.cardSizeEasy - 50)
+                    }
+                    else{
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separation, y: cardsTextures[i-1].position.y)
+                    }
+                }
+            }
+        }
+        
+    }
+    
     
     func onTap(sender: Button) {
         if sender == backButton {
