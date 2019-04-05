@@ -43,7 +43,7 @@ class PlayMenuScene: SKScene, ButtonDelegate {
         view.addGestureRecognizer(swipeRight)
         
         swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(SwipeLeft(sender:)))
-        swipeLeft.direction = .left
+         swipeLeft.direction = .left
         view.addGestureRecognizer(swipeLeft)
         
         swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(SwipeUp(sender:)))

@@ -23,7 +23,7 @@
 		2EB2F09122314D450067098E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EB2F09022314D450067098E /* Assets.xcassets */; };
 		2EB2F09422314D450067098E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EB2F09222314D450067098E /* LaunchScreen.storyboard */; };
 		2EB2F09C22314E510067098E /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F09B22314E510067098E /* Button.swift */; };
-		2EB2F09E22315D9B0067098E /* CloussoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F09D22315D9B0067098E /* CloussoreButton.swift */; };
+		2EB2F09E22315D9B0067098E /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F09D22315D9B0067098E /* ImageButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +45,7 @@
 		2EB2F09322314D450067098E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2EB2F09522314D460067098E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EB2F09B22314E510067098E /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		2EB2F09D22315D9B0067098E /* CloussoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloussoreButton.swift; sourceTree = "<group>"; };
+		2EB2F09D22315D9B0067098E /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				2EB2F09B22314E510067098E /* Button.swift */,
-				2EB2F09D22315D9B0067098E /* CloussoreButton.swift */,
+				2EB2F09D22315D9B0067098E /* ImageButton.swift */,
 				2E1822602243D1130031B51E /* CardSprite.swift */,
 				2E17109F224E549200C58B22 /* Preferences.swift */,
 			);
@@ -199,7 +199,7 @@
 				2EB2F08C22314D450067098E /* GameViewController.swift in Sources */,
 				2E1822592243C8720031B51E /* Card.swift in Sources */,
 				2E16B483223A98CF0093F8F6 /* SettingsScene.swift in Sources */,
-				2EB2F09E22315D9B0067098E /* CloussoreButton.swift in Sources */,
+				2EB2F09E22315D9B0067098E /* ImageButton.swift in Sources */,
 				2E1822612243D1130031B51E /* CardSprite.swift in Sources */,
 				2E16B47F223A966C0093F8F6 /* MenuScene.swift in Sources */,
 				2E136DA622450EC100130FD2 /* GameScene.swift in Sources */,

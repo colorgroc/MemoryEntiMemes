@@ -12,7 +12,7 @@ protocol GameSceneDelegate: class {
     func back(sender: GameScene)
 }
 
-class GameScene: SKScene, ButtonDelegate {
+class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
@@ -22,15 +22,16 @@ class GameScene: SKScene, ButtonDelegate {
     
     //private var label : SKLabelNode?
     
-    private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
-    
+    //private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
+    private var backButton = ImageButton(imageNamed: "back_50")
     var level = Levels.easy
     var gL: GameLogic?
+    var ID:Int
     //var separation: CGFloat?
     //var xPos: CGFloat = 0
     var cardsTextures = [CardSprite]()
     override func didMove(to view: SKView) {
-
+        self.backgroundColor = SKColor(named: "ENTI")!
         gL = GameLogic()
         gL?.reset()
         if(level == Levels.easy){
@@ -39,9 +40,12 @@ class GameScene: SKScene, ButtonDelegate {
             if let count = gL?.cards.count{
                  //print(count)
             for i in 0..<count{
-                if let textName = gL?.cards[i].textureFrontName{
+                if let textName = gL?.cards[i].textureBackName{
                 let card = CardSprite(imageNamed: textName)
                     card.size = CGSize(width: GameScene.cardSizeEasy, height: GameScene.cardSizeEasy) // poner variable size en easy
+                    card.isUserInteractionEnabled = true
+                    card.delegate = self
+                    //ID = i
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
@@ -59,13 +63,10 @@ class GameScene: SKScene, ButtonDelegate {
             //separation = 1
         }
         
-        
-        
-        backButton.setText(text: "BACK")
-        backButton.fillColor = .red
+    
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.position = CGPoint(x: (view.frame.width / 2.0) - (GameScene.buttonWidth / 2.0), y: 100)
+        backButton.position = CGPoint(x: 20, y: view.frame.height - 20)
         addChild(backButton)
         
         /*let logo = SKSpriteNode(imageNamed: "logo_enti")
@@ -90,15 +91,31 @@ class GameScene: SKScene, ButtonDelegate {
                 let separation: CGFloat = 25
                 if i < numCol {
                     if i == 0{
-                        cardsTextures[i].position = CGPoint(x: GameScene.cardSizeEasy - separation, y: view!.frame.height - 50)
+                        cardsTextures[i].position = CGPoint(x: GameScene.cardSizeEasy - separation, y: view!.frame.height - 150)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separation, y: view!.frame.height - 50)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separation, y: view!.frame.height - 150)
                     }
                 }
                 else if i < numCol*2{
                     if(i == numCol){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - GameScene.cardSizeEasy - 50)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - GameScene.cardSizeEasy - 30)
+                    }
+                    else{
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separation, y: cardsTextures[i-1].position.y)
+                    }
+                }
+                else if i < numCol*3{
+                    if(i == numCol*2){
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol].position.y - GameScene.cardSizeEasy - 30)
+                    }
+                    else{
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separation, y: cardsTextures[i-1].position.y)
+                    }
+                }
+                else if i  < numCol*4{
+                    if(i == numCol*3){
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*2].position.y - GameScene.cardSizeEasy - 30)
                     }
                     else{
                         cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separation, y: cardsTextures[i-1].position.y)
@@ -110,10 +127,23 @@ class GameScene: SKScene, ButtonDelegate {
     }
     
     
-    func onTap(sender: Button) {
+    /*func onTap(sender: Button) {
         if sender == backButton {
             gameSceneDelegate?.back(sender: self)
         }
+    }*/
+    func onTap(sender: ImageButton) {
+        if sender == backButton {
+            gameSceneDelegate?.back(sender: self)
+        }
+    }
+    func onTap(sender: CardSprite) {
+        sender.texture = SKSpriteNode(imageNamed: sender.textureFront).texture
+        for i in 0..<cardsTextures.count{
+            if(sender == gL!.cards)
+            print()
+        }//recorrer para acceder a la ID
+        
     }
     
 }

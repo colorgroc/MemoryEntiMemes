@@ -6,7 +6,7 @@
 //  Copyright © 2019 cat.enti. All rights reserved.
 //
 enum Levels: Int{
-    case easy = 9, medium = 18, hard = 26
+    case easy = 12, medium = 18, hard = 26
 }
 class GameLogic {
  

@@ -7,15 +7,45 @@
 //
 
 import SpriteKit
+import AudioToolbox
 
+protocol CardDelegate: class{
+    func onTap(sender:CardSprite)
+}
 class CardSprite: SKSpriteNode {
     //guardareme referencia carta seleccionada? var selectedCard: Card?
     var textureFront:String = ""
     var textureBack:String = ""
+    //var card:Card = Card()
+    //var textureToShow:String = ""
     
-    func setTextures(front: String ,back:String)->Void{
+    func SetTextures(front: String ,back:String)->Void{
         textureBack = back
         textureFront = front
+    }
+    
+    weak var delegate:CardDelegate?
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let action = SKAction.moveBy(x: 6, y: 0, duration: 0.1)
+        run (action)
+        
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let action = SKAction.moveBy(x: -6, y: 0, duration: 0.1)
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        func DidItTouched(){
+            if let touch = touches.first, let parent = parent{
+                if frame.contains(touch.location(in: parent)){
+                    if let delegate = delegate{
+                        delegate.onTap(sender: self)
+                        //print("Anna")
+                    }
+                    //self.texture = SKSpriteNode(imageNamed: textureFront).texture
+                }
+            }
+        }
+        run (action, completion: DidItTouched)
     }
     /*func setTextureToDefault(back: String) ->Void{
         textureBack = back
