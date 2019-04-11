@@ -26,12 +26,14 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     private var backButton = ImageButton(imageNamed: "back_50")
     var level = Levels.easy
     var gL: GameLogic?
-    var IDSelected:Int = 0
+    var cartaSeleccionada:CardSprite?
     //var separation: CGFloat?
     //var xPos: CGFloat = 0
     var cardsTextures = [CardSprite]()
+    
     override func didMove(to view: SKView) {
         self.backgroundColor = SKColor(named: "ENTI")!
+        //cartaSeleccionada = CardSprite()
         gL = GameLogic()
         gL?.reset()
         if(level == Levels.easy){
@@ -51,8 +53,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
-                    //xPos = xPos + separation
-                //}
+                if gL!.DidWin(){
+                    //cambiar escena
+                }
+
             }
             }
         }
@@ -71,19 +75,6 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         backButton.position = CGPoint(x: 20, y: view.frame.height - 20)
         addChild(backButton)
         
-        /*let logo = SKSpriteNode(imageNamed: "logo_enti")
-        logo.position = view.center
-        addChild(logo)
-        
-        // Get label node from scene and store it for use later
-        self.label = SKLabelNode(text: "Hello, World")
-        if let label = self.label {
-            addChild(label)
-            label.color = .red
-            label.position = logo.position.applying(CGAffineTransform(translationX: 0, y: -100))
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }*/
     }
     
     func CardsPositions()->Void{
@@ -128,37 +119,54 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         
     }
     
-    
-    /*func onTap(sender: Button) {
-        if sender == backButton {
-            gameSceneDelegate?.back(sender: self)
-        }
-    }*/
     func onTap(sender: ImageButton) {
         if sender == backButton {
             gameSceneDelegate?.back(sender: self)
         }
     }
     func onTap(sender: CardSprite) {
-        sender.texture = SKSpriteNode(imageNamed: sender.textureFront).texture
-        if selected == false{
-            print(sender.ID)
-            selected = true
-            IDSelected = sender.ID
-
+        
+        //if(sender.texture == SKSpriteNode(imageNamed: sender.textureBack).texture){
+        
+        var tempID:Int = 0
+        if sender.ID >= level.rawValue / 2{
+            tempID = sender.ID - level.rawValue / 2
         }
         else {
-            if sender.ID - level.rawValue == IDSelected || sender.ID + level.rawValue == IDSelected {
-                print("match")
-                selected = false
+            tempID = sender.ID
+        }
+        print(tempID)
+        if gL!.cards[tempID].state != Card.Estado.emparejada.rawValue{
+        sender.texture = SKSpriteNode(imageNamed: sender.textureFront).texture
+            if selected == false{
+                selected = true
+                gL!.IDSelected = tempID
+                gL!.cards[gL!.IDSelected].state = Card.Estado.destapada.rawValue
+                cartaSeleccionada = sender
             }
-            else{
-                sender.texture = SKSpriteNode(imageNamed: sender.textureBack).texture
-                print("no match")
-                selected = false
+            else {
+                if tempID == gL!.IDSelected {
+                    gL!.cards[tempID].state = Card.Estado.destapada.rawValue
+                    gL!.cards[tempID].state = Card.Estado.emparejada.rawValue
+                    gL!.cards[gL!.IDSelected].state = Card.Estado.emparejada.rawValue
+                    print("match")
+                    gL!.matches += 1
+                    selected = false
+                   // cartaSeleccionada!.texture = SKSpriteNode(imageNamed: cartaSeleccionada!.textureFront).texture
+                    sender.texture = SKSpriteNode(imageNamed: sender.textureFront).texture
+                }
+                else{
+                    print("no match")
+                    selected = false
+                    gL!.cards[gL!.IDSelected].state = Card.Estado.tapada.rawValue
+                    gL!.cards[tempID].state = Card.Estado.tapada.rawValue
+                    cartaSeleccionada!.texture = SKSpriteNode(imageNamed: cartaSeleccionada!.textureBack).texture
+                    sender.texture = SKSpriteNode(imageNamed: sender.textureBack).texture
+                    //gL!.cards[IDSelected].state = Card.Estado.emparejada.rawValue
+                    
+                }
             }
         }
-    
         
     }
     

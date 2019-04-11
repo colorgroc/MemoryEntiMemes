@@ -12,21 +12,13 @@ class GameLogic {
  
     var cards = [Card]()
     var points: Int = 0
+    var matches:Int = 0
+    var IDSelected:Int = 0
     var selectedCard: Card?
     var level = Levels.easy
-    let textures = ["trollface"] //opsar aqui totes les textures que poden sortir
+    let textures = ["Ivan", "Albert", "Jordi", "Radev", "Arnal", "Ben", "Carlos", "Coronado", "Enrique", "Fran", "Fredi", "Fukuy", "Hector", "Isidro", "Ismael", "Jaumandreu", "Jaume", "Jesus", "Jose Luis", "Jussi", "Lego", "Llobera", "Lourdes", "Matias", "Nico", "Oriol", "Oscar", "Raul", "Ricard", "Richard", "Rita", "Ruth", "Valls", "Vanesa", "Vilella", "Xavier", "Xicota" ] //opsar aqui totes les textures que poden sortir
     
     func reset(){
-        /*if level == Levels.easy{
-            //textures = []              
-        }
-        else if level == Levels.medium{
-            //textures = []
-        }
-        else if level == Levels.medium{
-            //textures = []
-        }*/
-        //resetear
         cards = [Card]()
         var tempTextures = textures
         tempTextures.shuffle()
@@ -34,9 +26,10 @@ class GameLogic {
         
         for i in 0..<level.rawValue / 2{
              //init(ID: String, special: Bool, estado: Int, textureFrontName: String, textureBackName: String) {
-           let card1 = Card(ID: i, special: false, estado: 1, textureFrontName: tempTextures[0], textureBackName: tempTextures[0])
+           let card1 = Card(ID: i, special: false, estado: Card.Estado.tapada.rawValue, textureFrontName: tempTextures[i], textureBackName: "trollface")
             //level.rawValue para luego obtener el id para el match
-            let card2 = Card(ID: i + level.rawValue / 2 + level.rawValue, special: false, estado: 1, textureFrontName: tempTextures[0], textureBackName: tempTextures[0])
+            let card2 = Card(ID: i + level.rawValue / 2, special: false, estado: Card.Estado.tapada.rawValue, textureFrontName: tempTextures[i], textureBackName: "trollface")
+            print(card2.cardID)
             cards.append(card1)
             cards.append(card2)
             cards.shuffle()
@@ -48,7 +41,12 @@ class GameLogic {
         
     }
     func DidWin()->Bool{
-        return false
+        if matches == level.rawValue / 2{
+            print("won")
+            return true
+        } else{
+            return false
+        }
     }
         
 }

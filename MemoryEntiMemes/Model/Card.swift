@@ -15,7 +15,7 @@ class Card {
     enum Estado: Int{
         case tapada, destapada, emparejada
     }
-    let state: Int
+    var state: Int
     init(ID: Int, special: Bool, estado: Int, textureFrontName: String, textureBackName: String) {
         self.cardID = ID
         self.isSpecial = special

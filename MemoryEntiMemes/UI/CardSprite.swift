@@ -17,10 +17,11 @@ class CardSprite: SKSpriteNode {
     var textureFront:String = ""
     var textureBack:String = ""
     var ID:Int = 0
+    //var estado: Int = 0
     //var card:Card = Card()
     //var textureToShow:String = ""
     
-    func SetTextures(front: String ,back:String)->Void{
+    func SetTextures(front: String ,back: String)->Void{
         textureBack = back
         textureFront = front
     }
