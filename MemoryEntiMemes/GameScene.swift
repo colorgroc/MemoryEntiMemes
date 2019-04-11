@@ -19,14 +19,14 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     static let cardSizeEasy: CGFloat = 80.0
     
     weak var gameSceneDelegate: GameSceneDelegate?
-    
+    var selected:Bool = false
     //private var label : SKLabelNode?
     
     //private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
     private var backButton = ImageButton(imageNamed: "back_50")
     var level = Levels.easy
     var gL: GameLogic?
-    var ID:Int
+    var IDSelected:Int = 0
     //var separation: CGFloat?
     //var xPos: CGFloat = 0
     var cardsTextures = [CardSprite]()
@@ -40,17 +40,19 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             if let count = gL?.cards.count{
                  //print(count)
             for i in 0..<count{
-                if let textName = gL?.cards[i].textureBackName{
-                let card = CardSprite(imageNamed: textName)
+                //if let textNameBack = gL?.cards[i].textureBackName{
+                let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
+                    card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
                     card.size = CGSize(width: GameScene.cardSizeEasy, height: GameScene.cardSizeEasy) // poner variable size en easy
                     card.isUserInteractionEnabled = true
                     card.delegate = self
+                    card.ID = gL!.cards[i].cardID
                     //ID = i
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
                     //xPos = xPos + separation
-                }
+                //}
             }
             }
         }
@@ -139,10 +141,24 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     }
     func onTap(sender: CardSprite) {
         sender.texture = SKSpriteNode(imageNamed: sender.textureFront).texture
-        for i in 0..<cardsTextures.count{
-            if(sender == gL!.cards)
-            print()
-        }//recorrer para acceder a la ID
+        if selected == false{
+            print(sender.ID)
+            selected = true
+            IDSelected = sender.ID
+
+        }
+        else {
+            if sender.ID - level.rawValue == IDSelected || sender.ID + level.rawValue == IDSelected {
+                print("match")
+                selected = false
+            }
+            else{
+                sender.texture = SKSpriteNode(imageNamed: sender.textureBack).texture
+                print("no match")
+                selected = false
+            }
+        }
+    
         
     }
     

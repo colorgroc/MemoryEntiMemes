@@ -16,6 +16,7 @@ class CardSprite: SKSpriteNode {
     //guardareme referencia carta seleccionada? var selectedCard: Card?
     var textureFront:String = ""
     var textureBack:String = ""
+    var ID:Int = 0
     //var card:Card = Card()
     //var textureToShow:String = ""
     

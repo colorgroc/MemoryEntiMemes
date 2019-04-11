@@ -35,11 +35,12 @@ class GameLogic {
         for i in 0..<level.rawValue / 2{
              //init(ID: String, special: Bool, estado: Int, textureFrontName: String, textureBackName: String) {
            let card1 = Card(ID: i, special: false, estado: 1, textureFrontName: tempTextures[0], textureBackName: tempTextures[0])
-            let card2 = Card(ID: i + level.rawValue / 2, special: false, estado: 1, textureFrontName: tempTextures[0], textureBackName: tempTextures[0])
+            //level.rawValue para luego obtener el id para el match
+            let card2 = Card(ID: i + level.rawValue / 2 + level.rawValue, special: false, estado: 1, textureFrontName: tempTextures[0], textureBackName: tempTextures[0])
             cards.append(card1)
             cards.append(card2)
             cards.shuffle()
-            print("hola")
+            //print("hola")
         }
         
     }
