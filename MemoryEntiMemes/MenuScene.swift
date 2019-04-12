@@ -76,8 +76,9 @@ class MenuScene: SKScene, ButtonDelegate {
         logo.setScale(0.3)
         
         //trollface
-        let troll = SKSpriteNode(imageNamed: "trollface")
+        let troll = SKSpriteNode(imageNamed: "Radev")
         troll.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height/2.0 + playButton!.position.y/2.0)
+        troll.setScale(0.5)
         addChild(troll)
         
         //Mementi

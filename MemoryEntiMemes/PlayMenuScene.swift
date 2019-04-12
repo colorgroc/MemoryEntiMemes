@@ -14,7 +14,7 @@ protocol PlayMenuSceneDelegate: class {
     func goToGame(sender: PlayMenuScene, level: Levels)
 }
 
-class PlayMenuScene: SKScene, ButtonDelegate {
+class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     static let buttonWidth: CGFloat = 150.0
     static let buttonHeight: CGFloat = 50.0
@@ -33,7 +33,8 @@ class PlayMenuScene: SKScene, ButtonDelegate {
     var swipeUp = UISwipeGestureRecognizer()
     var swipeDown = UISwipeGestureRecognizer()
     
-    private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
+    private var backButton = ImageButton(imageNamed: "back_50")
+    //private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
     
     //entrar escena
     override func didMove(to view: SKView) {
@@ -54,11 +55,16 @@ class PlayMenuScene: SKScene, ButtonDelegate {
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
         
-        backButton.setText(text: "BACK")
+        /*backButton.setText(text: "BACK")
         backButton.fillColor = .red
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.position = CGPoint(x: (view.frame.width / 2.0) - (PlayMenuScene.buttonWidth / 2.0), y: 100)
+        addChild(backButton)*/
+        
+        backButton.isUserInteractionEnabled = true
+        backButton.delegate = self
+        backButton.position = CGPoint(x: 20, y: view.frame.height - 20)
         addChild(backButton)
         
         easyButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
@@ -115,10 +121,10 @@ class PlayMenuScene: SKScene, ButtonDelegate {
     }
     
     func onTap(sender: Button) {
-        if sender == backButton {
+        /*if sender == backButton {
             playMenuDelegate?.back(sender: self)
-        }
-        else if sender == easyButton{
+        }*/
+         if sender == easyButton{
             if let playMenuDelegate = self.playMenuDelegate {
                 playMenuDelegate.goToGame(sender: self, level: Levels.easy)
             }
@@ -133,6 +139,11 @@ class PlayMenuScene: SKScene, ButtonDelegate {
                 playMenuDelegate.goToGame(sender: self, level: Levels.hard)
             }
             print("hardButton")
+        }
+    }
+    func onTap(sender: ImageButton) {
+        if sender == backButton {
+            playMenuDelegate?.back(sender: self)
         }
     }
     
