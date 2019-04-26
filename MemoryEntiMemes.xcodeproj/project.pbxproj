@@ -24,9 +24,14 @@
 		2EB2F09422314D450067098E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EB2F09222314D450067098E /* LaunchScreen.storyboard */; };
 		2EB2F09C22314E510067098E /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F09B22314E510067098E /* Button.swift */; };
 		2EB2F09E22315D9B0067098E /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F09D22315D9B0067098E /* ImageButton.swift */; };
+		2EF8506C2273361400783C4E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EF8506B2273361400783C4E /* GoogleService-Info.plist */; };
+		2EF8506E227338B000783C4E /* FirebaseSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF8506D227338B000783C4E /* FirebaseSevice.swift */; };
+		8D61925B389D34302D462527 /* Pods_MemoryEntiMemes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDD99D5E275A4D70B416FAC1 /* Pods_MemoryEntiMemes.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0AA01DCA3BBFA3FAAE7ABAB9 /* Pods-MemoryEntiMemes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryEntiMemes.debug.xcconfig"; path = "Target Support Files/Pods-MemoryEntiMemes/Pods-MemoryEntiMemes.debug.xcconfig"; sourceTree = "<group>"; };
+		1EBFC025525FE251EA2FDAB1 /* Pods-MemoryEntiMemes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryEntiMemes.release.xcconfig"; path = "Target Support Files/Pods-MemoryEntiMemes/Pods-MemoryEntiMemes.release.xcconfig"; sourceTree = "<group>"; };
 		2E1341D5225F67A200827C06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E136DA522450EC100130FD2 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		2E16B47E223A966C0093F8F6 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -46,6 +51,9 @@
 		2EB2F09522314D460067098E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EB2F09B22314E510067098E /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		2EB2F09D22315D9B0067098E /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
+		2EF8506B2273361400783C4E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2EF8506D227338B000783C4E /* FirebaseSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseSevice.swift; sourceTree = "<group>"; };
+		FDD99D5E275A4D70B416FAC1 /* Pods_MemoryEntiMemes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MemoryEntiMemes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,12 +61,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D61925B389D34302D462527 /* Pods_MemoryEntiMemes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EA9909C52E768D7DA63CDE9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0AA01DCA3BBFA3FAAE7ABAB9 /* Pods-MemoryEntiMemes.debug.xcconfig */,
+				1EBFC025525FE251EA2FDAB1 /* Pods-MemoryEntiMemes.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		293C1FD1A076FD3C71BFDC05 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FDD99D5E275A4D70B416FAC1 /* Pods_MemoryEntiMemes.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2E18225A2243CA710031B51E /* Engine */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +117,8 @@
 			children = (
 				2EB2F08222314D450067098E /* MemoryEntiMemes */,
 				2EB2F08122314D450067098E /* Products */,
+				1EA9909C52E768D7DA63CDE9 /* Pods */,
+				293C1FD1A076FD3C71BFDC05 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,11 +143,13 @@
 				2E16B482223A98CF0093F8F6 /* SettingsScene.swift */,
 				2E16B480223A98B10093F8F6 /* AboutScene.swift */,
 				2E16B47E223A966C0093F8F6 /* MenuScene.swift */,
+				2EF8506B2273361400783C4E /* GoogleService-Info.plist */,
 				2EB2F08B22314D450067098E /* GameViewController.swift */,
 				2EB2F08D22314D450067098E /* Main.storyboard */,
 				2EB2F09222314D450067098E /* LaunchScreen.storyboard */,
 				2EB2F09522314D460067098E /* Info.plist */,
 				2E136DA522450EC100130FD2 /* GameScene.swift */,
+				2EF8506D227338B000783C4E /* FirebaseSevice.swift */,
 			);
 			path = MemoryEntiMemes;
 			sourceTree = "<group>";
@@ -131,9 +161,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2EB2F09822314D460067098E /* Build configuration list for PBXNativeTarget "MemoryEntiMemes" */;
 			buildPhases = (
+				97DE66176AC634D802A8F90F /* [CP] Check Pods Manifest.lock */,
 				2EB2F07C22314D450067098E /* Sources */,
 				2EB2F07D22314D450067098E /* Frameworks */,
 				2EB2F07E22314D450067098E /* Resources */,
+				58C61367EFA12FD4457BEED4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -184,12 +216,72 @@
 			files = (
 				2EB2F08F22314D450067098E /* Main.storyboard in Resources */,
 				2EB2F09422314D450067098E /* LaunchScreen.storyboard in Resources */,
+				2EF8506C2273361400783C4E /* GoogleService-Info.plist in Resources */,
 				2E1341D6225F67A200827C06 /* Assets.xcassets in Resources */,
 				2EB2F08822314D450067098E /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		58C61367EFA12FD4457BEED4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MemoryEntiMemes/Pods-MemoryEntiMemes-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MemoryEntiMemes/Pods-MemoryEntiMemes-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		97DE66176AC634D802A8F90F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MemoryEntiMemes-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2EB2F07C22314D450067098E /* Sources */ = {
@@ -201,6 +293,7 @@
 				2E16B483223A98CF0093F8F6 /* SettingsScene.swift in Sources */,
 				2EB2F09E22315D9B0067098E /* ImageButton.swift in Sources */,
 				2E1822612243D1130031B51E /* CardSprite.swift in Sources */,
+				2EF8506E227338B000783C4E /* FirebaseSevice.swift in Sources */,
 				2E16B47F223A966C0093F8F6 /* MenuScene.swift in Sources */,
 				2E136DA622450EC100130FD2 /* GameScene.swift in Sources */,
 				2EB2F08422314D450067098E /* AppDelegate.swift in Sources */,
@@ -352,6 +445,7 @@
 		};
 		2EB2F09922314D460067098E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AA01DCA3BBFA3FAAE7ABAB9 /* Pods-MemoryEntiMemes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -370,6 +464,7 @@
 		};
 		2EB2F09A22314D460067098E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1EBFC025525FE251EA2FDAB1 /* Pods-MemoryEntiMemes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
