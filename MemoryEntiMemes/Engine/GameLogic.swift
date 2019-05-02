@@ -16,7 +16,7 @@ class GameLogic {
     var cards = [Card]()
     var points: Int = 0
     var matches:Int = 0
-    var IDSelected:Int = 0
+    var IDSelected:Int = -1
     var selectedCard: Card?
     var level = Levels.easy
     let textures = ["Ivan", "Albert", "Jordi", "Radev", "Arnal", "Ben", "Carlos", "Coronado", "Enrique", "Fran", "Fredi", "Fukuy", "Hector", "Isidro", "Ismael", "Jaumandreu", "Jaume", "Jesus", "Jose Luis", "Jussi", "Lego", "Llobera", "Lourdes", "Matias", "Nico", "Oriol", "Oscar", "Raul", "Ricard", "Richard", "Rita", "Ruth", "Valls", "Vanesa", "Vilella", "Xavier", "Xicota" ] //opsar aqui totes les textures que poden sortir
