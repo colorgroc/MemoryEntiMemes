@@ -17,6 +17,7 @@ class CardSprite: SKSpriteNode {
     var textureFront:String = ""
     var textureBack:String = ""
     var ID:Int = 0
+    var done:Bool = false
     //var estado: Int = 0
     //var card:Card = Card()
     //var textureToShow:String = ""
@@ -40,6 +41,8 @@ class CardSprite: SKSpriteNode {
             if let touch = touches.first, let parent = parent{
                 if frame.contains(touch.location(in: parent)){
                     if let delegate = delegate{
+                        //SwipeCard(type: ActionsEnum.backToFront.rawValue)
+                        print(ID)
                         delegate.onTap(sender: self)
                         //print("Anna")
                     }
@@ -48,6 +51,34 @@ class CardSprite: SKSpriteNode {
             }
         }
         run (action, completion: DidItTouched)
+        //run
+    }
+    func SetDoneTrue(){
+        done = true
+    }
+    func SetDoneFalse(){
+        done = false
+    }
+    func SwipeCard(type: Int){
+        let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
+        let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
+        let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.1)
+        let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.1)
+        //let scaleSmall = SKAction.scale(to: size, duration: 0.3)
+        //let scaleBig = SKAction.scale(by: 0.3, duration: 0.3)
+        let wait = SKAction.wait(forDuration: 0.7)
+        
+        //let sequence: SKAction
+        if type == ActionsEnum.backToFront.rawValue{
+
+            run(SKAction.sequence([scaleSmallX, front, scaleBigX]), completion: SetDoneTrue)
+        }
+        else{
+            run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]), completion: SetDoneTrue)
+        }
+        /*else if type == ActionsEnum.match.rawValue{
+            let sequence = SKAction.sequence([scaleBig, wait, scaleSmall])
+        }*/
     }
     /*func setTextureToDefault(back: String) ->Void{
         textureBack = back

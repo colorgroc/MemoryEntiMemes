@@ -9,7 +9,7 @@ enum Levels: Int{
     case easy = 12, medium = 20, hard = 28
 }
 enum ActionsEnum: Int{
-    case backToFront = 1, FrontToBack = 2, match = 3
+    case backToFront = 1, FrontToBack = 2, match = 3, selectedFrontToBack = 4
 }
 class GameLogic {
  
@@ -17,7 +17,8 @@ class GameLogic {
     var points: Int = 0
     var matches:Int = 0
     var IDSelected:Int = -1
-    var selectedCard: Card?
+    var cartaSeleccionada: CardSprite?
+    //var selectedCard: Card?
     var level = Levels.easy
     let textures = ["Ivan", "Albert", "Jordi", "Radev", "Arnal", "Ben", "Carlos", "Coronado", "Enrique", "Fran", "Fredi", "Fukuy", "Hector", "Isidro", "Ismael", "Jaumandreu", "Jaume", "Jesus", "Jose Luis", "Jussi", "Lego", "Llobera", "Lourdes", "Matias", "Nico", "Oriol", "Oscar", "Raul", "Ricard", "Richard", "Rita", "Ruth", "Valls", "Vanesa", "Vilella", "Xavier", "Xicota" ] //opsar aqui totes les textures que poden sortir
     
