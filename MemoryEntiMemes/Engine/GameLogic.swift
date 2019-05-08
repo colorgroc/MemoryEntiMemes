@@ -39,9 +39,7 @@ class GameLogic {
         }
         
     }
-    func move(){
-        
-    }
+    
     func DidWin()->Bool{
         if matches == level.rawValue / 2{
             print("won")

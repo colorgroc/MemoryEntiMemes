@@ -32,7 +32,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     override func didMove(to view: SKView) {
         self.backgroundColor = SKColor(named: "ENTI")!
         gL = GameLogic()
-        gL?.cartaSeleccionada = cartaSeleccionada
+        //gL?.cartaSeleccionada //= cartaSeleccionada
         gL?.level = level
         gL?.reset()
         if(gL?.level == Levels.easy){
@@ -51,6 +51,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         cardsTextures.append(card);
                         addChild(card)
                         CardsPositions()
+                        AllSwipe()
                         if gL!.DidWin(){
                             //cambiar escena
                         }
@@ -70,6 +71,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
+                    AllSwipe()
                     if gL!.DidWin(){
                         //cambiar escena
                     }
@@ -89,9 +91,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
-                    if gL!.DidWin(){
-                        //cambiar escena
-                    }
+                    AllSwipe()
+                    
                 }
             }
         }
@@ -103,6 +104,19 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         addChild(backButton)
         
     }
+    override func update(_ currentTime: TimeInterval){
+        if gL!.DidWin(){
+            gameSceneDelegate?.back(sender: self)
+        }
+    }
+    
+    /*
+     https://learnappmaking.com/timer-swift-how-to/
+    */
+    
+    
+    
+    
     
     func CardsPositions()->Void{
         for i in 0..<cardsTextures.count{
@@ -284,76 +298,53 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             tempID = sender.ID
         }
         
-        print("state: " + String(gL!.cards[sender.ID].state))
+        //print("state: " + String(gL!.cards[sender.ID].state))
        
-        if gL!.cards[sender.ID].state == Card.Estado.tapada.rawValue {//} && gL!.cards[tempID].state != Card.Estado.destapada.rawValue{
-            //print("id: " + String(gL!.IDSelected) + " temp : " + String(tempID2))
+        if gL!.cards[sender.ID].state == Card.Estado.tapada.rawValue {
             
-            print("id: " + String(sender.ID) + " temp: " + String(tempID) + " sel: " + String(gL!.IDSelected))
+            //print("id: " + String(sender.ID) + " temp: " + String(tempID) + " sel: " + String(gL!.IDSelected))
             
-            sender.SwipeCard(type: ActionsEnum.backToFront.rawValue)
-            if sender.done{
                 gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
-                //sender.SetDoneFalse()
-            }
             
-                if gL!.IDSelected == -1{
+                if gL?.cartaSeleccionada == nil{
                     gL!.IDSelected = tempID
-                    //gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
-                    cartaSeleccionada = sender
-                    //gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
+                    gL?.cartaSeleccionada = sender
+                    gL?.cartaSeleccionada?.ID = sender.ID
                 }
                 else {
                     if tempID == gL!.IDSelected{
-                       // gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
-                        //gL!.cards[tempID].state = Card.Estado.destapada.rawValue
-                        
                         print("match")
+                        
+                        gL?.cartaSeleccionada?.MatchCard()
+                        sender.MatchCard()
+                        gL!.cards[sender.ID].state = Card.Estado.emparejada.rawValue
+                        gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.emparejada.rawValue
                         gL!.matches += 1
-                        //selected = false
-                        //sender.SwipeCard(type: ActionsEnum.FrontToBack.rawValue)
-                        //sender.texture = SKSpriteNode(imageNamed: sender.textureFront).texture
-                       // if sender.done && cartaSeleccionada!.done{
-                            gL!.cards[sender.ID].state = Card.Estado.emparejada.rawValue
-                            gL!.cards[gL!.IDSelected].state = Card.Estado.emparejada.rawValue
-                            sender.SetDoneFalse()
-                            cartaSeleccionada?.SetDoneFalse()
-                       // }
+                        gL?.cartaSeleccionada = nil
                         gL!.IDSelected = -1
                     }
                     else{
                         
                         print("no match")
-                        //selected = false
-                        //gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
-                       // cartaSeleccionada!.texture = SKSpriteNode(imageNamed: cartaSeleccionada!.textureBack).texture
-                        cartaSeleccionada!.SwipeCard(type: ActionsEnum.FrontToBack.rawValue)
-                        sender.SwipeCard(type: ActionsEnum.FrontToBack.rawValue)
-                        if sender.done && cartaSeleccionada!.done{
-                            gL!.cards[sender.ID].state = Card.Estado.tapada.rawValue
-                            gL!.cards[gL!.IDSelected].state = Card.Estado.tapada.rawValue
-                            sender.SetDoneFalse()
-                            cartaSeleccionada?.SetDoneFalse()
-                        }
+                    
+                        gL?.cartaSeleccionada?.SwipeBackCard()
+                        sender.SwipeBackCard()
+                        gL!.cards[sender.ID].state = Card.Estado.tapada.rawValue
+                        gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.tapada.rawValue
                         gL!.IDSelected = -1
-                       // sender.texture = SKSpriteNode(imageNamed: sender.textureBack).texture
-                        //gL!.cards[IDSelected].state = Card.Estado.emparejada.rawValue
+                        gL?.cartaSeleccionada = nil
+
                         
                 }
             }
-            //run(Actions(sender: sender, type: ActionsEnum.backToFront.rawValue), completion: Swipe)
-        } /*else {
-            gL!.cards[sender.ID].state = Card.Estado.tapada.rawValue
-        }*/
+        
+        }
         
     }
     func AllSwipe(){
-       /* if start {
-            //girar todas
+        for i in 0..<cardsTextures.count{
+            cardsTextures[i].ShowCard()
         }
-        else if tapar {
-            
-        }*/
     }
     
 }
