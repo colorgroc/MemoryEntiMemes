@@ -26,7 +26,11 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     var easyButton: Button?
     var mediumButton: Button?
     var hardButton: Button?
-    
+    var tableScoreTitle: String = "Score Board"
+    var typeScore: String = "Easy"
+    var scoreTypeTitle: SKLabelNode?
+    var counterTab: Int = 0
+    //var
     //swipes
     var swipeRight = UISwipeGestureRecognizer()
     var swipeLeft = UISwipeGestureRecognizer()
@@ -35,6 +39,8 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     private var backButton = ImageButton(imageNamed: "back_50")
     //private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
+    var screenResBackH: CGFloat = 0.0
+    var screenResBackW: CGFloat = 0.0
     
     //entrar escena
     override func didMove(to view: SKView) {
@@ -55,16 +61,22 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
         
-        /*backButton.setText(text: "BACK")
-        backButton.fillColor = .red
-        backButton.isUserInteractionEnabled = true
-        backButton.delegate = self
-        backButton.position = CGPoint(x: (view.frame.width / 2.0) - (PlayMenuScene.buttonWidth / 2.0), y: 100)
-        addChild(backButton)*/
+        //print("modelo: " + MenuScene.modelIdentifier())
+        if MenuScene.modelIdentifier() == "iPhone11,8"{
+            screenResBackW = 0.09
+            screenResBackH = 0.92
+        }
+        else {
+            screenResBackW = 0.06
+            screenResBackH = 0.95
+        }
         
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.position = CGPoint(x: 20, y: view.frame.height - 20)
+        backButton.position = CGPoint(x: view.frame.width * screenResBackW, y: view.frame.height * screenResBackH)
+        if MenuScene.modelIdentifier() == "iPhone11,8"{
+            backButton.size = CGSize(width: backButton.size.width*1.2, height: backButton.size.height*1.2)
+        }
         addChild(backButton)
         
         easyButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
@@ -105,19 +117,35 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             addChild(hardButtton)
         }
         
-        /*let logo = SKSpriteNode(imageNamed: "logo_enti")
-        logo.position = view.center
-        addChild(logo)
         
-        // Get label node from scene and store it for use later
-        self.label = SKLabelNode(text: "Hello, World")
+        self.label = SKLabelNode(text: tableScoreTitle)
         if let label = self.label {
+            
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .black
+            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.9)
             addChild(label)
-            label.color = .white
-            label.position = logo.position.applying(CGAffineTransform(translationX: 0, y: -100))
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+            
+        }
+       /* self.label = SKLabelNode(text: scoreTypeTitle)
+        if let label = self.label {
+            
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .white
+            label.fontSize = 17
+            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.8)
+            addChild(label)
+            
         }*/
+        self.scoreTypeTitle = SKLabelNode(text: typeScore)
+        if let label = self.scoreTypeTitle{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .white
+            label.fontSize = 17
+            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.8)
+            addChild(label)
+        }
+        
     }
     
     func onTap(sender: Button) {
@@ -152,14 +180,37 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         view.removeGestureRecognizer(swipeRight)
         view.removeGestureRecognizer(swipeLeft)
         view.removeGestureRecognizer(swipeUp)
-         view.removeGestureRecognizer(swipeDown)
+        view.removeGestureRecognizer(swipeDown)
     }
     
     @objc func SwipeRight(sender: UISwipeGestureRecognizer){
         print("swipeRight")
+        counterTab -= 1
+        if counterTab <= 0{
+            counterTab = 0
+        }
+        if counterTab == 0{
+            self.scoreTypeTitle?.text = "Easy"
+        }
+        else if counterTab == 1 {
+            self.scoreTypeTitle?.text = "Medium"
+        }
+        print(counterTab)
     }
     @objc func SwipeLeft(sender: UISwipeGestureRecognizer){
         print("swipeLeft")
+        counterTab += 1
+        if counterTab >= 2{
+            counterTab = 2
+        }
+        if counterTab == 1 {
+            self.scoreTypeTitle?.text = "Medium"
+        }
+        else if counterTab == 2 {
+            self.scoreTypeTitle?.text = "Hard"
+        }
+        
+        print(counterTab)
     }
     @objc func SwipeUp(sender: UISwipeGestureRecognizer){
         print("swipeUp")

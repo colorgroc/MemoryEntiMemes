@@ -53,35 +53,35 @@ class MenuScene: SKScene, ButtonDelegate {
         
         //Options
         if let settingsButton = settingsButton{
-        settingsButton.fillColor = SKColor(named: "BotonOption")!//.gray
-        settingsButton.strokeColor = .white
-        settingsButton.setText(text: NSLocalizedString("Settings", comment: ""))
-        settingsButton.isUserInteractionEnabled = true
-        settingsButton.delegate = self
-        settingsButton.position = CGPoint(x: view.frame.width/2.0 - MenuScene.widthButton_MainMenu/2.0, y: playButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
-        addChild(settingsButton)
+            settingsButton.fillColor = SKColor(named: "BotonOption")!//.gray
+            settingsButton.strokeColor = .white
+            settingsButton.setText(text: NSLocalizedString("Settings", comment: ""))
+            settingsButton.isUserInteractionEnabled = true
+            settingsButton.delegate = self
+            settingsButton.position = CGPoint(x: view.frame.width/2.0 - MenuScene.widthButton_MainMenu/2.0, y: playButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
+            addChild(settingsButton)
         }
         //about
         if let aboutButton = aboutButton{
-        aboutButton.fillColor = SKColor(named: "BotonOption")!//.gray
-        aboutButton.strokeColor = .white
-        aboutButton.setText(text: NSLocalizedString("About", comment: ""))
-        aboutButton.isUserInteractionEnabled = true
-        aboutButton.delegate = self
-        aboutButton.position = CGPoint(x: view.frame.width / 2.0 - MenuScene.widthButton_MainMenu / 2.0, y: settingsButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
-        addChild(aboutButton)
+            aboutButton.fillColor = SKColor(named: "BotonOption")!//.gray
+            aboutButton.strokeColor = .white
+            aboutButton.setText(text: NSLocalizedString("About", comment: ""))
+            aboutButton.isUserInteractionEnabled = true
+            aboutButton.delegate = self
+            aboutButton.position = CGPoint(x: view.frame.width / 2.0 - MenuScene.widthButton_MainMenu / 2.0, y: settingsButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
+            addChild(aboutButton)
         }
         //logo enti
         let logo = SKSpriteNode(imageNamed: "enti-png-2")
-        logo.position = CGPoint(x: 75, y: 20)
+        logo.position = CGPoint(x: view.frame.width * 0.25, y: view.frame.height * 0.03)
         addChild(logo)
         logo.setScale(0.3)
         
         //trollface
-        let troll = SKSpriteNode(imageNamed: "Radev")
-        troll.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height/2.0 + playButton!.position.y/2.0)
-        troll.setScale(0.5)
-        addChild(troll)
+        let gameImage = SKSpriteNode(imageNamed: "Radev")
+        gameImage.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height/2.0 + playButton!.position.y/2.0)
+        gameImage.setScale(0.5)
+        addChild(gameImage)
         
         //Mementi
         self.label = SKLabelNode(text: "MEMENTI")
@@ -89,7 +89,7 @@ class MenuScene: SKScene, ButtonDelegate {
             
             label.fontName = "ArialRoundedMTBold"
             label.fontColor = .black
-            label.position = CGPoint(x: view.frame.width / 2.0, y: troll.position.y + 100)
+            label.position = CGPoint(x: view.frame.width / 2.0, y: gameImage.position.y + 100)
             addChild(label)
 
         }
@@ -110,6 +110,12 @@ class MenuScene: SKScene, ButtonDelegate {
         
     }
     
+    static func modelIdentifier() -> String {
+        if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] { return simulatorModelIdentifier }
+        var sysinfo = utsname()
+        uname(&sysinfo) // ignore return value
+        return String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
+    }
     
     func touchDown(atPoint pos : CGPoint) {
 

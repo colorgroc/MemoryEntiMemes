@@ -16,9 +16,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
-    static let cardSizeEasy: CGFloat = 80.0
-    static let cardSizeMedium: CGFloat = 70.0
-    static let cardSizeHard: CGFloat = 65.0
+    
     
     weak var gameSceneDelegate: GameSceneDelegate?
     var selected:Bool = false
@@ -28,15 +26,27 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     var gL: GameLogic?
     var cartaSeleccionada: CardSprite?
     var cardsTextures = [CardSprite]()
-    var screenRes: CGFloat = 0.0
+    var ScreenResW: CGFloat = 0.0
+    var ScreenResH: CGFloat = 0.0
+    var screenResBackH: CGFloat = 0.0
+    var screenResBackW: CGFloat = 0.0
+    static var cardSizeEasy: CGFloat = 80.0
+    static var cardSizeMedium: CGFloat = 70.0
+    static var cardSizeHard: CGFloat = 65.0
     
     override func didMove(to view: SKView) {
         
-        print("modelo: " + modelIdentifier())
-        if modelIdentifier() == "iPhone11,8"{
-            screenRes = 0.2
+        print("modelo: " + MenuScene.modelIdentifier())
+        if MenuScene.modelIdentifier() == "iPhone11,8"{
+            screenResBackW = 0.09
+            screenResBackH = 0.92
+            GameScene.cardSizeMedium = GameScene.cardSizeEasy
+            GameScene.cardSizeHard = GameScene.cardSizeMedium
         }
-        else {screenRes = 0.17}
+        else {
+            screenResBackW = 0.06
+            screenResBackH = 0.95
+        }
             
         self.backgroundColor = SKColor(named: "ENTI")!
         gL = GameLogic()
@@ -103,7 +113,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.position = CGPoint(x: view.frame.width * 0.05, y: view.frame.height - view.frame.height*0.05)
+        backButton.position = CGPoint(x: view.frame.width * screenResBackW, y: view.frame.height * screenResBackH)
+        if MenuScene.modelIdentifier() == "iPhone11,8"{
+            backButton.size = CGSize(width: backButton.size.width*1.2, height: backButton.size.height*1.2)
+        }
         addChild(backButton)
         
     }
@@ -117,27 +130,35 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
      https://learnappmaking.com/timer-swift-how-to/
     */
     
-    func modelIdentifier() -> String {
+    /*func modelIdentifier() -> String {
         if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] { return simulatorModelIdentifier }
         var sysinfo = utsname()
         uname(&sysinfo) // ignore return value
         return String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
-    }
+    }*/
     
     func CardsPositions()->Void{
         for i in 0..<cardsTextures.count{
             if gL?.level  == Levels.easy{
+                if MenuScene.modelIdentifier() == "iPhone11,8"{
+                    ScreenResW = 0.22
+                    ScreenResH = 0.65
+                }
+                else {
+                    ScreenResW = 0.17
+                    ScreenResH = 0.7
+                }
                 let numCol = 3
                 let separationWidth: CGFloat = view!.frame.width/12
-                let initialSeparationWidth: CGFloat = view!.frame.width/12
-                let separationHeight: CGFloat = view!.frame.height/4
+                //let initialSeparationWidth: CGFloat = view!.frame.width/12
+                //let separationHeight: CGFloat = view!.frame.height/4
                 let separationBelow: CGFloat = view!.frame.height/18
                 if i < numCol {
                     if i == 0{
-                        cardsTextures[i].position = CGPoint(x: view!.frame.width * screenRes, y: view!.frame.height * 0.8)
+                        cardsTextures[i].position = CGPoint(x: view!.frame.width * ScreenResW, y: view!.frame.height * ScreenResH)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: view!.frame.height * 0.8)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: view!.frame.height * ScreenResH)
                     }
                 }
                 else if i < numCol*2{
@@ -166,17 +187,25 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 }
             }
             else if gL?.level  == Levels.medium{
+                if MenuScene.modelIdentifier() == "iPhone11,8"{
+                    ScreenResW = 0.15
+                    ScreenResH = 0.65
+                }
+                else {
+                    ScreenResW = 0.17
+                    ScreenResH = 0.7
+                }
                 let numCol = 4
                 let separationWidth: CGFloat = view!.frame.width/28
-                let initialSeparationWidth: CGFloat = view!.frame.width/10
-                let separationHeight: CGFloat = view!.frame.height/4
+                //let initialSeparationWidth: CGFloat = view!.frame.width/10
+                //let separationHeight: CGFloat = view!.frame.height/4
                 let separationBelow: CGFloat = view!.frame.height/30
                 if i < numCol {
                     if i == 0{
-                        cardsTextures[i].position = CGPoint(x: GameScene.cardSizeMedium - initialSeparationWidth, y: view!.frame.height - separationHeight)
+                        cardsTextures[i].position = CGPoint(x: view!.frame.width * ScreenResW, y: view!.frame.height * ScreenResH)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: view!.frame.height - separationHeight)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: view!.frame.height * ScreenResH)
                     }
                 }
                 else if i < numCol*2{
@@ -221,6 +250,14 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 }
             }
             else if gL?.level  == Levels.hard{
+                if MenuScene.modelIdentifier() == "iPhone11,8"{
+                    ScreenResW = 0.17
+                    ScreenResH = 0.65
+                }
+                else {
+                    ScreenResW = 0.17
+                    ScreenResH = 0.7
+                }
                 let numCol = 4
                 let separationWidth: CGFloat = view!.frame.width/50
                 let initialSeparationWidth: CGFloat = view!.frame.width/20
@@ -229,10 +266,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 let separationDivider: CGFloat = 6
                 if i < numCol {
                     if i == 0{
-                        cardsTextures[i].position = CGPoint(x: GameScene.cardSizeHard - initialSeparationWidth, y: view!.frame.height - separationHeight)
+                        cardsTextures[i].position = CGPoint(x: view!.frame.width * ScreenResW, y: view!.frame.height * ScreenResH)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: view!.frame.height - separationHeight)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: view!.frame.height * ScreenResH)
                     }
                 }
                 else if i < numCol*2{
