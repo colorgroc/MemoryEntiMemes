@@ -17,6 +17,8 @@
 		2E1822592243C8720031B51E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1822582243C8720031B51E /* Card.swift */; };
 		2E18225E2243CB010031B51E /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18225D2243CB010031B51E /* GameLogic.swift */; };
 		2E1822612243D1130031B51E /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1822602243D1130031B51E /* CardSprite.swift */; };
+		2E1A369F22845A2600908A6D /* Actions.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E1A369E22845A2600908A6D /* Actions.strings */; };
+		2E1A36A222845AA500908A6D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E1A36A422845AA500908A6D /* Localizable.strings */; };
 		2EB2F08422314D450067098E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F08322314D450067098E /* AppDelegate.swift */; };
 		2EB2F08822314D450067098E /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2EB2F08722314D450067098E /* Actions.sks */; };
 		2EB2F08C22314D450067098E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F08B22314D450067098E /* GameViewController.swift */; };
@@ -42,6 +44,14 @@
 		2E1822582243C8720031B51E /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		2E18225D2243CB010031B51E /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		2E1822602243D1130031B51E /* CardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
+		2E1A369A2284576000908A6D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		2E1A369B2284576100908A6D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2E1A369C2284577400908A6D /* ca-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ca-ES"; path = "ca-ES.lproj/Main.strings"; sourceTree = "<group>"; };
+		2E1A369D2284577400908A6D /* ca-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ca-ES"; path = "ca-ES.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		2E1A369E22845A2600908A6D /* Actions.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Actions.strings; sourceTree = "<group>"; };
+		2E1A36A322845AA500908A6D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2E1A36A522845AAC00908A6D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2E1A36A622845AC800908A6D /* ca-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ca-ES"; path = "ca-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		2EB2F08022314D450067098E /* MemoryEntiMemes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryEntiMemes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB2F08322314D450067098E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EB2F08722314D450067098E /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -150,6 +160,8 @@
 				2EB2F09522314D460067098E /* Info.plist */,
 				2E136DA522450EC100130FD2 /* GameScene.swift */,
 				2EF8506D227338B000783C4E /* FirebaseSevice.swift */,
+				2E1A369E22845A2600908A6D /* Actions.strings */,
+				2E1A36A422845AA500908A6D /* Localizable.strings */,
 			);
 			path = MemoryEntiMemes;
 			sourceTree = "<group>";
@@ -198,6 +210,8 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
+				"ca-ES",
 			);
 			mainGroup = 2EB2F07722314D450067098E;
 			productRefGroup = 2EB2F08122314D450067098E /* Products */;
@@ -216,6 +230,8 @@
 			files = (
 				2EB2F08F22314D450067098E /* Main.storyboard in Resources */,
 				2EB2F09422314D450067098E /* LaunchScreen.storyboard in Resources */,
+				2E1A369F22845A2600908A6D /* Actions.strings in Resources */,
+				2E1A36A222845AA500908A6D /* Localizable.strings in Resources */,
 				2EF8506C2273361400783C4E /* GoogleService-Info.plist in Resources */,
 				2E1341D6225F67A200827C06 /* Assets.xcassets in Resources */,
 				2EB2F08822314D450067098E /* Actions.sks in Resources */,
@@ -308,10 +324,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		2E1A36A422845AA500908A6D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E1A36A322845AA500908A6D /* en */,
+				2E1A36A522845AAC00908A6D /* es */,
+				2E1A36A622845AC800908A6D /* ca-ES */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		2EB2F08D22314D450067098E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2EB2F08E22314D450067098E /* Base */,
+				2E1A369A2284576000908A6D /* es */,
+				2E1A369C2284577400908A6D /* ca-ES */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -320,6 +348,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				2EB2F09322314D450067098E /* Base */,
+				2E1A369B2284576100908A6D /* es */,
+				2E1A369D2284577400908A6D /* ca-ES */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -331,6 +361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -392,6 +423,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -33,16 +33,18 @@ class MenuScene: SKScene, ButtonDelegate {
     
     override func didMove(to view: SKView) {
         playButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu * 1.1, height: MenuScene.heightButton_MainMenu*1.1), cornerRadius:30)
+        //playButton.sizeToFit()
         settingsButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
         
         aboutButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
         self.backgroundColor = SKColor(named: "ENTI")! //el ! es per saber si existeix o no. No sap si existeix o no
         //play
         if let playButton = playButton{
+        
             playButton.fillColor = SKColor(named: "BotonPlay")!//.darkGray //SKColor(named: "nombre")
             //playButton.alpha = 0.5
             playButton.strokeColor = .darkGray
-            playButton.setText(text: "Play")
+            playButton.setText(text: NSLocalizedString("Play", comment: ""))
             playButton.isUserInteractionEnabled = true
             playButton.delegate = self
             playButton.position = CGPoint(x: view.frame.width / 2.0 - (MenuScene.widthButton_MainMenu*1.1 / 2.0), y: view.frame.height*0.35)
@@ -53,7 +55,7 @@ class MenuScene: SKScene, ButtonDelegate {
         if let settingsButton = settingsButton{
         settingsButton.fillColor = SKColor(named: "BotonOption")!//.gray
         settingsButton.strokeColor = .white
-        settingsButton.setText(text: "Settings")
+        settingsButton.setText(text: NSLocalizedString("Settings", comment: ""))
         settingsButton.isUserInteractionEnabled = true
         settingsButton.delegate = self
         settingsButton.position = CGPoint(x: view.frame.width/2.0 - MenuScene.widthButton_MainMenu/2.0, y: playButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
@@ -63,7 +65,7 @@ class MenuScene: SKScene, ButtonDelegate {
         if let aboutButton = aboutButton{
         aboutButton.fillColor = SKColor(named: "BotonOption")!//.gray
         aboutButton.strokeColor = .white
-        aboutButton.setText(text: "About")
+        aboutButton.setText(text: NSLocalizedString("About", comment: ""))
         aboutButton.isUserInteractionEnabled = true
         aboutButton.delegate = self
         aboutButton.position = CGPoint(x: view.frame.width / 2.0 - MenuScene.widthButton_MainMenu / 2.0, y: settingsButton!.position.y - (MenuScene.heightButton_MainMenu + 20))

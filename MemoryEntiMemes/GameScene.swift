@@ -28,8 +28,16 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     var gL: GameLogic?
     var cartaSeleccionada: CardSprite?
     var cardsTextures = [CardSprite]()
+    var screenRes: CGFloat = 0.0
     
     override func didMove(to view: SKView) {
+        
+        print("modelo: " + modelIdentifier())
+        if modelIdentifier() == "iPhone11,8"{
+            screenRes = 0.2
+        }
+        else {screenRes = 0.17}
+            
         self.backgroundColor = SKColor(named: "ENTI")!
         gL = GameLogic()
         //gL?.cartaSeleccionada //= cartaSeleccionada
@@ -52,9 +60,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         addChild(card)
                         CardsPositions()
                         AllSwipe()
-                        if gL!.DidWin(){
-                            //cambiar escena
-                        }
+                        //card.isUserInteractionEnabled = true
                 }
             }
         }
@@ -65,16 +71,14 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                     card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
                     card.size = CGSize(width: GameScene.cardSizeMedium, height: GameScene.cardSizeMedium)
-                    card.isUserInteractionEnabled = true
+                    
                     card.delegate = self
                     card.ID = gL!.cards[i].cardID
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
                     AllSwipe()
-                    if gL!.DidWin(){
-                        //cambiar escena
-                    }
+                    //card.isUserInteractionEnabled = true
                 }
             }
         }
@@ -85,22 +89,21 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                     card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
                     card.size = CGSize(width: GameScene.cardSizeHard, height: GameScene.cardSizeHard)
-                    card.isUserInteractionEnabled = true
                     card.delegate = self
                     card.ID = gL!.cards[i].cardID
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
                     AllSwipe()
-                    
+                    //card.isUserInteractionEnabled = true
                 }
             }
         }
         
-    
+        
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.position = CGPoint(x: 20, y: view.frame.height - 20)
+        backButton.position = CGPoint(x: view.frame.width * 0.05, y: view.frame.height - view.frame.height*0.05)
         addChild(backButton)
         
     }
@@ -114,9 +117,12 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
      https://learnappmaking.com/timer-swift-how-to/
     */
     
-    
-    
-    
+    func modelIdentifier() -> String {
+        if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] { return simulatorModelIdentifier }
+        var sysinfo = utsname()
+        uname(&sysinfo) // ignore return value
+        return String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
+    }
     
     func CardsPositions()->Void{
         for i in 0..<cardsTextures.count{
@@ -128,10 +134,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 let separationBelow: CGFloat = view!.frame.height/18
                 if i < numCol {
                     if i == 0{
-                        cardsTextures[i].position = CGPoint(x: GameScene.cardSizeEasy - initialSeparationWidth, y: view!.frame.height - separationHeight)
+                        cardsTextures[i].position = CGPoint(x: view!.frame.width * screenRes, y: view!.frame.height * 0.8)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: view!.frame.height - separationHeight)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: view!.frame.height * 0.8)
                     }
                 }
                 else if i < numCol*2{
@@ -343,8 +349,11 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     }
     func AllSwipe(){
         for i in 0..<cardsTextures.count{
+            cardsTextures[i].isUserInteractionEnabled = false
             cardsTextures[i].ShowCard()
+            cardsTextures[i].isUserInteractionEnabled = true
         }
+        
     }
     
 }
