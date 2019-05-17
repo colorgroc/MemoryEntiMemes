@@ -50,8 +50,9 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
             // Present the scene
             view.presentScene(scene)
             
-            view.showsFPS = true
-            view.showsNodeCount = true
+            //view.showsFPS = true
+            //view.showsNodeCount = true
+            view.showsDrawCount = true
             
         }
     }

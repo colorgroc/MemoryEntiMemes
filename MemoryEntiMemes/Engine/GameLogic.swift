@@ -15,6 +15,7 @@ class GameLogic {
  
     var cards = [Card]()
     var points: Int = 0
+    var bonus: Int = 0
     var matches:Int = 0
     var IDSelected:Int = -1
     var cartaSeleccionada: CardSprite?
@@ -29,9 +30,16 @@ class GameLogic {
         //let number = Int.random(in: 0 ..< level.rawValue / 2)
         
         for i in 0..<level.rawValue / 2{
-           let card1 = Card(ID: i, special: false, estado: Card.Estado.tapada.rawValue, textureFrontName: tempTextures[i], textureBackName: "back")
+            var special: Bool = false
+            if tempTextures[i] == "Radev" || tempTextures[i] == "Richard" || tempTextures[i] == "Oscar"{
+                special = true
+            }
+            else{
+                special = false
+            }
+           let card1 = Card(ID: i, special: special, estado: Card.Estado.tapada.rawValue, textureFrontName: tempTextures[i], textureBackName: "back")
             //level.rawValue para luego obtener el id para el match
-            let card2 = Card(ID: i + level.rawValue / 2, special: false, estado: Card.Estado.tapada.rawValue, textureFrontName: tempTextures[i], textureBackName: "back")
+            let card2 = Card(ID: i + level.rawValue / 2, special: special, estado: Card.Estado.tapada.rawValue, textureFrontName: tempTextures[i], textureBackName: "back")
             print(card2.cardID)
             cards.append(card1)
             cards.append(card2)
@@ -48,6 +56,15 @@ class GameLogic {
             return false
         }
     }
-        
+    func RandomBonus()->Void{
+        let dado = [Int](arrayLiteral: 1,2,3,4,5,6)
+        var res = Int.random(in: 1..<20)
+        if res <= 10{
+            bonus = dado[0]
+        }
+        else if res <= 1{
+            bonus = dado[1]
+        }
+    }
 }
 

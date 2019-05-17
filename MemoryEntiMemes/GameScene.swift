@@ -30,24 +30,49 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     var ScreenResH: CGFloat = 0.0
     var screenResBackH: CGFloat = 0.0
     var screenResBackW: CGFloat = 0.0
-    static var cardSizeEasy: CGFloat = 80.0
+    
+    /*static var cardSizeEasy: CGFloat = 80.0
     static var cardSizeMedium: CGFloat = 70.0
-    static var cardSizeHard: CGFloat = 65.0
+    static var cardSizeHard: CGFloat = 65.0*/
+    
+    var cardSizeEasy: CGFloat = 0
+    var cardSizeMedium: CGFloat = 0
+    var cardSizeHard: CGFloat = 0
+    
+    var numCol: Int = 0
+    //var points: Int = 0
+    //var bonus: Int = 0
+    //var time: TimeInterval = 0
+    var pointsScore: SKLabelNode?
+    var pointsTitle: SKLabelNode?
+    var timeLeft: SKLabelNode?
+    var timeLeftTitle: SKLabelNode?
+    var bonusText: SKLabelNode?
+    var bonusTitle: SKLabelNode?
+    //var timer: Timer?
+    
+    
     
     override func didMove(to view: SKView) {
+        
+        cardSizeEasy = view.frame.size.width * 0.22
+        cardSizeMedium = view.frame.size.width * 0.21
+        cardSizeHard = view.frame.size.width * 0.2
         
         print("modelo: " + MenuScene.modelIdentifier())
         if MenuScene.modelIdentifier() == "iPhone11,8"{
             screenResBackW = 0.09
             screenResBackH = 0.92
-            GameScene.cardSizeMedium = GameScene.cardSizeEasy
-            GameScene.cardSizeHard = GameScene.cardSizeMedium
+            /*GameScene.cardSizeMedium = GameScene.cardSizeEasy
+            GameScene.cardSizeHard = GameScene.cardSizeMedium*/
         }
         else {
             screenResBackW = 0.06
             screenResBackH = 0.95
         }
-            
+        
+        
+        
         self.backgroundColor = SKColor(named: "ENTI")!
         gL = GameLogic()
         //gL?.cartaSeleccionada //= cartaSeleccionada
@@ -61,7 +86,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     //if let textNameBack = gL?.cards[i].textureBackName{
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                         card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
-                        card.size = CGSize(width: GameScene.cardSizeEasy, height: GameScene.cardSizeEasy) // poner variable size en easy
+                        card.size = CGSize(width: cardSizeEasy, height: cardSizeEasy) // poner variable size en easy
                         card.isUserInteractionEnabled = true
                         card.delegate = self
                         card.ID = gL!.cards[i].cardID
@@ -80,7 +105,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 for i in 0..<count{
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                     card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
-                    card.size = CGSize(width: GameScene.cardSizeMedium, height: GameScene.cardSizeMedium)
+                    card.size = CGSize(width: cardSizeMedium, height: cardSizeMedium)
                     
                     card.delegate = self
                     card.ID = gL!.cards[i].cardID
@@ -98,7 +123,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 for i in 0..<count{
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                     card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
-                    card.size = CGSize(width: GameScene.cardSizeHard, height: GameScene.cardSizeHard)
+                    card.size = CGSize(width: cardSizeHard, height: cardSizeHard)
                     card.delegate = self
                     card.ID = gL!.cards[i].cardID
                     cardsTextures.append(card);
@@ -119,11 +144,70 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         }
         addChild(backButton)
         
+        self.pointsScore = SKLabelNode(text: String(gL!.points))
+        if let label = self.pointsScore{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .white
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            label.fontSize = 17
+            label.position = CGPoint(x: cardsTextures[numCol-1].position.x + cardsTextures[numCol-1].size.width/2, y: cardsTextures[0].position.y + 70)
+            addChild(label)
+        }
+        self.pointsTitle = SKLabelNode(text: "Score")
+        if let label = self.pointsTitle{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .black
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            label.fontSize = 18
+            label.position = CGPoint(x: cardsTextures[numCol-1].position.x + cardsTextures[numCol-1].size.width/2, y: self.pointsScore!.position.y + 20)//view.frame.height * 0.82)
+            addChild(label)
+        }
+        
+        self.bonusText = SKLabelNode(text: "x " + String(gL!.bonus))
+        if let label = self.bonusText{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .white
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+            label.fontSize = 17
+            label.position = CGPoint(x: cardsTextures[0].position.x - cardsTextures[0].size.width/2, y: cardsTextures[0].position.y + 70)
+            addChild(label)
+        }
+        self.bonusTitle = SKLabelNode(text: "Bonus")
+        if let label = self.bonusTitle{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .black
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+            label.fontSize = 18
+            label.position = CGPoint(x: cardsTextures[0].position.x - cardsTextures[0].size.width/2, y: self.pointsScore!.position.y + 20)//view.frame.height * 0.82)
+            addChild(label)
+        }
+        
+        self.timeLeft = SKLabelNode(text: String(gL!.time))
+        if let label = self.timeLeft{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .white
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+            label.fontSize = 17
+            label.position = CGPoint(x: view.frame.width/2.0, y: cardsTextures[0].position.y + 70)
+            addChild(label)
+        }
+        self.timeLeftTitle = SKLabelNode(text: "Time Left")
+        if let label = self.timeLeftTitle{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .black
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+            label.fontSize = 18
+            label.position = CGPoint(x: view.frame.width/2.0, y: self.pointsScore!.position.y + 20)//view.frame.height * 0.82)
+            addChild(label)
+        }
+        
     }
     override func update(_ currentTime: TimeInterval){
         if gL!.DidWin(){
             gameSceneDelegate?.back(sender: self)
         }
+        //time = currentTime
+        self.timeLeft!.text = String("10:00")
     }
     
     /*
@@ -148,7 +232,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     ScreenResW = 0.17
                     ScreenResH = 0.7
                 }
-                let numCol = 3
+                numCol = 3
                 let separationWidth: CGFloat = view!.frame.width/12
                 //let initialSeparationWidth: CGFloat = view!.frame.width/12
                 //let separationHeight: CGFloat = view!.frame.height/4
@@ -158,31 +242,31 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         cardsTextures[i].position = CGPoint(x: view!.frame.width * ScreenResW, y: view!.frame.height * ScreenResH)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: view!.frame.height * ScreenResH)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeEasy + separationWidth, y: view!.frame.height * ScreenResH)
                     }
                 }
                 else if i < numCol*2{
                     if(i == numCol){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - GameScene.cardSizeEasy - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - cardSizeEasy - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeEasy + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i < numCol*3{
                     if(i == numCol*2){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol].position.y - GameScene.cardSizeEasy - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol].position.y - cardSizeEasy - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeEasy + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*4{
                     if(i == numCol*3){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*2].position.y - GameScene.cardSizeEasy - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*2].position.y - cardSizeEasy - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeEasy + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeEasy + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
             }
@@ -195,7 +279,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     ScreenResW = 0.17
                     ScreenResH = 0.7
                 }
-                let numCol = 4
+                numCol = 4
                 let separationWidth: CGFloat = view!.frame.width/28
                 //let initialSeparationWidth: CGFloat = view!.frame.width/10
                 //let separationHeight: CGFloat = view!.frame.height/4
@@ -205,47 +289,47 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         cardsTextures[i].position = CGPoint(x: view!.frame.width * ScreenResW, y: view!.frame.height * ScreenResH)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: view!.frame.height * ScreenResH)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeMedium + separationWidth, y: view!.frame.height * ScreenResH)
                     }
                 }
                 else if i < numCol*2{
                     if(i == numCol){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - GameScene.cardSizeMedium - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - cardSizeMedium - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i < numCol*3{
                     if(i == numCol*2){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol].position.y - GameScene.cardSizeMedium - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol].position.y - cardSizeMedium - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*4{
                     if(i == numCol*3){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*2].position.y - GameScene.cardSizeMedium - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*2].position.y - cardSizeMedium - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*5{
                     if(i == numCol*4){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*3].position.y - GameScene.cardSizeMedium - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*3].position.y - cardSizeMedium - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*6{
                     if(i == numCol*5){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*4].position.y - GameScene.cardSizeMedium - separationBelow)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*4].position.y - cardSizeMedium - separationBelow)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeMedium + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
             }
@@ -258,10 +342,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                     ScreenResW = 0.17
                     ScreenResH = 0.7
                 }
-                let numCol = 4
+                numCol = 4
                 let separationWidth: CGFloat = view!.frame.width/50
-                let initialSeparationWidth: CGFloat = view!.frame.width/20
-                let separationHeight: CGFloat = view!.frame.height/5
+                //let initialSeparationWidth: CGFloat = view!.frame.width/20
+                //let separationHeight: CGFloat = view!.frame.height/5
                 let separationBelow: CGFloat = view!.frame.height/36
                 let separationDivider: CGFloat = 6
                 if i < numCol {
@@ -269,55 +353,55 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         cardsTextures[i].position = CGPoint(x: view!.frame.width * ScreenResW, y: view!.frame.height * ScreenResH)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: view!.frame.height * ScreenResH)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeHard + separationWidth, y: view!.frame.height * ScreenResH)
                     }
                 }
                 else if i < numCol*2{
                     if(i == numCol){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - GameScene.cardSizeHard - separationBelow/separationDivider)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[0].position.y - cardSizeHard - separationBelow/separationDivider)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i < numCol*3{
                     if(i == numCol*2){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol].position.y - GameScene.cardSizeHard - separationBelow/separationDivider)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol].position.y - cardSizeHard - separationBelow/separationDivider)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*4{
                     if(i == numCol*3){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*2].position.y - GameScene.cardSizeHard - separationBelow/separationDivider)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*2].position.y - cardSizeHard - separationBelow/separationDivider)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*5{
                     if(i == numCol*4){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*3].position.y - GameScene.cardSizeHard - separationBelow/separationDivider)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*3].position.y - cardSizeHard - separationBelow/separationDivider)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*6{
                     if(i == numCol*5){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*4].position.y - GameScene.cardSizeHard - separationBelow/separationDivider)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*4].position.y - cardSizeHard - separationBelow/separationDivider)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
                 else if i  < numCol*7{
                     if(i == numCol*6){
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*5].position.y - GameScene.cardSizeHard - separationBelow/separationDivider)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[0].position.x, y: cardsTextures[numCol*5].position.y - cardSizeHard - separationBelow/separationDivider)
                     }
                     else{
-                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + GameScene.cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
+                        cardsTextures[i].position = CGPoint(x: cardsTextures[i - 1].position.x + cardSizeHard + separationWidth, y: cardsTextures[i-1].position.y)
                     }
                 }
             }
@@ -340,44 +424,43 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         else {
             tempID = sender.ID
         }
-        
-        //print("state: " + String(gL!.cards[sender.ID].state))
        
         if gL!.cards[sender.ID].state == Card.Estado.tapada.rawValue {
-            
-            //print("id: " + String(sender.ID) + " temp: " + String(tempID) + " sel: " + String(gL!.IDSelected))
-            
+
                 gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
             
                 if gL?.cartaSeleccionada == nil{
                     gL!.IDSelected = tempID
                     gL?.cartaSeleccionada = sender
                     gL?.cartaSeleccionada?.ID = sender.ID
+                    gL?.cartaSeleccionada?.special = sender.special
                 }
                 else {
+                    //match
                     if tempID == gL!.IDSelected{
-                        print("match")
-                        
                         gL?.cartaSeleccionada?.MatchCard()
                         sender.MatchCard()
                         gL!.cards[sender.ID].state = Card.Estado.emparejada.rawValue
                         gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.emparejada.rawValue
                         gL!.matches += 1
+                        if sender.special{
+                            gL!.points += 3 * 2 * bonus
+                        }
+                        else{
+                            gL!.points += 3 * bonus
+                        }
                         gL?.cartaSeleccionada = nil
                         gL!.IDSelected = -1
                     }
+                        //no match
                     else{
-                        
-                        print("no match")
-                    
                         gL?.cartaSeleccionada?.SwipeBackCard()
                         sender.SwipeBackCard()
                         gL!.cards[sender.ID].state = Card.Estado.tapada.rawValue
                         gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.tapada.rawValue
                         gL!.IDSelected = -1
                         gL?.cartaSeleccionada = nil
-
-                        
+                 
                 }
             }
         
@@ -390,7 +473,6 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             cardsTextures[i].ShowCard()
             cardsTextures[i].isUserInteractionEnabled = true
         }
-        
     }
     
 }

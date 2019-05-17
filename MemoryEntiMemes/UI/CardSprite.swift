@@ -17,7 +17,7 @@ class CardSprite: SKSpriteNode {
     var textureFront:String = ""
     var textureBack:String = ""
     var ID:Int = 0
-
+    var special:Bool = false
     
     func SetTextures(front: String ,back: String)->Void{
         textureBack = back
