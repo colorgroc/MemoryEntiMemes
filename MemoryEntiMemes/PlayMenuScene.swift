@@ -37,7 +37,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     var swipeLeft = UISwipeGestureRecognizer()
     var swipeUp = UISwipeGestureRecognizer()
     var swipeDown = UISwipeGestureRecognizer()
-    
+    var pageControl: SKSpriteNode?
     private var backButton = ImageButton(imageNamed: "back_50")
     //private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
     var screenResBackH: CGFloat = 0.0
@@ -62,22 +62,13 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
         
-        //print("modelo: " + MenuScene.modelIdentifier())
-        /*if MenuScene.modelIdentifier() == "iPhone11,8"{
-            screenResBackW = 0.09
-            screenResBackH = 0.92
-        }*/
-        //else {
             screenResBackW = 0.06
             screenResBackH = 0.95
-        //}
         
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.position = CGPoint(x: view.frame.width * screenResBackW, y: view.frame.height * screenResBackH)
-        /*if MenuScene.modelIdentifier() == "iPhone11,8"{
-            backButton.size = CGSize(width: backButton.size.width*1.2, height: backButton.size.height*1.2)
-        }*/
+
         addChild(backButton)
         
         easyButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
@@ -85,7 +76,15 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         
         hardButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
         self.backgroundColor = SKColor(named: "ENTI")! //el ! es per saber si existeix o no. No sap si existeix o no
-        //play
+        
+        //page control
+        pageControl = SKSpriteNode(imageNamed: "1_Page")
+        pageControl!.position = CGPoint(x: view.frame.width/2, y: view.frame.height * 0.51)
+        addChild(pageControl!)
+        pageControl!.setScale(0.1)
+        
+        
+        //easy
         if let easyButton = easyButton{
             easyButton.fillColor = SKColor(named: "BotonPlay")!//.darkGray //SKColor(named: "nombre")
             //playButton.alpha = 0.5
@@ -97,7 +96,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             addChild(easyButton)
         }
         
-        //Options
+        //medium
         if let mediumButon = mediumButton{
             mediumButon.fillColor = SKColor(named: "BotonPlay")!//.gray
             mediumButon.strokeColor = .darkGray
@@ -107,7 +106,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             mediumButon.position = CGPoint(x: view.frame.width/2.0 - PlayMenuScene.buttonWidth/2.0, y: easyButton!.position.y - (PlayMenuScene.buttonHeight + 20))
             addChild(mediumButon)
         }
-        //about
+        //hard
         if let hardButtton = hardButton{
             hardButtton.fillColor = SKColor(named: "BotonPlay")!//.gray
             hardButtton.strokeColor = .darkGray
@@ -201,11 +200,13 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         }
         if counterTab == 0{
             self.scoreTypeTitle?.text = NSLocalizedString("typeEasy", comment: "")
+            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "1_Page")))
         }
         else if counterTab == 1 {
             self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
+            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "2_Page")))
         }
-        print(counterTab)
+       // print(counterTab)
     }
     @objc func SwipeLeft(sender: UISwipeGestureRecognizer){
         print("swipeLeft")
@@ -215,12 +216,14 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         }
         if counterTab == 1 {
             self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
+            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "2_Page")))
         }
         else if counterTab == 2 {
             self.scoreTypeTitle?.text = NSLocalizedString("typeHard", comment: "")
+            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "3_Page")))
         }
         
-        print(counterTab)
+        //print(counterTab)
     }
     @objc func SwipeUp(sender: UISwipeGestureRecognizer){
         print("swipeUp")

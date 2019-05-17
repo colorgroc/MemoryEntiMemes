@@ -15,3 +15,5 @@
 "typeMedium" = "Medium";
 "typeHard" = "Hard";
 "ScoreBoard" = "Score Board";
+"TimeLeft" = "Time Left";
+"Score" = "Score";

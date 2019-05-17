@@ -15,3 +15,5 @@
 "typeMedium" = "Mitjà";
 "typeHard" = "Difícil";
 "ScoreBoard" = "Taula de Puntuacions";
+"TimeLeft" = "Temps Restant";
+"Score" = "Punts";

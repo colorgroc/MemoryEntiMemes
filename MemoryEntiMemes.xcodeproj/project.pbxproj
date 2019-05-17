@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E1302E5228EFF11001A7C5C /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1302E4228EFF11001A7C5C /* Score.swift */; };
+		2E1302E9228F0365001A7C5C /* Fireflies.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2E1302E8228F0365001A7C5C /* Fireflies.sks */; };
 		2E1341D6225F67A200827C06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E1341D5225F67A200827C06 /* Assets.xcassets */; };
 		2E136DA622450EC100130FD2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E136DA522450EC100130FD2 /* GameScene.swift */; };
 		2E16B47F223A966C0093F8F6 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E16B47E223A966C0093F8F6 /* MenuScene.swift */; };
@@ -34,6 +36,8 @@
 /* Begin PBXFileReference section */
 		0AA01DCA3BBFA3FAAE7ABAB9 /* Pods-MemoryEntiMemes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryEntiMemes.debug.xcconfig"; path = "Target Support Files/Pods-MemoryEntiMemes/Pods-MemoryEntiMemes.debug.xcconfig"; sourceTree = "<group>"; };
 		1EBFC025525FE251EA2FDAB1 /* Pods-MemoryEntiMemes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryEntiMemes.release.xcconfig"; path = "Target Support Files/Pods-MemoryEntiMemes/Pods-MemoryEntiMemes.release.xcconfig"; sourceTree = "<group>"; };
+		2E1302E4228EFF11001A7C5C /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		2E1302E8228F0365001A7C5C /* Fireflies.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fireflies.sks; sourceTree = "<group>"; };
 		2E1341D5225F67A200827C06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E136DA522450EC100130FD2 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		2E16B47E223A966C0093F8F6 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -107,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				2E1822582243C8720031B51E /* Card.swift */,
+				2E1302E4228EFF11001A7C5C /* Score.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 				2EF8506D227338B000783C4E /* FirebaseSevice.swift */,
 				2E1A369E22845A2600908A6D /* Actions.strings */,
 				2E1A36A422845AA500908A6D /* Localizable.strings */,
+				2E1302E8228F0365001A7C5C /* Fireflies.sks */,
 			);
 			path = MemoryEntiMemes;
 			sourceTree = "<group>";
@@ -228,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E1302E9228F0365001A7C5C /* Fireflies.sks in Resources */,
 				2EB2F08F22314D450067098E /* Main.storyboard in Resources */,
 				2EB2F09422314D450067098E /* LaunchScreen.storyboard in Resources */,
 				2E1A369F22845A2600908A6D /* Actions.strings in Resources */,
@@ -308,6 +315,7 @@
 				2E1822592243C8720031B51E /* Card.swift in Sources */,
 				2E16B483223A98CF0093F8F6 /* SettingsScene.swift in Sources */,
 				2EB2F09E22315D9B0067098E /* ImageButton.swift in Sources */,
+				2E1302E5228EFF11001A7C5C /* Score.swift in Sources */,
 				2E1822612243D1130031B51E /* CardSprite.swift in Sources */,
 				2EF8506E227338B000783C4E /* FirebaseSevice.swift in Sources */,
 				2E16B47F223A966C0093F8F6 /* MenuScene.swift in Sources */,

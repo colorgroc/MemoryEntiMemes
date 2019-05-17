@@ -160,7 +160,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             label.position = CGPoint(x: cardsTextures[numCol-1].position.x + cardsTextures[numCol-1].size.width/2, y: cardsTextures[0].position.y + view.frame.height * 0.08)
             addChild(label)
         }
-        self.pointsTitle = SKLabelNode(text: "Score")
+        self.pointsTitle = SKLabelNode(text: NSLocalizedString("Score", comment: ""))
         if let label = self.pointsTitle{
             label.fontName = "ArialRoundedMTBold"
             label.fontColor = .black
@@ -198,7 +198,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             label.position = CGPoint(x: view.frame.width/2.0, y: cardsTextures[0].position.y + view.frame.height * 0.08)
             addChild(label)
         }
-        self.timeLeftTitle = SKLabelNode(text: "Time Left")
+        self.timeLeftTitle = SKLabelNode(text: NSLocalizedString("TimeLeft", comment: ""))
         if let label = self.timeLeftTitle{
             label.fontName = "ArialRoundedMTBold"
             label.fontColor = .black

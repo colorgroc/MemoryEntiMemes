@@ -52,14 +52,14 @@ class CardSprite: SKSpriteNode {
     }
     func SwipeCard(){
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
-        let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.1)
-        let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.1)
+        let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
+        let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         run(SKAction.sequence([scaleSmallX, front, scaleBigX]), completion: Delegate)
     }
     func SwipeBackCard(){
         let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
-        let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.1)
-        let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.1)
+        let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
+        let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         let wait = SKAction.wait(forDuration: 0.7)
         run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]))
     }
@@ -67,13 +67,19 @@ class CardSprite: SKSpriteNode {
         let scaleBig = SKAction.scale(by: 1.1, duration: 0.1)
         let scaleSmall = SKAction.scale(to: 1, duration: 0.1)
         run(SKAction.sequence([scaleBig, scaleSmall]))
+        /*if special{
+            let particles = SKEmitterNode(fileNamed: "Fireflies.sks")
+            particles!.position = self.position
+            addChild(particles!)
+            particles!.play
+        }*/
         //run(scale)
     }
     func ShowCard(){
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
         let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
-        let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.1)
-        let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.1)
+        let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
+        let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         let wait_short = SKAction.wait(forDuration: 0.7)
         let wait_long = SKAction.wait(forDuration: 1.5)
         run(SKAction.sequence([wait_short,scaleSmallX, front, scaleBigX, wait_long, scaleSmallX, back, scaleBigX]))

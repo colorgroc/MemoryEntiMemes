@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import FirebaseAnalytics
 
 class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDelegate, AboutSceneDelegate, PlayMenuSceneDelegate, GameSceneDelegate {
  
@@ -21,6 +22,7 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
         //let userId = UUID().uuidString          // Guardar en el userDefaults.
         FirebaseService().updateUserScore(score: 11, username: "JoanNoob", userId: "40971B13-4957-4FB0-B33A-4B95B2CA9164")
         FirebaseService().readUserScore()
+        Analytics.logEvent("app_start", parameters:[:])
         
         /*let swipeRight = UISwipeGestureRecognizer(target: self , action: #selector(PlayMenuScene.HandleSwipe(sender:)))
         swipeRight.direction = .right

@@ -19,10 +19,11 @@ class GameLogic {
     var bonus: Int = 1
     var matches:Int = 0
     var initTime: TimeInterval = 0
-    var maxTime: TimeInterval = 10
+    var maxTime: TimeInterval = 15
     var time: TimeInterval = 0
     var IDSelected:Int = -1
     var cartaSeleccionada: CardSprite?
+    var scoreList = [Score]()
     //var selectedCard: Card?
     var level = Levels.easy
     let textures = ["Ivan", "Albert", "Jordi", "Radev", "Arnal", "Ben", "Carlos", "Coronado", "Enrique", "Fran", "Fredi", "Fukuy", "Hector", "Isidro", "Ismael", "Jaumandreu", "Jaume", "Jesus", "Jose Luis", "Jussi", "Lego", "Llobera", "Lourdes", "Matias", "Nico", "Oriol", "Oscar", "Raul", "Ricard", "Richard", "Rita", "Ruth", "Valls", "Vanesa", "Vilella", "Xavier", "Xicota" ] //opsar aqui totes les textures que poden sortir
