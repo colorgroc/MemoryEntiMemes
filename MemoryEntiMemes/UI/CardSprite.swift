@@ -64,12 +64,8 @@ class CardSprite: SKSpriteNode {
         run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]))
     }
     func MatchCard(){
-        //let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
-        //let scaleSmall = SKAction.scale(to: 0.7, duration: 0)
-        //let scaleBig = SKAction.scale(to: 1, duration: 0)
         let scaleBig = SKAction.scale(by: 1.1, duration: 0.1)
         let scaleSmall = SKAction.scale(to: 1, duration: 0.1)
-        //let wait = SKAction.wait(forDuration: 0.7)
         run(SKAction.sequence([scaleBig, scaleSmall]))
         //run(scale)
     }

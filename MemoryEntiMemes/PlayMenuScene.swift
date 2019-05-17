@@ -26,9 +26,10 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     var easyButton: Button?
     var mediumButton: Button?
     var hardButton: Button?
-    var tableScoreTitle: String = "Score Board"
-    var typeScore: String = "Easy"
+    var tableScoreTitle: String = NSLocalizedString("ScoreBoard", comment: "")
+    var typeScore: String = NSLocalizedString("typeEasy", comment: "")
     var scoreTypeTitle: SKLabelNode?
+    var bla: SKLabelNode?
     var counterTab: Int = 0
     //var
     //swipes
@@ -62,21 +63,21 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         view.addGestureRecognizer(swipeDown)
         
         //print("modelo: " + MenuScene.modelIdentifier())
-        if MenuScene.modelIdentifier() == "iPhone11,8"{
+        /*if MenuScene.modelIdentifier() == "iPhone11,8"{
             screenResBackW = 0.09
             screenResBackH = 0.92
-        }
-        else {
+        }*/
+        //else {
             screenResBackW = 0.06
             screenResBackH = 0.95
-        }
+        //}
         
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.position = CGPoint(x: view.frame.width * screenResBackW, y: view.frame.height * screenResBackH)
-        if MenuScene.modelIdentifier() == "iPhone11,8"{
+        /*if MenuScene.modelIdentifier() == "iPhone11,8"{
             backButton.size = CGSize(width: backButton.size.width*1.2, height: backButton.size.height*1.2)
-        }
+        }*/
         addChild(backButton)
         
         easyButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
@@ -89,7 +90,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             easyButton.fillColor = SKColor(named: "BotonPlay")!//.darkGray //SKColor(named: "nombre")
             //playButton.alpha = 0.5
             easyButton.strokeColor = .darkGray
-            easyButton.setText(text: "Easy")
+            easyButton.setText(text: NSLocalizedString("Easy", comment: ""))
             easyButton.isUserInteractionEnabled = true
             easyButton.delegate = self
             easyButton.position = CGPoint(x: view.frame.width / 2.0 - (PlayMenuScene.buttonWidth / 2.0), y: view.frame.height*0.35)
@@ -100,7 +101,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         if let mediumButon = mediumButton{
             mediumButon.fillColor = SKColor(named: "BotonPlay")!//.gray
             mediumButon.strokeColor = .darkGray
-            mediumButon.setText(text: "Medium")
+            mediumButon.setText(text: NSLocalizedString("Medium", comment: ""))
             mediumButon.isUserInteractionEnabled = true
             mediumButon.delegate = self
             mediumButon.position = CGPoint(x: view.frame.width/2.0 - PlayMenuScene.buttonWidth/2.0, y: easyButton!.position.y - (PlayMenuScene.buttonHeight + 20))
@@ -110,7 +111,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         if let hardButtton = hardButton{
             hardButtton.fillColor = SKColor(named: "BotonPlay")!//.gray
             hardButtton.strokeColor = .darkGray
-            hardButtton.setText(text: "Hard")
+            hardButtton.setText(text: NSLocalizedString("Hard", comment: ""))
             hardButtton.isUserInteractionEnabled = true
             hardButtton.delegate = self
             hardButtton.position = CGPoint(x: view.frame.width / 2.0 - PlayMenuScene.buttonWidth / 2.0, y: mediumButton!.position.y - (PlayMenuScene.buttonHeight + 20))
@@ -122,8 +123,9 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         if let label = self.label {
             
             label.fontName = "ArialRoundedMTBold"
+            label.fontSize = 20
             label.fontColor = .black
-            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.9)
+            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.85)
             addChild(label)
             
         }
@@ -143,6 +145,14 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             label.fontColor = .white
             label.fontSize = 17
             label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.8)
+            addChild(label)
+        }
+        self.bla = SKLabelNode(text: "newScore")
+        if let label = self.bla{
+            label.fontName = "ArialRoundedMTBold"
+            label.fontColor = .gray
+            label.fontSize = 17
+            label.position = CGPoint(x: view.frame.width / 2.0, y: scoreTypeTitle!.position.y - view.frame.height * 0.03)
             addChild(label)
         }
         
@@ -190,10 +200,10 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             counterTab = 0
         }
         if counterTab == 0{
-            self.scoreTypeTitle?.text = "Easy"
+            self.scoreTypeTitle?.text = NSLocalizedString("typeEasy", comment: "")
         }
         else if counterTab == 1 {
-            self.scoreTypeTitle?.text = "Medium"
+            self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
         }
         print(counterTab)
     }
@@ -204,10 +214,10 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             counterTab = 2
         }
         if counterTab == 1 {
-            self.scoreTypeTitle?.text = "Medium"
+            self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
         }
         else if counterTab == 2 {
-            self.scoreTypeTitle?.text = "Hard"
+            self.scoreTypeTitle?.text = NSLocalizedString("typeHard", comment: "")
         }
         
         print(counterTab)

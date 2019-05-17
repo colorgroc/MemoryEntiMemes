@@ -23,7 +23,7 @@ class MenuScene: SKScene, ButtonDelegate {
     static let heightButton_MainMenu: CGFloat = 50
     
     var playButton: Button?
-    var settingsButton: Button?
+    //var settingsButton: Button?
     var aboutButton: Button?
     
     weak var menuDelegate: MenuSceneDelegate?
@@ -34,7 +34,7 @@ class MenuScene: SKScene, ButtonDelegate {
     override func didMove(to view: SKView) {
         playButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu * 1.1, height: MenuScene.heightButton_MainMenu*1.1), cornerRadius:30)
         //playButton.sizeToFit()
-        settingsButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
+        /*settingsButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)*/
         
         aboutButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
         self.backgroundColor = SKColor(named: "ENTI")! //el ! es per saber si existeix o no. No sap si existeix o no
@@ -52,7 +52,7 @@ class MenuScene: SKScene, ButtonDelegate {
         }
         
         //Options
-        if let settingsButton = settingsButton{
+       /* if let settingsButton = settingsButton{
             settingsButton.fillColor = SKColor(named: "BotonOption")!//.gray
             settingsButton.strokeColor = .white
             settingsButton.setText(text: NSLocalizedString("Settings", comment: ""))
@@ -60,7 +60,7 @@ class MenuScene: SKScene, ButtonDelegate {
             settingsButton.delegate = self
             settingsButton.position = CGPoint(x: view.frame.width/2.0 - MenuScene.widthButton_MainMenu/2.0, y: playButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
             addChild(settingsButton)
-        }
+        }*/
         //about
         if let aboutButton = aboutButton{
             aboutButton.fillColor = SKColor(named: "BotonOption")!//.gray
@@ -68,7 +68,7 @@ class MenuScene: SKScene, ButtonDelegate {
             aboutButton.setText(text: NSLocalizedString("About", comment: ""))
             aboutButton.isUserInteractionEnabled = true
             aboutButton.delegate = self
-            aboutButton.position = CGPoint(x: view.frame.width / 2.0 - MenuScene.widthButton_MainMenu / 2.0, y: settingsButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
+            aboutButton.position = CGPoint(x: view.frame.width / 2.0 - MenuScene.widthButton_MainMenu / 2.0, y: playButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
             addChild(aboutButton)
         }
         //logo enti
@@ -110,13 +110,6 @@ class MenuScene: SKScene, ButtonDelegate {
         
     }
     
-    static func modelIdentifier() -> String {
-        if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] { return simulatorModelIdentifier }
-        var sysinfo = utsname()
-        uname(&sysinfo) // ignore return value
-        return String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
-    }
-    
     func touchDown(atPoint pos : CGPoint) {
 
     }
@@ -150,17 +143,18 @@ class MenuScene: SKScene, ButtonDelegate {
             if let menuDelegate = self.menuDelegate {
                 menuDelegate.goToGameSelector(sender: self)
             }
-            print("playButton")
-        }else if sender == settingsButton{
+            //print("playButton")
+        }/*else if sender == settingsButton{
             if let menuDelegate = self.menuDelegate {
                 menuDelegate.goToSettings(sender: self)
             }
             print("settingsButton")
-        }else if sender == aboutButton{
+        }*/
+        else if sender == aboutButton{
             if let menuDelegate = self.menuDelegate {
                 menuDelegate.goToAbout(sender: self)
             }
-            print("aboutButton")
+            //print("aboutButton")
         }
         //print("estoy tocando un boton")
     }
