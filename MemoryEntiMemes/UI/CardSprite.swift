@@ -51,22 +51,24 @@ class CardSprite: SKSpriteNode {
         }
     }
     func SwipeCard(){
+        self.isUserInteractionEnabled = false
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         run(SKAction.sequence([scaleSmallX, front, scaleBigX]), completion: Delegate)
     }
     func SwipeBackCard(){
+        self.isUserInteractionEnabled = false
         let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         let wait = SKAction.wait(forDuration: 0.7)
-        run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]))
+        run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]), completion: UseInteraction)
     }
     func MatchCard(){
         let scaleBig = SKAction.scale(by: 1.1, duration: 0.1)
         let scaleSmall = SKAction.scale(to: 1, duration: 0.1)
-        run(SKAction.sequence([scaleBig, scaleSmall]))
+        run(SKAction.sequence([scaleBig, scaleSmall]), completion: UseInteraction)
         /*if special{
             let particles = SKEmitterNode(fileNamed: "Fireflies.sks")
             particles!.position = self.position
@@ -75,13 +77,19 @@ class CardSprite: SKSpriteNode {
         }*/
         //run(scale)
     }
+    func UseInteraction()->Void{
+        self.isUserInteractionEnabled = true
+    }
+    
     func ShowCard(){
+        self.isUserInteractionEnabled = false
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
         let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         let wait_short = SKAction.wait(forDuration: 0.7)
         let wait_long = SKAction.wait(forDuration: 1.5)
-        run(SKAction.sequence([wait_short,scaleSmallX, front, scaleBigX, wait_long, scaleSmallX, back, scaleBigX]))
+        
+        run(SKAction.sequence([wait_short,scaleSmallX, front, scaleBigX, wait_long, scaleSmallX, back, scaleBigX]), completion: UseInteraction)
     }
 }

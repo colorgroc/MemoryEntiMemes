@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import FirebaseAnalytics
 //import UIKit
 
 protocol PlayMenuSceneDelegate: class {
@@ -29,7 +30,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     var tableScoreTitle: String = NSLocalizedString("ScoreBoard", comment: "")
     var typeScore: String = NSLocalizedString("typeEasy", comment: "")
     var scoreTypeTitle: SKLabelNode?
-    var bla: SKLabelNode?
+    var gold: SKLabelNode?
     var counterTab: Int = 0
     //var
     //swipes
@@ -146,14 +147,19 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.8)
             addChild(label)
         }
-        self.bla = SKLabelNode(text: "newScore")
-        if let label = self.bla{
+
+        self.gold = SKLabelNode(text: "test")
+        if let label = self.gold{
             label.fontName = "ArialRoundedMTBold"
             label.fontColor = .gray
             label.fontSize = 17
             label.position = CGPoint(x: view.frame.width / 2.0, y: scoreTypeTitle!.position.y - view.frame.height * 0.03)
             addChild(label)
         }
+        
+        FirebaseService().ReadEasyScore(completion: { easyScores in
+            //cuando termina puedes updatear
+        })
         
     }
     

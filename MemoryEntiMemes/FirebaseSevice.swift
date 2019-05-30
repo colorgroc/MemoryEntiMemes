@@ -10,34 +10,108 @@ import Foundation
 import FirebaseFirestore
 
 class FirebaseService {
-    let k_COLLECTION_SCORE = "score"
+    //let k_COLLECTION_HIGHSCORE = "HighScore"
     let db = Firestore.firestore()
     
-    func writeUserScore(score: Int, username: String?, userId: String) {
-        // Si no existe la collection la crea, no pasa con los document.
-        db.collection(k_COLLECTION_SCORE)
-            .addDocument(data: ["score": score, "username": username ?? "", "userId": userId])
-    }
-    
-    func updateUserScore(score: Int, username: String?, userId: String) {
-        // Si el documento ya existe lo sobreescribe, si no lo crea.
-        // [merge: true] sobreescribe la info que se le pasa y mantiene la que exista en otros campos.
-        db.collection(k_COLLECTION_SCORE)
-            .document(userId)
-            .setData(["score": score, "username": username ?? "", "userId": userId])
-    }
-    
-    func readUserScore() {
-        db.collection(k_COLLECTION_SCORE)
-            .whereField("score", isGreaterThan: 0)
-            .getDocuments {(snapshot, error) in
+    func ReadEasyScore(completion: @escaping ([Int])->(Void)){
+        let docRef = db.collection("HighScores").document("Easy")
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists,
+                let gold = document.get("Gold") as? Int,
+                let silver = document.get("Silver") as? Int,
+                let bronze = document.get("Bronze") as? Int {
                 
-                //Es necesario un sistem de control de error.
-                if let error = error {
-                    print("Not connecting to DB with error: ", error)
-                } else {
-                    snapshot?.documents.forEach({ print($0.data()) })
-                }
+                var easyList = [Int]()
+                easyList[0] = gold
+                easyList[1] = silver
+                easyList[2] = bronze
+                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                completion(easyList)
+            } else {
+                print("Document does not exist")
+            }
         }
     }
+    func UpdateEasyScore(score:Int){
+        let docRef = db.collection("HighScores").document("Easy")
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists,
+                let gold = document.get("Gold") as? Int,
+                let silver = document.get("Silver") as? Int,
+                let bronze = document.get("Bronze") as? Int {
+                
+                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                
+                if score >= gold{
+                    docRef.setData(["Gold" : score])
+                    print("Document data: \(gold)")
+                }
+                else if score >= silver{
+                    docRef.setData(["Silver" : score])
+                    print("Document data: \(silver)")
+                }
+                else if score >= bronze{
+                    docRef.setData(["Bronze" : score])
+                    print("Document data: \(bronze)")
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+    func UpdateMediumScore(score:Int){
+        let docRef = db.collection("HighScores").document("Medium")
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists,
+                let gold = document.get("Gold") as? Int,
+                let silver = document.get("Silver") as? Int,
+                let bronze = document.get("Bronze") as? Int {
+                
+                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                
+                if score >= gold{
+                    docRef.setData(["Gold" : score])
+                    print("Document data: \(gold)")
+                }
+                else if score >= silver{
+                    docRef.setData(["Silver" : score])
+                    print("Document data: \(silver)")
+                }
+                else if score >= bronze{
+                    docRef.setData(["Bronze" : score])
+                    print("Document data: \(bronze)")
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+    func UpdateHardScore(score:Int){
+        let docRef = db.collection("HighScores").document("Hard")
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists,
+                let gold = document.get("Gold") as? Int,
+                let silver = document.get("Silver") as? Int,
+                let bronze = document.get("Bronze") as? Int {
+                
+                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                
+                if score >= gold{
+                    docRef.setData(["Gold" : score])
+                    print("Document data: \(gold)")
+                }
+                else if score >= silver{
+                    docRef.setData(["Silver" : score])
+                    print("Document data: \(silver)")
+                }
+                else if score >= bronze{
+                    docRef.setData(["Bronze" : score])
+                    print("Document data: \(bronze)")
+                }
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+   
 }

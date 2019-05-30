@@ -18,10 +18,11 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
         super.viewDidLoad()
         
         //donde quiera ponerlo
-        print("Writing on DB")
-        //let userId = UUID().uuidString          // Guardar en el userDefaults.
-        FirebaseService().updateUserScore(score: 11, username: "JoanNoob", userId: "40971B13-4957-4FB0-B33A-4B95B2CA9164")
-        FirebaseService().readUserScore()
+        //print("Writing on DB")
+        //let userId = UUID().uuidString
+        //let userName = UIDevice.current.name// Guardar en el userDefaults.
+        //FirebaseService().updateUserScore(score: 11, level: level, userId: userId)
+        //FirebaseService().readUserScore()
         Analytics.logEvent("app_start", parameters:[:])
         
         /*let swipeRight = UISwipeGestureRecognizer(target: self , action: #selector(PlayMenuScene.HandleSwipe(sender:)))
