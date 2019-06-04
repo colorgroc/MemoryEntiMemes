@@ -9,8 +9,8 @@
       "color" : {
         "color-space" : "gray-gamma-22",
         "components" : {
-          "white" : "0.654",
-          "alpha" : "0.784"
+          "white" : "0.925",
+          "alpha" : "1.000"
         }
       }
     }

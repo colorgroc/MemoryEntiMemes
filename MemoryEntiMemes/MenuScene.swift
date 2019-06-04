@@ -37,7 +37,7 @@ class MenuScene: SKScene, ButtonDelegate {
         /*settingsButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)*/
         
         aboutButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
-        self.backgroundColor = SKColor(named: "ENTI")! //el ! es per saber si existeix o no. No sap si existeix o no
+        self.backgroundColor = SKColor(named: "lightGray")! //el ! es per saber si existeix o no. No sap si existeix o no
         //play
         if let playButton = playButton{
         
@@ -64,7 +64,7 @@ class MenuScene: SKScene, ButtonDelegate {
         //about
         if let aboutButton = aboutButton{
             aboutButton.fillColor = SKColor(named: "BotonOption")!//.gray
-            aboutButton.strokeColor = .white
+            aboutButton.strokeColor = .lightGray
             aboutButton.setText(text: NSLocalizedString("About", comment: ""))
             aboutButton.isUserInteractionEnabled = true
             aboutButton.delegate = self
@@ -78,13 +78,13 @@ class MenuScene: SKScene, ButtonDelegate {
         logo.setScale(0.3)
         
         //trollface
-        let gameImage = SKSpriteNode(imageNamed: "Radev")
-        gameImage.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height/2.0 + playButton!.position.y/2.0)
-        gameImage.setScale(0.5)
+        let gameImage = SKSpriteNode(imageNamed: "Logo_Enti")
+        gameImage.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height/2.0 + playButton!.position.y/1.5)
+        gameImage.setScale(1.8)
         addChild(gameImage)
         
         //Mementi
-        self.label = SKLabelNode(text: "MEMENTI")
+        /*self.label = SKLabelNode(text: "MEMENTI")
         if let label = self.label {
             
             label.fontName = "ArialRoundedMTBold"
@@ -92,22 +92,8 @@ class MenuScene: SKScene, ButtonDelegate {
             label.position = CGPoint(x: view.frame.width / 2.0, y: gameImage.position.y + 100)
             addChild(label)
 
-        }
-        
-        // Create shape node to use during mouse interaction
-       /* let w = (self.size.width + self.size.height) * 0.1
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
         }*/
-        
-        
+   
     }
     
     func touchDown(atPoint pos : CGPoint) {
@@ -144,12 +130,7 @@ class MenuScene: SKScene, ButtonDelegate {
                 menuDelegate.goToGameSelector(sender: self)
             }
             //print("playButton")
-        }/*else if sender == settingsButton{
-            if let menuDelegate = self.menuDelegate {
-                menuDelegate.goToSettings(sender: self)
-            }
-            print("settingsButton")
-        }*/
+        }
         else if sender == aboutButton{
             if let menuDelegate = self.menuDelegate {
                 menuDelegate.goToAbout(sender: self)

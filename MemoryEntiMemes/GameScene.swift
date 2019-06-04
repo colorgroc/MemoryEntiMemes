@@ -75,7 +75,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         
         
         
-        self.backgroundColor = SKColor(named: "ENTI")!
+        self.backgroundColor = SKColor(named: "lightGray")!
         gL = GameLogic()
         //gL?.cartaSeleccionada //= cartaSeleccionada
         gL?.level = level
@@ -153,8 +153,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         
         self.pointsScore = SKLabelNode(text: String(gL!.points))
         if let label = self.pointsScore{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .white
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = SKColor(named: "BotonPlay")
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
             label.fontSize = 17
             label.position = CGPoint(x: cardsTextures[numCol-1].position.x + cardsTextures[numCol-1].size.width/2, y: cardsTextures[0].position.y + view.frame.height * 0.08)
@@ -162,8 +162,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         }
         self.pointsTitle = SKLabelNode(text: NSLocalizedString("Score", comment: ""))
         if let label = self.pointsTitle{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .black
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = .darkGray
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
             label.fontSize = 18
             label.position = CGPoint(x: cardsTextures[numCol-1].position.x + cardsTextures[numCol-1].size.width/2, y: self.pointsScore!.position.y + view.frame.height * 0.035)//view.frame.height * 0.82)
@@ -172,8 +172,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         
         self.bonusText = SKLabelNode(text: "x " + String(gL!.bonus))
         if let label = self.bonusText{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .white
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = SKColor(named: "BotonPlay")
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
             label.fontSize = 17
             label.position = CGPoint(x: cardsTextures[0].position.x - cardsTextures[0].size.width/2, y: cardsTextures[0].position.y + view.frame.height * 0.08)
@@ -181,8 +181,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         }
         self.bonusTitle = SKLabelNode(text: "Bonus")
         if let label = self.bonusTitle{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .black
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = .darkGray
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
             label.fontSize = 18
             label.position = CGPoint(x: cardsTextures[0].position.x - cardsTextures[0].size.width/2, y: self.pointsScore!.position.y + view.frame.height * 0.035)//view.frame.height * 0.82)
@@ -191,8 +191,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         
         self.timeLeft = SKLabelNode(text: "10:00")//String(gL!.time))
         if let label = self.timeLeft{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .white
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = SKColor(named: "BotonPlay")
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
             label.fontSize = 17
             label.position = CGPoint(x: view.frame.width/2.0, y: cardsTextures[0].position.y + view.frame.height * 0.08)
@@ -200,8 +200,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         }
         self.timeLeftTitle = SKLabelNode(text: NSLocalizedString("TimeLeft", comment: ""))
         if let label = self.timeLeftTitle{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .black
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = .darkGray
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
             label.fontSize = 18
             label.position = CGPoint(x: view.frame.width/2.0, y: self.pointsScore!.position.y + view.frame.height * 0.035)//view.frame.height * 0.82)
@@ -226,6 +226,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         if !initiate && startTime{
             gL!.time = gL!.maxTime - (currentTime - gL!.initTime)
         }
+
         
         self.timeLeft!.text = gL!.timeString(time: gL!.time)
         self.bonusText?.text = "x" + String(gL!.bonus)
@@ -491,13 +492,23 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         }
         
     }
+    
+    
     func AllSwipe(){
-        for i in 0..<cardsTextures.count{
+        /*for i in 0..<cardsTextures.count{
             cardsTextures[i].isUserInteractionEnabled = false
+        }*/
+        var counter: Int = 0
+        for i in 0..<cardsTextures.count{
             cardsTextures[i].ShowCard()
-            cardsTextures[i].isUserInteractionEnabled = true
+            counter += 1
         }
-        initiate = true
+        if counter >= cardsTextures.count{
+            initiate = true
+            for i in 0..<cardsTextures.count{
+                cardsTextures[i].isUserInteractionEnabled = true
+            }
+        }
     }
     
 }

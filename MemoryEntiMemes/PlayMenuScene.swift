@@ -22,7 +22,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     weak var playMenuDelegate: PlayMenuSceneDelegate?
     
-    private var label : SKLabelNode?
+    private var tableScoreLabel : SKLabelNode?
     
     var easyScores = [Int]()
     var mediumScores = [Int]()
@@ -35,6 +35,8 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     var typeScore: String = NSLocalizedString("typeEasy", comment: "")
     var scoreTypeTitle: SKLabelNode?
     var goldScore: SKLabelNode?
+    var silverScore: SKLabelNode?
+    var bronzeScore: SKLabelNode?
     //var scoreGold: String = ""
     var counterTab: Int = 0
     //var
@@ -44,10 +46,12 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     var swipeUp = UISwipeGestureRecognizer()
     var swipeDown = UISwipeGestureRecognizer()
     var pageControl: SKSpriteNode?
-    private var backButton = ImageButton(imageNamed: "back_50")
-    //private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
-    var screenResBackH: CGFloat = 0.0
-    var screenResBackW: CGFloat = 0.0
+    var backButton = ImageButton(imageNamed: "back_50")
+    let goldAward = SKSpriteNode(imageNamed: "gold")
+    let silverAward = SKSpriteNode(imageNamed: "silver")
+    let bronzeAward = SKSpriteNode(imageNamed: "bronze")
+    var screenResBackH: CGFloat = 0.95
+    var screenResBackW: CGFloat = 0.06
     
     //entrar escena
     override func didMove(to view: SKView) {
@@ -60,42 +64,32 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
          swipeLeft.direction = .left
         view.addGestureRecognizer(swipeLeft)
         
-        swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(SwipeUp(sender:)))
-        swipeUp.direction = .up
-        view.addGestureRecognizer(swipeUp)
-        
-        swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(SwipeDown(sender:)))
-        swipeDown.direction = .down
-        view.addGestureRecognizer(swipeDown)
-        
-            screenResBackW = 0.06
-            screenResBackH = 0.95
-        
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.position = CGPoint(x: view.frame.width * screenResBackW, y: view.frame.height * screenResBackH)
-
         addChild(backButton)
         
         easyButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
         mediumButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
         
         hardButton = Button(rect: CGRect(x: 0, y:0, width: PlayMenuScene.buttonWidth, height: PlayMenuScene.buttonHeight), cornerRadius:30)
-        self.backgroundColor = SKColor(named: "ENTI")! //el ! es per saber si existeix o no. No sap si existeix o no
+        
+        self.backgroundColor = SKColor(named: "lightGray")! //el ! es per saber si existeix o no. No sap si existeix o no
         
         //page control
         pageControl = SKSpriteNode(imageNamed: "1_Page")
-        pageControl!.position = CGPoint(x: view.frame.width/2, y: view.frame.height * 0.51)
+        pageControl!.position = CGPoint(x: view.frame.width/2, y: (easyButton!.position.y + easyButton!.frame.height) + view.frame.height * 0.37)
         addChild(pageControl!)
-        pageControl!.setScale(0.1)
+        pageControl!.setScale(0.18)
         
         
         //easy
         if let easyButton = easyButton{
-            easyButton.fillColor = SKColor(named: "BotonPlay")!//.darkGray //SKColor(named: "nombre")
+            easyButton.fillColor = SKColor(named: "lightGray_2")!//.darkGray //SKColor(named: "nombre")
             //playButton.alpha = 0.5
-            easyButton.strokeColor = .darkGray
-            easyButton.setText(text: NSLocalizedString("Easy", comment: ""))
+            easyButton.strokeColor = SKColor(named: "BotonOption")!
+            //easyButton.setText(text: NSLocalizedString("Easy", comment: ""))
+            easyButton.setText(text: NSLocalizedString("Easy", comment: ""), color: SKColor(named: "BotonPlay")!)
             easyButton.isUserInteractionEnabled = true
             easyButton.delegate = self
             easyButton.position = CGPoint(x: view.frame.width / 2.0 - (PlayMenuScene.buttonWidth / 2.0), y: view.frame.height*0.35)
@@ -104,9 +98,9 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         
         //medium
         if let mediumButon = mediumButton{
-            mediumButon.fillColor = SKColor(named: "BotonPlay")!//.gray
-            mediumButon.strokeColor = .darkGray
-            mediumButon.setText(text: NSLocalizedString("Medium", comment: ""))
+            mediumButon.fillColor = SKColor(named: "lightGray_2")!//.gray
+            mediumButon.strokeColor = SKColor(named: "BotonOption")!
+            mediumButon.setText(text: NSLocalizedString("Medium", comment: ""), color: SKColor(named: "BotonPlay")!)
             mediumButon.isUserInteractionEnabled = true
             mediumButon.delegate = self
             mediumButon.position = CGPoint(x: view.frame.width/2.0 - PlayMenuScene.buttonWidth/2.0, y: easyButton!.position.y - (PlayMenuScene.buttonHeight + 20))
@@ -114,9 +108,9 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         }
         //hard
         if let hardButtton = hardButton{
-            hardButtton.fillColor = SKColor(named: "BotonPlay")!//.gray
-            hardButtton.strokeColor = .darkGray
-            hardButtton.setText(text: NSLocalizedString("Hard", comment: ""))
+            hardButtton.fillColor = SKColor(named: "lightGray_2")!//.gray
+            hardButtton.strokeColor = SKColor(named: "BotonOption")!
+            hardButtton.setText(text: NSLocalizedString("Hard", comment: ""), color: SKColor(named: "BotonPlay")!)
             hardButtton.isUserInteractionEnabled = true
             hardButtton.delegate = self
             hardButtton.position = CGPoint(x: view.frame.width / 2.0 - PlayMenuScene.buttonWidth / 2.0, y: mediumButton!.position.y - (PlayMenuScene.buttonHeight + 20))
@@ -124,54 +118,74 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         }
         
         
-        self.label = SKLabelNode(text: tableScoreTitle)
-        if let label = self.label {
+        self.tableScoreLabel = SKLabelNode(text: tableScoreTitle)
+        if let label = self.tableScoreLabel {
             
-            label.fontName = "ArialRoundedMTBold"
-            label.fontSize = 20
-            label.fontColor = .black
-            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.85)
+            label.fontName = "HelveticaNeue-Light"
+            label.fontSize = 30
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+            label.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+            label.fontColor = SKColor(named: "BotonPlay")!
+            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.9)
             addChild(label)
             
         }
-       /* self.label = SKLabelNode(text: scoreTypeTitle)
-        if let label = self.label {
-            
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .white
-            label.fontSize = 17
-            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.8)
-            addChild(label)
-            
-        }*/
+        
         self.scoreTypeTitle = SKLabelNode(text: typeScore)
         if let label = self.scoreTypeTitle{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .white
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = .gray//SKColor(named: "ENTI")!
             label.fontSize = 17
-            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.8)
+            label.position = CGPoint(x: view.frame.width / 2.0, y: tableScoreLabel!.position.y - view.frame.height * 0.08)
             addChild(label)
         }
 
+        goldAward.position = CGPoint(x: view.frame.width / 2.5, y: scoreTypeTitle!.position.y - view.frame.height * 0.085)
+        goldAward.setScale(1.5)
+        addChild(goldAward)
+        
         self.goldScore = SKLabelNode(text: "")
         if let label = self.goldScore{
-            label.fontName = "ArialRoundedMTBold"
-            label.fontColor = .gray
-            label.fontSize = 17
-            label.position = CGPoint(x: view.frame.width / 2.0, y: scoreTypeTitle!.position.y - view.frame.height * 0.03)
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = SKColor(named: "BotonPlay")!
+            label.fontSize = 35
+            label.position = CGPoint(x: goldAward.position.x + view.frame.width * 0.2, y: scoreTypeTitle!.position.y - view.frame.height * 0.11)
+            addChild(label)
+        }
+        
+        silverAward.position = CGPoint(x: view.frame.width / 2.5, y: goldAward.position.y - view.frame.height * 0.09)
+        silverAward.setScale(1.3)
+        addChild(silverAward)
+        
+        self.silverScore = SKLabelNode(text: "")
+        if let label = self.silverScore{
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = SKColor(named: "BotonPlay")!
+            label.fontSize = 27
+            label.position = CGPoint(x: silverAward.position.x + view.frame.width * 0.2, y: goldScore!.position.y - view.frame.height * 0.085)
+            addChild(label)
+        }
+        
+        bronzeAward.position = CGPoint(x: view.frame.width / 2.5, y: silverAward.position.y - view.frame.height * 0.08)
+        bronzeAward.setScale(1)
+        addChild(bronzeAward)
+        
+        self.bronzeScore = SKLabelNode(text: "")
+        if let label = self.bronzeScore{
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = SKColor(named: "BotonPlay")!
+            label.fontSize = 25
+            label.position = CGPoint(x: bronzeAward.position.x + view.frame.width * 0.2, y: silverScore!.position.y - view.frame.height * 0.08)
             addChild(label)
         }
         
         FirebaseService().ReadScore(level: "Easy", completion: { scores in
-            //cuando termina puedes updatear
             self.easyScores = scores
         })
         FirebaseService().ReadScore(level: "Medium", completion: { scores in
-            //cuando termina puedes updatear
             self.mediumScores = scores
         })
         FirebaseService().ReadScore(level: "Hard", completion: { scores in
-            //cuando termina puedes updatear
             self.hardScores = scores
         })
         
@@ -182,39 +196,39 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
                 self.scoreTypeTitle?.text = NSLocalizedString("typeEasy", comment: "")
                 pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "1_Page")))
                 self.goldScore?.text = String(self.easyScores[0])
+                self.silverScore?.text = String(self.easyScores[1])
+                self.bronzeScore?.text = String(self.easyScores[2])
             }
             else if self.counterTab == 1{
                 self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
                 pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "2_Page")))
                 self.goldScore?.text = String(self.mediumScores[0])
+                self.silverScore?.text = String(self.mediumScores[1])
+                self.bronzeScore?.text = String(self.mediumScores[2])
             }
             else if self.counterTab == 2{
                 self.scoreTypeTitle?.text = NSLocalizedString("typeHard", comment: "")
                 pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "3_Page")))
                 self.goldScore?.text = String(self.hardScores[0])
+                self.silverScore?.text = String(self.hardScores[1])
+                self.bronzeScore?.text = String(self.hardScores[2])
             }
         }
         
     }
     func onTap(sender: Button) {
-        /*if sender == backButton {
-            playMenuDelegate?.back(sender: self)
-        }*/
          if sender == easyButton{
             if let playMenuDelegate = self.playMenuDelegate {
                 playMenuDelegate.goToGame(sender: self, level: Levels.easy)
             }
-            print("easyButton")
         }else if sender == mediumButton{
             if let playMenuDelegate = self.playMenuDelegate {
                 playMenuDelegate.goToGame(sender: self, level: Levels.medium)
             }
-            print("mediumButton")
         }else if sender == hardButton{
             if let playMenuDelegate = self.playMenuDelegate {
                 playMenuDelegate.goToGame(sender: self, level: Levels.hard)
             }
-            print("hardButton")
         }
     }
     func onTap(sender: ImageButton) {
@@ -232,24 +246,15 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     }
     
     @objc func SwipeRight(sender: UISwipeGestureRecognizer){
-        print("swipeRight")
         counterTab -= 1
         if counterTab <= 0{
             counterTab = 0
         }
     }
     @objc func SwipeLeft(sender: UISwipeGestureRecognizer){
-        print("swipeLeft")
         counterTab += 1
         if counterTab >= 2{
             counterTab = 2
         }
     }
-    @objc func SwipeUp(sender: UISwipeGestureRecognizer){
-        print("swipeUp")
-    }
-    @objc func SwipeDown(sender: UISwipeGestureRecognizer){
-        print("swipeDown")
-    }
-    
 }

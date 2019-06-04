@@ -26,6 +26,29 @@ class Button: SKShapeNode {
         textNode.text = text
     }
    
+    func setText(text: String, color: SKColor){
+        if textNode.parent == nil{
+            textNode.fontColor = color
+            addChild(textNode)
+            textNode.verticalAlignmentMode = .center
+            textNode.position = CGPoint(x: frame.width / 2.0, y: frame.height / 2.0)
+            //textNode.fontName = "HelveticaNeue-UltraLight"
+        }
+        textNode.text = text
+    }
+    
+    func setText(text: String, color: SKColor, font: String){
+        if textNode.parent == nil{
+            textNode.fontColor = color
+            textNode.fontName = font
+            addChild(textNode)
+            textNode.verticalAlignmentMode = .center
+            textNode.position = CGPoint(x: frame.width / 2.0, y: frame.height / 2.0)
+            //textNode.fontName = "Bangla Sangam MN"
+        }
+        textNode.text = text
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let action = SKAction.moveBy(x: 6, y: 0, duration: 0.1)
         run (action)

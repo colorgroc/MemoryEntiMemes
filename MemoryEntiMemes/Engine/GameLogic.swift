@@ -9,9 +9,9 @@ import Foundation
 enum Levels: Int{
     case easy = 12, medium = 20, hard = 28
 }
-enum ActionsEnum: Int{
+/*enum ActionsEnum: Int{
     case backToFront = 1, FrontToBack = 2, match = 3, selectedFrontToBack = 4
-}
+}*/
 class GameLogic {
  
     var cards = [Card]()
@@ -31,6 +31,9 @@ class GameLogic {
     func reset(){
         cards = [Card]()
         time = maxTime
+        matches = 0
+        points = 0
+        bonus = 1
         var tempTextures = textures
         tempTextures.shuffle()
         //let number = Int.random(in: 0 ..< level.rawValue / 2)

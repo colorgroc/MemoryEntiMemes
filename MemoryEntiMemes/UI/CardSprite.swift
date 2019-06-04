@@ -17,6 +17,7 @@ class CardSprite: SKSpriteNode {
     var textureFront:String = ""
     var textureBack:String = ""
     var ID:Int = 0
+    var state: Int = 0
     var special:Bool = false
     
     func SetTextures(front: String ,back: String)->Void{
@@ -27,6 +28,7 @@ class CardSprite: SKSpriteNode {
     weak var delegate:CardDelegate?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.isUserInteractionEnabled = false
         let action = SKAction.moveBy(x: 6, y: 0, duration: 0.1)
         run (action)
         
@@ -37,7 +39,8 @@ class CardSprite: SKSpriteNode {
         func DidItTouched(){
             if let touch = touches.first, let parent = parent{
                 if frame.contains(touch.location(in: parent)){
-                        SwipeCard()
+                    //self.isUserInteractionEnabled = false
+                    SwipeCard()
                 }
             }
         }
@@ -46,41 +49,42 @@ class CardSprite: SKSpriteNode {
 
     func Delegate(){
         if let delegate = delegate{
-            print(ID)
+            //print(ID)
+            self.state = Card.Estado.destapada.rawValue
+            self.isUserInteractionEnabled = false
             delegate.onTap(sender: self)
         }
     }
     func SwipeCard(){
-        self.isUserInteractionEnabled = false
+        
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         run(SKAction.sequence([scaleSmallX, front, scaleBigX]), completion: Delegate)
     }
     func SwipeBackCard(){
-        self.isUserInteractionEnabled = false
+        //self.isUserInteractionEnabled = false
         let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
         let wait = SKAction.wait(forDuration: 0.7)
-        run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]), completion: UseInteraction)
+        run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]), completion: UseInteractionTapada)
     }
     func MatchCard(){
         let scaleBig = SKAction.scale(by: 1.1, duration: 0.1)
         let scaleSmall = SKAction.scale(to: 1, duration: 0.1)
-        run(SKAction.sequence([scaleBig, scaleSmall]), completion: UseInteraction)
-        /*if special{
-            let particles = SKEmitterNode(fileNamed: "Fireflies.sks")
-            particles!.position = self.position
-            addChild(particles!)
-            particles!.play
-        }*/
-        //run(scale)
+        run(SKAction.sequence([scaleBig, scaleSmall]), completion: UseInteractionMatch)
+
     }
-    func UseInteraction()->Void{
+    func UseInteractionTapada()->Void{
+        self.state = Card.Estado.tapada.rawValue
         self.isUserInteractionEnabled = true
     }
-    
+    func UseInteractionMatch()->Void{
+        self.state = Card.Estado.emparejada.rawValue
+        self.isUserInteractionEnabled = false
+    }
+
     func ShowCard(){
         self.isUserInteractionEnabled = false
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
@@ -90,6 +94,6 @@ class CardSprite: SKSpriteNode {
         let wait_short = SKAction.wait(forDuration: 0.7)
         let wait_long = SKAction.wait(forDuration: 1.5)
         
-        run(SKAction.sequence([wait_short,scaleSmallX, front, scaleBigX, wait_long, scaleSmallX, back, scaleBigX]), completion: UseInteraction)
+        run(SKAction.sequence([wait_short,scaleSmallX, front, scaleBigX, wait_long, scaleSmallX, back, scaleBigX]), completion: UseInteractionTapada)
     }
 }

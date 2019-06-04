@@ -30,7 +30,7 @@ class AboutScene: SKScene, ImageButtonDelegate {
         
         screenResBackW = 0.06
         screenResBackH = 0.95
-        self.backgroundColor = SKColor(named: "ENTI")!
+        self.backgroundColor = SKColor(named: "lightGray")!
         
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
