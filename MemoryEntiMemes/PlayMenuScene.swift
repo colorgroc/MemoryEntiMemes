@@ -24,13 +24,18 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     private var label : SKLabelNode?
     
+    var easyScores = [Int]()
+    var mediumScores = [Int]()
+    var hardScores = [Int]()
+    
     var easyButton: Button?
     var mediumButton: Button?
     var hardButton: Button?
     var tableScoreTitle: String = NSLocalizedString("ScoreBoard", comment: "")
     var typeScore: String = NSLocalizedString("typeEasy", comment: "")
     var scoreTypeTitle: SKLabelNode?
-    var gold: SKLabelNode?
+    var goldScore: SKLabelNode?
+    //var scoreGold: String = ""
     var counterTab: Int = 0
     //var
     //swipes
@@ -148,8 +153,8 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             addChild(label)
         }
 
-        self.gold = SKLabelNode(text: "test")
-        if let label = self.gold{
+        self.goldScore = SKLabelNode(text: "")
+        if let label = self.goldScore{
             label.fontName = "ArialRoundedMTBold"
             label.fontColor = .gray
             label.fontSize = 17
@@ -157,12 +162,40 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             addChild(label)
         }
         
-        FirebaseService().ReadEasyScore(completion: { easyScores in
+        FirebaseService().ReadScore(level: "Easy", completion: { scores in
             //cuando termina puedes updatear
+            self.easyScores = scores
+        })
+        FirebaseService().ReadScore(level: "Medium", completion: { scores in
+            //cuando termina puedes updatear
+            self.mediumScores = scores
+        })
+        FirebaseService().ReadScore(level: "Hard", completion: { scores in
+            //cuando termina puedes updatear
+            self.hardScores = scores
         })
         
     }
-    
+    override func update(_ currentTime: TimeInterval){
+        if(self.easyScores.count >= 3 && self.mediumScores.count >= 3 && self.hardScores.count >= 3){
+            if self.counterTab == 0{
+                self.scoreTypeTitle?.text = NSLocalizedString("typeEasy", comment: "")
+                pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "1_Page")))
+                self.goldScore?.text = String(self.easyScores[0])
+            }
+            else if self.counterTab == 1{
+                self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
+                pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "2_Page")))
+                self.goldScore?.text = String(self.mediumScores[0])
+            }
+            else if self.counterTab == 2{
+                self.scoreTypeTitle?.text = NSLocalizedString("typeHard", comment: "")
+                pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "3_Page")))
+                self.goldScore?.text = String(self.hardScores[0])
+            }
+        }
+        
+    }
     func onTap(sender: Button) {
         /*if sender == backButton {
             playMenuDelegate?.back(sender: self)
@@ -204,15 +237,6 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         if counterTab <= 0{
             counterTab = 0
         }
-        if counterTab == 0{
-            self.scoreTypeTitle?.text = NSLocalizedString("typeEasy", comment: "")
-            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "1_Page")))
-        }
-        else if counterTab == 1 {
-            self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
-            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "2_Page")))
-        }
-       // print(counterTab)
     }
     @objc func SwipeLeft(sender: UISwipeGestureRecognizer){
         print("swipeLeft")
@@ -220,16 +244,6 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         if counterTab >= 2{
             counterTab = 2
         }
-        if counterTab == 1 {
-            self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
-            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "2_Page")))
-        }
-        else if counterTab == 2 {
-            self.scoreTypeTitle?.text = NSLocalizedString("typeHard", comment: "")
-            pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "3_Page")))
-        }
-        
-        //print(counterTab)
     }
     @objc func SwipeUp(sender: UISwipeGestureRecognizer){
         print("swipeUp")

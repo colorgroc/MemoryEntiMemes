@@ -13,24 +13,65 @@ class FirebaseService {
     //let k_COLLECTION_HIGHSCORE = "HighScore"
     let db = Firestore.firestore()
     
-    func ReadEasyScore(completion: @escaping ([Int])->(Void)){
-        let docRef = db.collection("HighScores").document("Easy")
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists,
-                let gold = document.get("Gold") as? Int,
-                let silver = document.get("Silver") as? Int,
-                let bronze = document.get("Bronze") as? Int {
-                
-                var easyList = [Int]()
-                easyList[0] = gold
-                easyList[1] = silver
-                easyList[2] = bronze
-                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                completion(easyList)
-            } else {
-                print("Document does not exist")
+    func ReadScore(level: String, completion: @escaping ([Int])->(Void)){
+        if level == "Easy"{
+            let docRef = db.collection("HighScores").document("Easy")
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists,
+                    let gold = document.get("Gold") as? Int,
+                    let silver = document.get("Silver") as? Int,
+                    let bronze = document.get("Bronze") as? Int {
+                    
+                    var tempList = [Int]()
+                    tempList.append(gold)
+                    tempList.append(silver)
+                    tempList.append(bronze)
+                    //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    completion(tempList)
+                } else {
+                    print("Document does not exist")
+                }
             }
         }
+        else if level == "Medium"{
+            let docRef = db.collection("HighScores").document("Medium")
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists,
+                    let gold = document.get("Gold") as? Int,
+                    let silver = document.get("Silver") as? Int,
+                    let bronze = document.get("Bronze") as? Int {
+                    
+                    var tempList = [Int]()
+                    tempList.append(gold)
+                    tempList.append(silver)
+                    tempList.append(bronze)
+                    //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    completion(tempList)
+                } else {
+                    print("Document does not exist")
+                }
+            }
+        }
+        else if level == "Hard"{
+            let docRef = db.collection("HighScores").document("Hard")
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists,
+                    let gold = document.get("Gold") as? Int,
+                    let silver = document.get("Silver") as? Int,
+                    let bronze = document.get("Bronze") as? Int {
+                    
+                    var tempList = [Int]()
+                    tempList.append(gold)
+                    tempList.append(silver)
+                    tempList.append(bronze)
+                    //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    completion(tempList)
+                } else {
+                    print("Document does not exist")
+                }
+            }
+        }
+     
     }
     func UpdateEasyScore(score:Int){
         let docRef = db.collection("HighScores").document("Easy")
