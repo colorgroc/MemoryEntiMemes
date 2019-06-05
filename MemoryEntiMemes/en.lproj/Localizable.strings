@@ -14,6 +14,7 @@
 "typeEasy" = "Easy";
 "typeMedium" = "Medium";
 "typeHard" = "Hard";
-"ScoreBoard" = "Score Board";
+"ScoreBoard" = "Global Scores";
 "TimeLeft" = "Time Left";
 "Score" = "Score";
+"MadeBy" = "Made by";

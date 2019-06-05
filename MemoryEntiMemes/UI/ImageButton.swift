@@ -13,8 +13,13 @@ protocol ImageButtonDelegate: class{
 }
 class ImageButton: SKSpriteNode {
     
+    private var imageIcon = SKSpriteNode()
     weak var delegate:ImageButtonDelegate?
     
+    func setImage(newImage: String){
+        self.texture! = SKTexture(imageNamed: newImage)
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let action = SKAction.moveBy(x: 6, y: 0, duration: 0.1)
         run (action)

@@ -14,6 +14,7 @@
 "typeEasy" = "Fàcil";
 "typeMedium" = "Mitjà";
 "typeHard" = "Difícil";
-"ScoreBoard" = "Taula de Puntuacions";
+"ScoreBoard" = "Puntuacions Globals";
 "TimeLeft" = "Temps Restant";
 "Score" = "Punts";
+"MadeBy" = "Creat per";

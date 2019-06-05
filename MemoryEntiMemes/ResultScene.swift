@@ -1,5 +1,5 @@
 //
-//  AboutScene.swift
+//  SettingsScene.swift
 //  MemoryEntiMemes
 //
 //  Created by Anna Ponce Llerda on 14/03/2019.
@@ -8,22 +8,23 @@
 
 import SpriteKit
 
-protocol AboutSceneDelegate: class {
-    func back(sender: AboutScene)
+protocol ResultSceneDelegate: class {
+    func back(sender: ResultScene)
 }
 
-class AboutScene: SKScene, ImageButtonDelegate {
+class ResultScene: SKScene, ImageButtonDelegate {
     
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
     var screenResBackH: CGFloat = 0.0
     var screenResBackW: CGFloat = 0.0
-    weak var aboutDelegate: AboutSceneDelegate?
+    weak var resultDelegate: ResultSceneDelegate?
     private var anna : SKLabelNode?
     private var enti : SKLabelNode?
     private var label : SKLabelNode?
     private var backButton = ImageButton(imageNamed: "back_50")
-    private var madeBy: String = NSLocalizedString("MadeBy", comment: "")
+    private var congratulations: String = NSLocalizedString("Congratulations", comment: "")
+    private var lost: String = NSLocalizedString("Lost", comment: "")
     
     //private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
     
@@ -60,7 +61,7 @@ class AboutScene: SKScene, ImageButtonDelegate {
             label.fontSize = 15
             label.run(SKAction.fadeIn(withDuration: 3.0))
         }
-        self.label = SKLabelNode(text: madeBy)
+        self.label = SKLabelNode(text: "Made by")
         if let label = self.label {
             addChild(label)
             label.fontColor = .black
@@ -73,8 +74,9 @@ class AboutScene: SKScene, ImageButtonDelegate {
     
     func onTap(sender: ImageButton) {
         if sender == backButton {
-            aboutDelegate?.back(sender: self)
+            resultDelegate?.back(sender: self)
         }
     }
     
 }
+

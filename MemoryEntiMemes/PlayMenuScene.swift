@@ -53,6 +53,10 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     var screenResBackH: CGFloat = 0.95
     var screenResBackW: CGFloat = 0.06
     
+    static var bestEasyPoints:Int = 0
+    static var bestMediumPoints:Int = 0
+    static var bestHardPoints:Int = 0
+    
     //entrar escena
     override func didMove(to view: SKView) {
         //swipes
@@ -126,7 +130,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
             label.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
             label.fontColor = SKColor(named: "BotonPlay")!
-            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.9)
+            label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.87)
             addChild(label)
             
         }
@@ -135,7 +139,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         if let label = self.scoreTypeTitle{
             label.fontName = "HelveticaNeue-Light"
             label.fontColor = .gray//SKColor(named: "ENTI")!
-            label.fontSize = 17
+            label.fontSize = 20
             label.position = CGPoint(x: view.frame.width / 2.0, y: tableScoreLabel!.position.y - view.frame.height * 0.08)
             addChild(label)
         }

@@ -13,7 +13,7 @@
 		2E136DA622450EC100130FD2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E136DA522450EC100130FD2 /* GameScene.swift */; };
 		2E16B47F223A966C0093F8F6 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E16B47E223A966C0093F8F6 /* MenuScene.swift */; };
 		2E16B481223A98B10093F8F6 /* AboutScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E16B480223A98B10093F8F6 /* AboutScene.swift */; };
-		2E16B483223A98CF0093F8F6 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E16B482223A98CF0093F8F6 /* SettingsScene.swift */; };
+		2E16B483223A98CF0093F8F6 /* ResultScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E16B482223A98CF0093F8F6 /* ResultScene.swift */; };
 		2E1710A0224E549200C58B22 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E17109F224E549200C58B22 /* Preferences.swift */; };
 		2E176056223BD72C00A05515 /* PlayMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E176055223BD72C00A05515 /* PlayMenuScene.swift */; };
 		2E1822592243C8720031B51E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1822582243C8720031B51E /* Card.swift */; };
@@ -21,6 +21,10 @@
 		2E1822612243D1130031B51E /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1822602243D1130031B51E /* CardSprite.swift */; };
 		2E1A369F22845A2600908A6D /* Actions.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E1A369E22845A2600908A6D /* Actions.strings */; };
 		2E1A36A222845AA500908A6D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E1A36A422845AA500908A6D /* Localizable.strings */; };
+		2E88D33522A7FF8300DED0A8 /* Prefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D33422A7FF8300DED0A8 /* Prefs.swift */; };
+		2E88D33722A800F700DED0A8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D33622A800F700DED0A8 /* Audio.swift */; };
+		2E88D33A22A8040500DED0A8 /* BACKGROUND_MUSIC.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D33922A8040500DED0A8 /* BACKGROUND_MUSIC.mp3 */; };
+		2E88D33C22A81E2600DED0A8 /* wrong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D33B22A81E2600DED0A8 /* wrong.mp3 */; };
 		2EB2F08422314D450067098E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F08322314D450067098E /* AppDelegate.swift */; };
 		2EB2F08822314D450067098E /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2EB2F08722314D450067098E /* Actions.sks */; };
 		2EB2F08C22314D450067098E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2F08B22314D450067098E /* GameViewController.swift */; };
@@ -42,7 +46,7 @@
 		2E136DA522450EC100130FD2 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		2E16B47E223A966C0093F8F6 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; usesTabs = 0; };
 		2E16B480223A98B10093F8F6 /* AboutScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScene.swift; sourceTree = "<group>"; };
-		2E16B482223A98CF0093F8F6 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
+		2E16B482223A98CF0093F8F6 /* ResultScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScene.swift; sourceTree = "<group>"; };
 		2E17109F224E549200C58B22 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		2E176055223BD72C00A05515 /* PlayMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayMenuScene.swift; sourceTree = "<group>"; };
 		2E1822582243C8720031B51E /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -56,6 +60,10 @@
 		2E1A36A322845AA500908A6D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2E1A36A522845AAC00908A6D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2E1A36A622845AC800908A6D /* ca-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ca-ES"; path = "ca-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2E88D33422A7FF8300DED0A8 /* Prefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefs.swift; sourceTree = "<group>"; };
+		2E88D33622A800F700DED0A8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		2E88D33922A8040500DED0A8 /* BACKGROUND_MUSIC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = BACKGROUND_MUSIC.mp3; path = ../../../BACKGROUND_MUSIC.mp3; sourceTree = "<group>"; };
+		2E88D33B22A81E2600DED0A8 /* wrong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = wrong.mp3; path = ../../../wrong.mp3; sourceTree = "<group>"; };
 		2EB2F08022314D450067098E /* MemoryEntiMemes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryEntiMemes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB2F08322314D450067098E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EB2F08722314D450067098E /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -127,6 +135,15 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		2E88D33822A803ED00DED0A8 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D33B22A81E2600DED0A8 /* wrong.mp3 */,
+				2E88D33922A8040500DED0A8 /* BACKGROUND_MUSIC.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		2EB2F07722314D450067098E = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +165,7 @@
 		2EB2F08222314D450067098E /* MemoryEntiMemes */ = {
 			isa = PBXGroup;
 			children = (
+				2E88D33822A803ED00DED0A8 /* Music */,
 				2E1341D5225F67A200827C06 /* Assets.xcassets */,
 				2E18225C2243CAA00031B51E /* UI */,
 				2E18225B2243CA7A0031B51E /* Model */,
@@ -155,7 +173,8 @@
 				2EB2F08322314D450067098E /* AppDelegate.swift */,
 				2EB2F08722314D450067098E /* Actions.sks */,
 				2E176055223BD72C00A05515 /* PlayMenuScene.swift */,
-				2E16B482223A98CF0093F8F6 /* SettingsScene.swift */,
+				2E88D33622A800F700DED0A8 /* Audio.swift */,
+				2E16B482223A98CF0093F8F6 /* ResultScene.swift */,
 				2E16B480223A98B10093F8F6 /* AboutScene.swift */,
 				2E16B47E223A966C0093F8F6 /* MenuScene.swift */,
 				2EF8506B2273361400783C4E /* GoogleService-Info.plist */,
@@ -168,6 +187,7 @@
 				2E1A369E22845A2600908A6D /* Actions.strings */,
 				2E1A36A422845AA500908A6D /* Localizable.strings */,
 				2E1302E8228F0365001A7C5C /* Fireflies.sks */,
+				2E88D33422A7FF8300DED0A8 /* Prefs.swift */,
 			);
 			path = MemoryEntiMemes;
 			sourceTree = "<group>";
@@ -234,6 +254,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E88D33C22A81E2600DED0A8 /* wrong.mp3 in Resources */,
+				2E88D33A22A8040500DED0A8 /* BACKGROUND_MUSIC.mp3 in Resources */,
 				2E1302E9228F0365001A7C5C /* Fireflies.sks in Resources */,
 				2EB2F08F22314D450067098E /* Main.storyboard in Resources */,
 				2EB2F09422314D450067098E /* LaunchScreen.storyboard in Resources */,
@@ -313,13 +335,15 @@
 			files = (
 				2EB2F08C22314D450067098E /* GameViewController.swift in Sources */,
 				2E1822592243C8720031B51E /* Card.swift in Sources */,
-				2E16B483223A98CF0093F8F6 /* SettingsScene.swift in Sources */,
+				2E16B483223A98CF0093F8F6 /* ResultScene.swift in Sources */,
 				2EB2F09E22315D9B0067098E /* ImageButton.swift in Sources */,
 				2E1302E5228EFF11001A7C5C /* Score.swift in Sources */,
 				2E1822612243D1130031B51E /* CardSprite.swift in Sources */,
 				2EF8506E227338B000783C4E /* FirebaseSevice.swift in Sources */,
 				2E16B47F223A966C0093F8F6 /* MenuScene.swift in Sources */,
 				2E136DA622450EC100130FD2 /* GameScene.swift in Sources */,
+				2E88D33722A800F700DED0A8 /* Audio.swift in Sources */,
+				2E88D33522A7FF8300DED0A8 /* Prefs.swift in Sources */,
 				2EB2F08422314D450067098E /* AppDelegate.swift in Sources */,
 				2E16B481223A98B10093F8F6 /* AboutScene.swift in Sources */,
 				2E1710A0224E549200C58B22 /* Preferences.swift in Sources */,

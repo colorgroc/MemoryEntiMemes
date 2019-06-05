@@ -10,6 +10,7 @@ import SpriteKit
 
 protocol GameSceneDelegate: class {
     func back(sender: GameScene)
+    func goToResult(sender: GameScene)
 }
 
 class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
@@ -212,10 +213,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     override func update(_ currentTime: TimeInterval){
         if gL!.DidWin(){
             //guardar cosas
-            gameSceneDelegate?.back(sender: self)
+            gameSceneDelegate?.goToResult(sender: self)
         }
         if gL!.DidLost(){
-            gameSceneDelegate?.back(sender: self)
+            gameSceneDelegate?.goToResult(sender: self)
         }
         //time = currentTime
         if initiate{

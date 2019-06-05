@@ -12,19 +12,18 @@ import GameplayKit
 protocol MenuSceneDelegate: class {
     func goToGameSelector(sender: MenuScene)
     func goToAbout(sender: MenuScene)
-    func goToSettings(sender: MenuScene)
 }
 
 
-class MenuScene: SKScene, ButtonDelegate {
-    
-    
+class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
+
     static let widthButton_MainMenu: CGFloat = 150
     static let heightButton_MainMenu: CGFloat = 50
     
     var playButton: Button?
     //var settingsButton: Button?
     var aboutButton: Button?
+    var soundButton = ImageButton(imageNamed: "audio_on")
     
     weak var menuDelegate: MenuSceneDelegate?
     
@@ -32,12 +31,13 @@ class MenuScene: SKScene, ButtonDelegate {
     private var spinnyNode : SKShapeNode?
     
     override func didMove(to view: SKView) {
-        playButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu * 1.1, height: MenuScene.heightButton_MainMenu*1.1), cornerRadius:30)
-        //playButton.sizeToFit()
-        /*settingsButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)*/
         
+        Audio.shared.PLAY()
+        
+        playButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu * 1.1, height: MenuScene.heightButton_MainMenu*1.1), cornerRadius:30)
         aboutButton = Button(rect: CGRect(x: 0, y:0, width: MenuScene.widthButton_MainMenu, height: MenuScene.heightButton_MainMenu), cornerRadius:30)
-        self.backgroundColor = SKColor(named: "lightGray")! //el ! es per saber si existeix o no. No sap si existeix o no
+        self.backgroundColor = SKColor(named: "lightGray")!
+        
         //play
         if let playButton = playButton{
         
@@ -51,16 +51,12 @@ class MenuScene: SKScene, ButtonDelegate {
             addChild(playButton)
         }
         
-        //Options
-       /* if let settingsButton = settingsButton{
-            settingsButton.fillColor = SKColor(named: "BotonOption")!//.gray
-            settingsButton.strokeColor = .white
-            settingsButton.setText(text: NSLocalizedString("Settings", comment: ""))
-            settingsButton.isUserInteractionEnabled = true
-            settingsButton.delegate = self
-            settingsButton.position = CGPoint(x: view.frame.width/2.0 - MenuScene.widthButton_MainMenu/2.0, y: playButton!.position.y - (MenuScene.heightButton_MainMenu + 20))
-            addChild(settingsButton)
-        }*/
+            soundButton.isUserInteractionEnabled = true
+            soundButton.delegate = self
+            soundButton.setScale(1.5)
+            soundButton.position = CGPoint(x: view.frame.width * 0.9, y: view.frame.height * 0.95)
+            addChild(soundButton)
+        
         //about
         if let aboutButton = aboutButton{
             aboutButton.fillColor = SKColor(named: "BotonOption")!//.gray
@@ -77,9 +73,9 @@ class MenuScene: SKScene, ButtonDelegate {
         addChild(logo)
         logo.setScale(0.3)
         
-        //trollface
+        //huge image
         let gameImage = SKSpriteNode(imageNamed: "Logo_Enti")
-        gameImage.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height/2.0 + playButton!.position.y/1.5)
+        gameImage.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height/2.0 + playButton!.position.y/1.7)
         gameImage.setScale(1.8)
         addChild(gameImage)
         
@@ -139,6 +135,25 @@ class MenuScene: SKScene, ButtonDelegate {
         }
         //print("estoy tocando un boton")
     }
+    func onTap(sender: ImageButton) {
+        if sender == soundButton{
+            print("sound")
+            print("volumen: " + String(Audio.shared.volumenOn))
+            
+            if Audio.shared.volumenOn {
+                sender.setImage(newImage: "audio_mute")
+                Audio.shared.volumenOn = false
+                Audio.shared.OFF()
+            }
+            else if !Audio.shared.volumenOn{
+                Audio.shared.volumenOn = true
+                Audio.shared.ON()
+                sender.setImage(newImage: "audio_on")
+            }
+            
+        }
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }

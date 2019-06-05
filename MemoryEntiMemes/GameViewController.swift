@@ -11,8 +11,7 @@ import SpriteKit
 import GameplayKit
 import FirebaseAnalytics
 
-class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDelegate, AboutSceneDelegate, PlayMenuSceneDelegate, GameSceneDelegate {
- 
+class GameViewController: UIViewController, MenuSceneDelegate, ResultSceneDelegate, AboutSceneDelegate, PlayMenuSceneDelegate, GameSceneDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,10 +83,10 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
         }
     }
     
-    func goToSettings(sender: MenuScene) {
+    func goToResult(sender: GameScene) {
         if let view = self.view as? SKView {
-            let scene = SettingsScene(size: view.frame.size)
-            scene.settingsDelegate = self
+            let scene = ResultScene(size: view.frame.size)
+            scene.resultDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -108,10 +107,10 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
         }
     }
     
-    func back(sender: SettingsScene) {
+    func back(sender: ResultScene) {
         if let view = self.view as? SKView {
-            let scene = MenuScene(size: view.frame.size)
-            scene.menuDelegate = self
+            let scene = PlayMenuScene(size: view.frame.size)
+            scene.playMenuDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -142,6 +141,7 @@ class GameViewController: UIViewController, MenuSceneDelegate, SettingsSceneDele
             view.presentScene(scene, transition: .crossFade(withDuration: 0.2))
         }
     }
+    
     func back(sender: GameScene) {
         if let view = self.view as? SKView {
             let scene = PlayMenuScene(size: view.frame.size)
