@@ -15,7 +15,7 @@ class GameViewController: UIViewController, MenuSceneDelegate, ResultSceneDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Audio.shared.PLAY()
         Analytics.logEvent("app_start", parameters:[:])
         
         if let view = self.view as! SKView? {

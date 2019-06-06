@@ -28,35 +28,43 @@ class CardSprite: SKSpriteNode {
     weak var delegate:CardDelegate?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.isUserInteractionEnabled = false
-        let action = SKAction.moveBy(x: 6, y: 0, duration: 0.1)
-        run (action)
+        if !GameScene.firstShow{
+            self.isUserInteractionEnabled = false
+            let action = SKAction.moveBy(x: 6, y: 0, duration: 0.1)
+            run (action)
+        }
         
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let action = SKAction.moveBy(x: -6, y: 0, duration: 0.1)
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        func DidItTouched(){
-            if let touch = touches.first, let parent = parent{
-                if frame.contains(touch.location(in: parent)){
-                    //self.isUserInteractionEnabled = false
-                    SwipeCard()
+        if !GameScene.firstShow{
+            let action = SKAction.moveBy(x: -6, y: 0, duration: 0.1)
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            func DidItTouched(){
+                if let touch = touches.first, let parent = parent{
+                    if frame.contains(touch.location(in: parent)){
+                        //self.isUserInteractionEnabled = false
+                        SwipeCard()
+                    }
                 }
             }
+            run (action, completion: DidItTouched)
         }
-        run (action, completion: DidItTouched)
     }
 
     func Delegate(){
-        if let delegate = delegate{
-            //print(ID)
-            self.state = Card.Estado.destapada.rawValue
-            self.isUserInteractionEnabled = false
-            delegate.onTap(sender: self)
+        if !GameScene.firstShow{
+            if let delegate = delegate{
+                //print(ID)
+                self.state = Card.Estado.destapada.rawValue
+                self.isUserInteractionEnabled = false
+                delegate.onTap(sender: self)
+            }
         }
     }
     func SwipeCard(){
         Audio.shared.PLAY_PRESSED()
+        self.isUserInteractionEnabled = false
+        self.state = Card.Estado.destapada.rawValue
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
@@ -87,8 +95,15 @@ class CardSprite: SKSpriteNode {
         self.isUserInteractionEnabled = false
     }
 
+    func UseInteractionFirst()->Void{
+        self.state = Card.Estado.tapada.rawValue
+        self.isUserInteractionEnabled = true
+        GameScene.initiate = true
+    }
+    
     func ShowCard(){
         self.isUserInteractionEnabled = false
+        self.state = Card.Estado.destapada.rawValue
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
         let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
@@ -96,6 +111,6 @@ class CardSprite: SKSpriteNode {
         let wait_short = SKAction.wait(forDuration: 0.7)
         let wait_long = SKAction.wait(forDuration: 1.5)
         
-        run(SKAction.sequence([wait_short,scaleSmallX, front, scaleBigX, wait_long, scaleSmallX, back, scaleBigX]), completion: UseInteractionTapada)
+        run(SKAction.sequence([wait_short,scaleSmallX, front, scaleBigX, wait_long, scaleSmallX, back, scaleBigX]), completion: UseInteractionFirst)
     }
 }

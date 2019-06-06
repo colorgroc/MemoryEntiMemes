@@ -75,6 +75,7 @@ class AboutScene: SKScene, ImageButtonDelegate {
         if sender == backButton {
             aboutDelegate?.back(sender: self)
         }
+        
     }
     
 }

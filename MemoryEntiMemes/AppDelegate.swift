@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        do{
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.default, options: .mixWithOthers)
+           // try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, with: [.mixWithOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+        }catch{//some meaningful exception handling
+            
+        }
     }
 
 

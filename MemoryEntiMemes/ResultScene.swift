@@ -24,6 +24,8 @@ class ResultScene: SKScene, ImageButtonDelegate {
     private var time_string : SKLabelNode?
     private var time : SKLabelNode?
     private var result : SKLabelNode?
+    private var tryNextTime : SKLabelNode?
+    private var nextTime : String = NSLocalizedString("Try", comment: "")
     private var points : String = NSLocalizedString("YourScore", comment: "")
     private var timeDone : String = NSLocalizedString("TimeDone", comment: "")
     private var backButton = ImageButton(imageNamed: "back_50")
@@ -111,11 +113,20 @@ class ResultScene: SKScene, ImageButtonDelegate {
             }
         }
         else{
-            self.result = SKLabelNode(text: lost + "...")
+            self.result = SKLabelNode(text: lost + "!")
             if let label = self.result {
                 addChild(label)
-                label.fontColor = .darkGray
+                label.fontColor = SKColor(named: "BotonPlay")
                 label.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
+                label.alpha = 0.0
+                label.run(SKAction.fadeIn(withDuration: 1.0))
+            }
+            self.tryNextTime = SKLabelNode(text: nextTime)
+            if let label = self.tryNextTime {
+                label.fontSize = 20
+                addChild(label)
+                label.fontColor = .darkGray
+                label.position = result!.position.applying(CGAffineTransform(translationX: 0, y: -35))
                 label.alpha = 0.0
                 label.run(SKAction.fadeIn(withDuration: 1.0))
             }
@@ -143,6 +154,7 @@ class ResultScene: SKScene, ImageButtonDelegate {
         if sender == backButton {
             resultDelegate?.back(sender: self)
         }
+        //Audio.shared.PLAY_PRESSED()
     }
     
 }

@@ -31,8 +31,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     private var spinnyNode : SKShapeNode?
     
     override func didMove(to view: SKView) {
-
-        Audio.shared.PLAY()
+        
         FirebaseService().ReadScore(level: "Easy", completion: { scores in
             PlayMenuScene.easyScores = scores
         })
@@ -141,6 +140,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             }
             //print("aboutButton")
         }
+        //Audio.shared.PLAY_PRESSED()
         //print("estoy tocando un boton")
     }
     func onTap(sender: ImageButton) {
@@ -160,6 +160,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             }
             
         }
+        //Audio.shared.PLAY_PRESSED()
     }
     
     override func update(_ currentTime: TimeInterval) {

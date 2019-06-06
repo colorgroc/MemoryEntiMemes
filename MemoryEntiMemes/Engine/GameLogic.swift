@@ -21,7 +21,7 @@ class GameLogic {
     var bonus: Int = 1
     var matches:Int = 0
     var initTime: TimeInterval = 0
-    var maxTime: TimeInterval = 15
+    var maxTime: TimeInterval = 30
     var time: TimeInterval = 0
     var IDSelected:Int = -1
     var cartaSeleccionada: CardSprite?

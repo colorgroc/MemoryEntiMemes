@@ -239,11 +239,13 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
                 playMenuDelegate.goToGame(sender: self, level: Levels.hard)
             }
         }
+        //Audio.shared.PLAY_PRESSED()
     }
     func onTap(sender: ImageButton) {
         if sender == backButton {
             playMenuDelegate?.back(sender: self)
         }
+        //Audio.shared.PLAY_PRESSED()
     }
     
     //salir escena

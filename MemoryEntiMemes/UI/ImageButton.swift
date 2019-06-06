@@ -31,6 +31,7 @@ class ImageButton: SKSpriteNode {
         func DidItTouched(){
             if let touch = touches.first, let parent = parent{
                 if frame.contains(touch.location(in: parent)){
+                    Audio.shared.PLAY_PRESSED()
                     if let delegate = delegate{
                         delegate.onTap(sender: self)
                         

@@ -31,19 +31,13 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     var ScreenResH: CGFloat = 0.0
     var screenResBackH: CGFloat = 0.0
     var screenResBackW: CGFloat = 0.0
-    
-    /*static var cardSizeEasy: CGFloat = 80.0
-    static var cardSizeMedium: CGFloat = 70.0
-    static var cardSizeHard: CGFloat = 65.0*/
-    
+
     var cardSizeEasy: CGFloat = 0
     var cardSizeMedium: CGFloat = 0
     var cardSizeHard: CGFloat = 0
     
     var numCol: Int = 0
-    //var points: Int = 0
-    //var bonus: Int = 0
-    //var time: TimeInterval = 0
+
     var pointsScore: SKLabelNode?
     var pointsTitle: SKLabelNode?
     var timeLeft: SKLabelNode?
@@ -52,11 +46,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     var bonusTitle: SKLabelNode?
     var pointsLocalScore: SKLabelNode?
     var pointsLocalTitle: SKLabelNode?
-    var initiate:Bool = false
     var startTime:Bool = false
-    //var timer: Timer?
     var localPoints:Int = 0
-    
+    static var firstShow:Bool = true
+    static var initiate:Bool = false
     
     override func didMove(to view: SKView) {
         
@@ -66,27 +59,29 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     
         screenResBackW = 0.06
         screenResBackH = 0.95
-        
-
+        //counter = 0
+        GameScene.firstShow = true
+        GameScene.initiate = false
+        startTime = false
         self.backgroundColor = SKColor(named: "lightGray")!
         gL = GameLogic()
-        //gL?.cartaSeleccionada //= cartaSeleccionada
+
         gL?.level = level
         gL?.reset()
         gL!.time = gL!.maxTime
         startTime = false
         if(gL?.level == Levels.easy){
             localPoints = PlayMenuScene.bestEasyPoints
-            //print("easy")
-            gL!.maxTime *= 3
+
+            gL!.maxTime *= 2
             if let count = gL?.cards.count{
-                 //print(count)
+
                 for i in 0..<count{
-                    //if let textNameBack = gL?.cards[i].textureBackName{
+
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                         card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
                         card.size = CGSize(width: cardSizeEasy, height: cardSizeEasy) // poner variable size en easy
-                        card.isUserInteractionEnabled = true
+                        card.isUserInteractionEnabled = false
                         card.delegate = self
                         card.ID = gL!.cards[i].cardID
                         //ID = i
@@ -94,47 +89,47 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         addChild(card)
                         CardsPositions()
                         AllSwipe()
-                    
-                        //card.isUserInteractionEnabled = true
+
                 }
             }
         }
         else if(gL?.level == Levels.medium){
             localPoints = PlayMenuScene.bestMediumPoints
             //print("medium")
-            gL!.maxTime *= 5
+            gL!.maxTime *= 4
             if let count = gL?.cards.count{
                 for i in 0..<count{
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                     card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
                     card.size = CGSize(width: cardSizeMedium, height: cardSizeMedium)
-                    
                     card.delegate = self
+                    card.isUserInteractionEnabled = false
                     card.ID = gL!.cards[i].cardID
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
                     AllSwipe()
-                    //card.isUserInteractionEnabled = true
+                    //card.isUserInteractionEnabled = false
                 }
             }
         }
         else if(gL?.level == Levels.hard){
             localPoints = PlayMenuScene.bestHardPoints
             //print("hard")
-            gL!.maxTime *= 10
+            gL!.maxTime *= 6
             if let count = gL?.cards.count{
                 for i in 0..<count{
                     let card = CardSprite(imageNamed: gL!.cards[i].textureBackName)
                     card.SetTextures(front: gL!.cards[i].textureFrontName, back: gL!.cards[i].textureBackName)
                     card.size = CGSize(width: cardSizeHard, height: cardSizeHard)
                     card.delegate = self
+                    card.isUserInteractionEnabled = false
                     card.ID = gL!.cards[i].cardID
                     cardsTextures.append(card);
                     addChild(card)
                     CardsPositions()
                     AllSwipe()
-                    //card.isUserInteractionEnabled = true
+                    //card.isUserInteractionEnabled = false
                 }
             }
         }
@@ -245,15 +240,20 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             gameSceneDelegate?.goToResult(sender: self, won: false, scoreGot: gL!.points, timeGot: gL!.timeString(time: gL!.time))
         }
         //time = currentTime
-        if initiate{
-            gL!.initTime = currentTime
-            initiate = false
-            startTime = true
+        if !GameScene.initiate{
+            gL!.time = gL!.maxTime
         }
-        if !initiate && startTime{
-            gL!.time = gL!.maxTime - (currentTime - gL!.initTime)
+        else{
+            if !startTime{
+                gL!.initTime = currentTime
+                //GameScene.initiate = true
+                startTime = true
+                GameScene.firstShow = false
+            }
+            else{
+                gL!.time = gL!.maxTime - (currentTime - gL!.initTime)
+            }
         }
-
         self.timeLeft!.text = gL!.timeString(time: gL!.time)
         self.bonusText?.text = "x" + String(gL!.bonus)
         self.pointsScore?.text = String(gL!.points)
@@ -267,8 +267,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 ScreenResH = 0.7
                 numCol = 3
                 let separationWidth: CGFloat = view!.frame.width/12
-                //let initialSeparationWidth: CGFloat = view!.frame.width/12
-                //let separationHeight: CGFloat = view!.frame.height/4
+
                 let separationBelow: CGFloat = view!.frame.height/18
                 if i < numCol {
                     if i == 0{
@@ -443,68 +442,69 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         if sender == backButton {
             gameSceneDelegate?.back(sender: self)
         }
+        //Audio.shared.PLAY_PRESSED()
     }
     func onTap(sender: CardSprite) {
-
-        var tempID:Int = 0
-        
-        if sender.ID >= level.rawValue / 2{
-            tempID = sender.ID - level.rawValue / 2
-        }
-        else {
-            tempID = sender.ID
-        }
-       
-        if gL!.cards[sender.ID].state == Card.Estado.tapada.rawValue {
-
-                gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
+        if !GameScene.firstShow{
+            var tempID:Int = 0
             
-                if gL?.cartaSeleccionada == nil{
-                    gL!.IDSelected = tempID
-                    gL?.cartaSeleccionada = sender
-                    gL?.cartaSeleccionada?.ID = sender.ID
-                    gL?.cartaSeleccionada?.special = sender.special
-                }
-                else {
-                    //match
-                    if tempID == gL!.IDSelected{
-                        gL?.cartaSeleccionada?.MatchCard()
-                        sender.MatchCard()
-                        gL!.cards[sender.ID].state = Card.Estado.emparejada.rawValue
-                        gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.emparejada.rawValue
-                        gL!.matches += 1
-                        
-                        if sender.special{
-                            gL!.points += gL!.pointsValue * gL!.extraPointsValue * gL!.bonus
-                            OnScoreChanged()
-                        }
-                        else{
-                            gL!.points += gL!.pointsValue * gL!.bonus
-                            OnScoreChanged()
-                        }
-                        if gL!.matches < ((level.rawValue / 2) - 1){
-                            //gL!.RandomBonus()
-                            gL!.AddBonus()
-                            OnBonusChanged()
-                        }
-                        
-                        gL?.cartaSeleccionada = nil
-                        gL!.IDSelected = -1
+            if sender.ID >= level.rawValue / 2{
+                tempID = sender.ID - level.rawValue / 2
+            }
+            else {
+                tempID = sender.ID
+            }
+           
+            if gL!.cards[sender.ID].state == Card.Estado.tapada.rawValue {
+
+                    gL!.cards[sender.ID].state = Card.Estado.destapada.rawValue
+                
+                    if gL?.cartaSeleccionada == nil{
+                        gL!.IDSelected = tempID
+                        gL?.cartaSeleccionada = sender
+                        gL?.cartaSeleccionada?.ID = sender.ID
+                        gL?.cartaSeleccionada?.special = sender.special
                     }
-                        //no match
-                    else{
-                        gL?.cartaSeleccionada?.SwipeBackCard()
-                        sender.SwipeBackCard()
-                        gL!.cards[sender.ID].state = Card.Estado.tapada.rawValue
-                        gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.tapada.rawValue
-                        gL!.IDSelected = -1
-                        gL!.ResetBonus()
-                        //gL!.RandomBonus()
-                        gL?.cartaSeleccionada = nil
-                 
+                    else {
+                        //match
+                        if tempID == gL!.IDSelected{
+                            gL?.cartaSeleccionada?.MatchCard()
+                            sender.MatchCard()
+                            gL!.cards[sender.ID].state = Card.Estado.emparejada.rawValue
+                            gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.emparejada.rawValue
+                            gL!.matches += 1
+                            
+                            if sender.special{
+                                gL!.points += gL!.pointsValue * gL!.extraPointsValue * gL!.bonus
+                                OnScoreChanged()
+                            }
+                            else{
+                                gL!.points += gL!.pointsValue * gL!.bonus
+                                OnScoreChanged()
+                            }
+                            if gL!.matches < ((level.rawValue / 2) - 1){
+                                //gL!.RandomBonus()
+                                gL!.AddBonus()
+                                OnBonusChanged()
+                            }
+                            
+                            gL?.cartaSeleccionada = nil
+                            gL!.IDSelected = -1
+                        }
+                            //no match
+                        else{
+                            gL?.cartaSeleccionada?.SwipeBackCard()
+                            sender.SwipeBackCard()
+                            gL!.cards[sender.ID].state = Card.Estado.tapada.rawValue
+                            gL!.cards[gL!.cartaSeleccionada!.ID].state = Card.Estado.tapada.rawValue
+                            gL!.IDSelected = -1
+                            gL!.ResetBonus()
+                            //gL!.RandomBonus()
+                            gL?.cartaSeleccionada = nil
+                     
+                    }
                 }
             }
-        
         }
         
     }
@@ -514,16 +514,10 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         for i in 0..<cardsTextures.count{
             cardsTextures[i].isUserInteractionEnabled = false
         }
-        var counter: Int = 0
+        
         for i in 0..<cardsTextures.count{
             cardsTextures[i].ShowCard()
-            counter += 1
-        }
-        if counter >= cardsTextures.count{
-            initiate = true
-            for i in 0..<cardsTextures.count{
-                cardsTextures[i].isUserInteractionEnabled = true
-            }
+            //counter += 1
         }
     }
     
