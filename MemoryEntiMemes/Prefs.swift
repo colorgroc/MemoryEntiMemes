@@ -10,7 +10,6 @@ import Foundation
 
 class Prefs {
     
-    let k_SOUND_ON = "SOUND_ON"
     public static let E_POINTS = "e_POINTS"
     public static let M_POINTS = "m_POINTS"
     public static let H_POINTS = "h_POINTS"
@@ -23,17 +22,23 @@ class Prefs {
     
     func toggleSound(){
         let soundOn = isSoundOn()
-        UserDefaults.standard.set(!soundOn, forKey: k_SOUND_ON)
+        UserDefaults.standard.set(!soundOn, forKey: "SOUND_ON")
     }
     
-    public static func saveEasyPoints(){
-        UserDefaults.standard.set(PlayMenuScene.bestEasyPoints, forKey: Prefs.E_POINTS)
+    public static func saveEasyPoints(points: Int){
+        if points > UserDefaults.standard.integer(forKey: Prefs.E_POINTS){
+            UserDefaults.standard.set(points, forKey: Prefs.E_POINTS)
+        }
     }
-    public static func saveMediumPoints(){
-        UserDefaults.standard.set(PlayMenuScene.bestMediumPoints, forKey: Prefs.M_POINTS)
+    public static func saveMediumPoints(points: Int){
+        if points > UserDefaults.standard.integer(forKey: Prefs.M_POINTS){
+            UserDefaults.standard.set(points, forKey: Prefs.M_POINTS)
+        }
     }
-    public static func saveHardPoints(){
-        UserDefaults.standard.set(PlayMenuScene.bestHardPoints, forKey: Prefs.H_POINTS)
+    public static func saveHardPoints(points: Int){
+        if points > UserDefaults.standard.integer(forKey: Prefs.H_POINTS){
+            UserDefaults.standard.set(points, forKey: Prefs.H_POINTS)
+        }
     }
     
     public static func loadEasyPoints(){

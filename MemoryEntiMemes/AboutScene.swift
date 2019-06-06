@@ -21,7 +21,7 @@ class AboutScene: SKScene, ImageButtonDelegate {
     weak var aboutDelegate: AboutSceneDelegate?
     private var anna : SKLabelNode?
     private var enti : SKLabelNode?
-    private var label : SKLabelNode?
+    private var madeByLabel : SKLabelNode?
     private var backButton = ImageButton(imageNamed: "back_50")
     private var madeBy: String = NSLocalizedString("MadeBy", comment: "")
     
@@ -60,8 +60,8 @@ class AboutScene: SKScene, ImageButtonDelegate {
             label.fontSize = 15
             label.run(SKAction.fadeIn(withDuration: 3.0))
         }
-        self.label = SKLabelNode(text: madeBy)
-        if let label = self.label {
+        self.madeByLabel = SKLabelNode(text: madeBy)
+        if let label = self.madeByLabel {
             addChild(label)
             label.fontColor = .black
             label.fontSize = 15

@@ -10,7 +10,7 @@ import SpriteKit
 
 protocol GameSceneDelegate: class {
     func back(sender: GameScene)
-    func goToResult(sender: GameScene)
+    func goToResult(sender: GameScene, won: Bool, scoreGot: Int, timeGot: String)
 }
 
 class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
@@ -50,10 +50,12 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     var timeLeftTitle: SKLabelNode?
     var bonusText: SKLabelNode?
     var bonusTitle: SKLabelNode?
+    var pointsLocalScore: SKLabelNode?
+    var pointsLocalTitle: SKLabelNode?
     var initiate:Bool = false
     var startTime:Bool = false
     //var timer: Timer?
-    
+    var localPoints:Int = 0
     
     
     override func didMove(to view: SKView) {
@@ -61,21 +63,11 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         cardSizeEasy = view.frame.size.width * 0.22
         cardSizeMedium = view.frame.size.width * 0.21
         cardSizeHard = view.frame.size.width * 0.19
+    
+        screenResBackW = 0.06
+        screenResBackH = 0.95
         
-        //print("modelo: " + MenuScene.modelIdentifier())
-       /* if MenuScene.modelIdentifier() == "iPhone11,8"{
-            screenResBackW = 0.09
-            screenResBackH = 0.92
-            /*GameScene.cardSizeMedium = GameScene.cardSizeEasy
-            GameScene.cardSizeHard = GameScene.cardSizeMedium*/
-        }*/
-        //else {
-            screenResBackW = 0.06
-            screenResBackH = 0.95
-        //}
-        
-        
-        
+
         self.backgroundColor = SKColor(named: "lightGray")!
         gL = GameLogic()
         //gL?.cartaSeleccionada //= cartaSeleccionada
@@ -84,6 +76,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         gL!.time = gL!.maxTime
         startTime = false
         if(gL?.level == Levels.easy){
+            localPoints = PlayMenuScene.bestEasyPoints
             //print("easy")
             gL!.maxTime *= 3
             if let count = gL?.cards.count{
@@ -101,11 +94,13 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         addChild(card)
                         CardsPositions()
                         AllSwipe()
+                    
                         //card.isUserInteractionEnabled = true
                 }
             }
         }
         else if(gL?.level == Levels.medium){
+            localPoints = PlayMenuScene.bestMediumPoints
             //print("medium")
             gL!.maxTime *= 5
             if let count = gL?.cards.count{
@@ -125,6 +120,7 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             }
         }
         else if(gL?.level == Levels.hard){
+            localPoints = PlayMenuScene.bestHardPoints
             //print("hard")
             gL!.maxTime *= 10
             if let count = gL?.cards.count{
@@ -147,15 +143,33 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.position = CGPoint(x: view.frame.width * screenResBackW, y: view.frame.height * screenResBackH)
-       /* if MenuScene.modelIdentifier() == "iPhone11,8"{
-            backButton.size = CGSize(width: backButton.size.width*1.2, height: backButton.size.height*1.2)
-        }*/
         addChild(backButton)
         
+        self.pointsLocalTitle = SKLabelNode(text: NSLocalizedString("LocalScore", comment: ""))
+        if let label = self.pointsLocalTitle{
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = SKColor(named: "BotonPlay")
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            label.fontSize = 20
+            label.position = CGPoint(x: view.frame.width * 0.95, y: view.frame.height * screenResBackH)//view.frame.height * 0.82)
+            addChild(label)
+        }
+        
+        self.pointsLocalScore = SKLabelNode(text: String(localPoints))
+        if let label = self.pointsLocalScore{
+            label.fontName = "HelveticaNeue-Light"
+            label.fontColor = .gray //SKColor(named: "Blue")
+            label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            label.fontSize = 22
+            //label.position = CGPoint(x: pointsLocalTitle!.position.x, y: pointsLocalTitle!.position.y - view.frame.height * 0.035)
+            label.position = pointsLocalTitle!.position.applying(CGAffineTransform(translationX: 0, y: -25))
+            addChild(label)
+        }
+ 
         self.pointsScore = SKLabelNode(text: String(gL!.points))
         if let label = self.pointsScore{
             label.fontName = "HelveticaNeue-Light"
-            label.fontColor = SKColor(named: "BotonPlay")
+            label.fontColor = SKColor(named: "Blue")
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
             label.fontSize = 17
             label.position = CGPoint(x: cardsTextures[numCol-1].position.x + cardsTextures[numCol-1].size.width/2, y: cardsTextures[0].position.y + view.frame.height * 0.08)
@@ -213,10 +227,22 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     override func update(_ currentTime: TimeInterval){
         if gL!.DidWin(){
             //guardar cosas
-            gameSceneDelegate?.goToResult(sender: self)
+            if level == Levels.easy{
+                FirebaseService().UpdateEasyScore(score: gL!.points)
+                Prefs.saveEasyPoints(points: gL!.points)
+            }
+            else if level == Levels.medium{
+                FirebaseService().UpdateMediumScore(score: gL!.points)
+                Prefs.saveMediumPoints(points: gL!.points)
+            }
+            else if level == Levels.hard{
+                FirebaseService().UpdateHardScore(score: gL!.points)
+                Prefs.saveHardPoints(points: gL!.points)
+            }
+            gameSceneDelegate?.goToResult(sender: self, won: true, scoreGot: gL!.points, timeGot: gL!.timeString(time: gL!.time))
         }
         if gL!.DidLost(){
-            gameSceneDelegate?.goToResult(sender: self)
+            gameSceneDelegate?.goToResult(sender: self, won: false, scoreGot: gL!.points, timeGot: gL!.timeString(time: gL!.time))
         }
         //time = currentTime
         if initiate{
@@ -228,7 +254,6 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
             gL!.time = gL!.maxTime - (currentTime - gL!.initTime)
         }
 
-        
         self.timeLeft!.text = gL!.timeString(time: gL!.time)
         self.bonusText?.text = "x" + String(gL!.bonus)
         self.pointsScore?.text = String(gL!.points)
@@ -238,14 +263,8 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     func CardsPositions()->Void{
         for i in 0..<cardsTextures.count{
             if gL?.level  == Levels.easy{
-                /*if MenuScene.modelIdentifier() == "iPhone11,8"{
-                    ScreenResW = 0.22
-                    ScreenResH = 0.65
-                }*/
-               // else {
-                    ScreenResW = 0.18
-                    ScreenResH = 0.7
-               // }
+                ScreenResW = 0.18
+                ScreenResH = 0.7
                 numCol = 3
                 let separationWidth: CGFloat = view!.frame.width/12
                 //let initialSeparationWidth: CGFloat = view!.frame.width/12
@@ -285,18 +304,12 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 }
             }
             else if gL?.level  == Levels.medium{
-                /*if MenuScene.modelIdentifier() == "iPhone11,8"{
-                    ScreenResW = 0.15
-                    ScreenResH = 0.65
-                }*/
-                //else {
-                    ScreenResW = 0.13
-                    ScreenResH = 0.7
-                //}
+
+                ScreenResW = 0.13
+                ScreenResH = 0.7
                 numCol = 4
                 let separationWidth: CGFloat = view!.frame.width/28
-                //let initialSeparationWidth: CGFloat = view!.frame.width/10
-                //let separationHeight: CGFloat = view!.frame.height/4
+
                 let separationBelow: CGFloat = view!.frame.height/30
                 if i < numCol {
                     if i == 0{
@@ -348,14 +361,9 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                 }
             }
             else if gL?.level  == Levels.hard{
-                /*if MenuScene.modelIdentifier() == "iPhone11,8"{
-                    ScreenResW = 0.17
-                    ScreenResH = 0.65
-                }*/
-                //else {
-                    ScreenResW = 0.17
-                    ScreenResH = 0.75
-                //}
+                ScreenResW = 0.17
+                ScreenResH = 0.75
+
                 numCol = 4
                 let separationWidth: CGFloat = view!.frame.width/50
 
@@ -426,6 +434,11 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
         let scaleSmall = SKAction.scale(to: 1, duration: 0.1)
         bonusText!.run(SKAction.sequence([scaleBig, scaleSmall]))
     }
+    func OnScoreChanged(){
+        let scaleBig = SKAction.scale(by: 1.4, duration: 0.2)
+        let scaleSmall = SKAction.scale(to: 1, duration: 0.1)
+        pointsScore!.run(SKAction.sequence([scaleBig, scaleSmall]))
+    }
     func onTap(sender: ImageButton) {
         if sender == backButton {
             gameSceneDelegate?.back(sender: self)
@@ -462,10 +475,12 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
                         gL!.matches += 1
                         
                         if sender.special{
-                            gL!.points += 3 * 2 * gL!.bonus
+                            gL!.points += gL!.pointsValue * gL!.extraPointsValue * gL!.bonus
+                            OnScoreChanged()
                         }
                         else{
-                            gL!.points += 3 * gL!.bonus
+                            gL!.points += gL!.pointsValue * gL!.bonus
+                            OnScoreChanged()
                         }
                         if gL!.matches < ((level.rawValue / 2) - 1){
                             //gL!.RandomBonus()
@@ -496,9 +511,9 @@ class GameScene: SKScene, ImageButtonDelegate, CardDelegate {
     
     
     func AllSwipe(){
-        /*for i in 0..<cardsTextures.count{
+        for i in 0..<cardsTextures.count{
             cardsTextures[i].isUserInteractionEnabled = false
-        }*/
+        }
         var counter: Int = 0
         for i in 0..<cardsTextures.count{
             cardsTextures[i].ShowCard()

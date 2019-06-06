@@ -29,7 +29,7 @@ class FirebaseService {
                     //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                     completion(tempList)
                 } else {
-                    print("Document does not exist")
+                    print("Easy Document does not exist")
                 }
             }
         }
@@ -48,7 +48,7 @@ class FirebaseService {
                     //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                     completion(tempList)
                 } else {
-                    print("Document does not exist")
+                    print("Medium Document does not exist")
                 }
             }
         }
@@ -67,11 +67,10 @@ class FirebaseService {
                     //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                     completion(tempList)
                 } else {
-                    print("Document does not exist")
+                    print("Hard Document does not exist")
                 }
             }
         }
-     
     }
     func UpdateEasyScore(score:Int){
         let docRef = db.collection("HighScores").document("Easy")
@@ -81,19 +80,25 @@ class FirebaseService {
                 let silver = document.get("Silver") as? Int,
                 let bronze = document.get("Bronze") as? Int {
                 
-                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                
                 if score >= gold{
-                    docRef.setData(["Gold" : score])
-                    print("Document data: \(gold)")
+                    if score == gold {
+                        docRef.setData(["Gold" : score, "Silver" : silver, "Bronze" : bronze])
+                    }
+                    else{
+                        docRef.setData(["Gold" : score, "Silver" : gold, "Bronze" : silver])
+                    }
+                    
                 }
                 else if score >= silver{
-                    docRef.setData(["Silver" : score])
-                    print("Document data: \(silver)")
+                    if score == silver {
+                        docRef.setData(["Gold" : gold, "Silver" : score, "Bronze" : bronze])
+                    }
+                    else{
+                        docRef.setData(["Gold" : gold, "Silver" : score, "Bronze" : silver])
+                    }
                 }
                 else if score >= bronze{
-                    docRef.setData(["Bronze" : score])
-                    print("Document data: \(bronze)")
+                    docRef.setData(["Gold" : gold, "Silver" : silver, "Bronze" : score])
                 }
             } else {
                 print("Document does not exist")
@@ -107,20 +112,26 @@ class FirebaseService {
                 let gold = document.get("Gold") as? Int,
                 let silver = document.get("Silver") as? Int,
                 let bronze = document.get("Bronze") as? Int {
-                
-                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                
+
                 if score >= gold{
-                    docRef.setData(["Gold" : score])
-                    print("Document data: \(gold)")
+                    if score == gold {
+                        docRef.setData(["Gold" : score, "Silver" : silver, "Bronze" : bronze])
+                    }
+                    else{
+                        docRef.setData(["Gold" : score, "Silver" : gold, "Bronze" : silver])
+                    }
+                    
                 }
                 else if score >= silver{
-                    docRef.setData(["Silver" : score])
-                    print("Document data: \(silver)")
+                    if score == silver {
+                        docRef.setData(["Gold" : gold, "Silver" : score, "Bronze" : bronze])
+                    }
+                    else{
+                        docRef.setData(["Gold" : gold, "Silver" : score, "Bronze" : silver])
+                    }
                 }
                 else if score >= bronze{
-                    docRef.setData(["Bronze" : score])
-                    print("Document data: \(bronze)")
+                    docRef.setData(["Gold" : gold, "Silver" : silver, "Bronze" : score])
                 }
             } else {
                 print("Document does not exist")
@@ -135,19 +146,25 @@ class FirebaseService {
                 let silver = document.get("Silver") as? Int,
                 let bronze = document.get("Bronze") as? Int {
                 
-                //let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                
                 if score >= gold{
-                    docRef.setData(["Gold" : score])
-                    print("Document data: \(gold)")
+                    if score == gold {
+                        docRef.setData(["Gold" : score, "Silver" : silver, "Bronze" : bronze])
+                    }
+                    else{
+                        docRef.setData(["Gold" : score, "Silver" : gold, "Bronze" : silver])
+                    }
+                    
                 }
                 else if score >= silver{
-                    docRef.setData(["Silver" : score])
-                    print("Document data: \(silver)")
+                    if score == silver {
+                        docRef.setData(["Gold" : gold, "Silver" : score, "Bronze" : bronze])
+                    }
+                    else{
+                        docRef.setData(["Gold" : gold, "Silver" : score, "Bronze" : silver])
+                    }
                 }
                 else if score >= bronze{
-                    docRef.setData(["Bronze" : score])
-                    print("Document data: \(bronze)")
+                    docRef.setData(["Gold" : gold, "Silver" : silver, "Bronze" : score])
                 }
             } else {
                 print("Document does not exist")

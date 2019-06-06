@@ -18,3 +18,8 @@
 "TimeLeft" = "Temps Restant";
 "Score" = "Punts";
 "MadeBy" = "Creat per";
+"YourScore" = "Puntuació";
+"TimeDone" = "Temps";
+"Congratulations" = "Enorabona";
+"Lost" = "Has perdut";
+"LocalScore" = "Millor teu";

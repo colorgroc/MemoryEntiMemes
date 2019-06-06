@@ -13,9 +13,11 @@ enum Levels: Int{
     case backToFront = 1, FrontToBack = 2, match = 3, selectedFrontToBack = 4
 }*/
 class GameLogic {
- 
+   
     var cards = [Card]()
     var points: Int = 0
+    let pointsValue: Int = 10
+    let extraPointsValue:Int = 2
     var bonus: Int = 1
     var matches:Int = 0
     var initTime: TimeInterval = 0

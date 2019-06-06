@@ -24,9 +24,9 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     private var tableScoreLabel : SKLabelNode?
     
-    var easyScores = [Int]()
-    var mediumScores = [Int]()
-    var hardScores = [Int]()
+    static var easyScores = [Int]()
+    static var mediumScores = [Int]()
+    static var hardScores = [Int]()
     
     var easyButton: Button?
     var mediumButton: Button?
@@ -59,6 +59,11 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     //entrar escena
     override func didMove(to view: SKView) {
+ 
+        Prefs.loadEasyPoints()
+        Prefs.loadMediumPoints()
+        Prefs.loadHardPoints()
+        
         //swipes
         swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(SwipeRight(sender:)))
         swipeRight.direction = .right
@@ -85,8 +90,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         pageControl!.position = CGPoint(x: view.frame.width/2, y: (easyButton!.position.y + easyButton!.frame.height) + view.frame.height * 0.37)
         addChild(pageControl!)
         pageControl!.setScale(0.18)
-        
-        
+ 
         //easy
         if let easyButton = easyButton{
             easyButton.fillColor = SKColor(named: "lightGray_2")!//.darkGray //SKColor(named: "nombre")
@@ -120,8 +124,7 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             hardButtton.position = CGPoint(x: view.frame.width / 2.0 - PlayMenuScene.buttonWidth / 2.0, y: mediumButton!.position.y - (PlayMenuScene.buttonHeight + 20))
             addChild(hardButtton)
         }
-        
-        
+   
         self.tableScoreLabel = SKLabelNode(text: tableScoreTitle)
         if let label = self.tableScoreLabel {
             
@@ -132,9 +135,8 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             label.fontColor = SKColor(named: "BotonPlay")!
             label.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.87)
             addChild(label)
-            
         }
-        
+ 
         self.scoreTypeTitle = SKLabelNode(text: typeScore)
         if let label = self.scoreTypeTitle{
             label.fontName = "HelveticaNeue-Light"
@@ -182,55 +184,58 @@ class PlayMenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             label.position = CGPoint(x: bronzeAward.position.x + view.frame.width * 0.2, y: silverScore!.position.y - view.frame.height * 0.08)
             addChild(label)
         }
-        
+    }
+    
+    override func update(_ currentTime: TimeInterval){
         FirebaseService().ReadScore(level: "Easy", completion: { scores in
-            self.easyScores = scores
+            PlayMenuScene.easyScores = scores
         })
         FirebaseService().ReadScore(level: "Medium", completion: { scores in
-            self.mediumScores = scores
+            PlayMenuScene.mediumScores = scores
         })
         FirebaseService().ReadScore(level: "Hard", completion: { scores in
-            self.hardScores = scores
+            PlayMenuScene.hardScores = scores
         })
-        
-    }
-    override func update(_ currentTime: TimeInterval){
-        if(self.easyScores.count >= 3 && self.mediumScores.count >= 3 && self.hardScores.count >= 3){
+
+        if(PlayMenuScene.easyScores.count >= 3 && PlayMenuScene.mediumScores.count >= 3 && PlayMenuScene.hardScores.count >= 3){
             if self.counterTab == 0{
                 self.scoreTypeTitle?.text = NSLocalizedString("typeEasy", comment: "")
                 pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "1_Page")))
-                self.goldScore?.text = String(self.easyScores[0])
-                self.silverScore?.text = String(self.easyScores[1])
-                self.bronzeScore?.text = String(self.easyScores[2])
+                self.goldScore?.text = String(PlayMenuScene.easyScores[0])
+                self.silverScore?.text = String(PlayMenuScene.easyScores[1])
+                self.bronzeScore?.text = String(PlayMenuScene.easyScores[2])
             }
             else if self.counterTab == 1{
                 self.scoreTypeTitle?.text = NSLocalizedString("typeMedium", comment: "")
                 pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "2_Page")))
-                self.goldScore?.text = String(self.mediumScores[0])
-                self.silverScore?.text = String(self.mediumScores[1])
-                self.bronzeScore?.text = String(self.mediumScores[2])
+                self.goldScore?.text = String(PlayMenuScene.mediumScores[0])
+                self.silverScore?.text = String(PlayMenuScene.mediumScores[1])
+                self.bronzeScore?.text = String(PlayMenuScene.mediumScores[2])
             }
             else if self.counterTab == 2{
                 self.scoreTypeTitle?.text = NSLocalizedString("typeHard", comment: "")
                 pageControl!.run(SKAction.setTexture(SKTexture(imageNamed: "3_Page")))
-                self.goldScore?.text = String(self.hardScores[0])
-                self.silverScore?.text = String(self.hardScores[1])
-                self.bronzeScore?.text = String(self.hardScores[2])
+                self.goldScore?.text = String(PlayMenuScene.hardScores[0])
+                self.silverScore?.text = String(PlayMenuScene.hardScores[1])
+                self.bronzeScore?.text = String(PlayMenuScene.hardScores[2])
             }
         }
-        
     }
+    
     func onTap(sender: Button) {
          if sender == easyButton{
             if let playMenuDelegate = self.playMenuDelegate {
+                Analytics.logEvent("easy_Game", parameters:[:])
                 playMenuDelegate.goToGame(sender: self, level: Levels.easy)
             }
         }else if sender == mediumButton{
             if let playMenuDelegate = self.playMenuDelegate {
+                Analytics.logEvent("medium_Game", parameters:[:])
                 playMenuDelegate.goToGame(sender: self, level: Levels.medium)
             }
         }else if sender == hardButton{
             if let playMenuDelegate = self.playMenuDelegate {
+                Analytics.logEvent("hard_Game", parameters:[:])
                 playMenuDelegate.goToGame(sender: self, level: Levels.hard)
             }
         }

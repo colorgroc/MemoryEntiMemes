@@ -18,3 +18,8 @@
 "TimeLeft" = "Time Left";
 "Score" = "Score";
 "MadeBy" = "Made by";
+"YourScore" = "Score";
+"TimeDone" = "Time";
+"Congratulations" = "Congratulations";
+"Lost" = "You lost";
+"LocalScore" = "Your Best";

@@ -16,31 +16,7 @@ class GameViewController: UIViewController, MenuSceneDelegate, ResultSceneDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //donde quiera ponerlo
-        //print("Writing on DB")
-        //let userId = UUID().uuidString
-        //let userName = UIDevice.current.name// Guardar en el userDefaults.
-        //FirebaseService().updateUserScore(score: 11, level: level, userId: userId)
-        //FirebaseService().readUserScore()
         Analytics.logEvent("app_start", parameters:[:])
-        
-        /*let swipeRight = UISwipeGestureRecognizer(target: self , action: #selector(PlayMenuScene.HandleSwipe(sender:)))
-        swipeRight.direction = .right
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self , action: #selector(PlayMenuScene.HandleSwipe(sender:)))
-        swipeLeft.direction = .left
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self , action: #selector(PlayMenuScene.HandleSwipe(sender:)))
-        swipeUp.direction = .up
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self , action: #selector(PlayMenuScene.HandleSwipe(sender:)))
-        swipeLeft.direction = .down
-        
-        view.addGestureRecognizer(swipeRight)
-        view.addGestureRecognizer(swipeLeft)
-        view.addGestureRecognizer(swipeUp)
-        view.addGestureRecognizer(swipeDown)*/
-        
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -51,10 +27,6 @@ class GameViewController: UIViewController, MenuSceneDelegate, ResultSceneDelega
             
             // Present the scene
             view.presentScene(scene)
-            
-            //view.showsFPS = true
-            //view.showsNodeCount = true
-            //view.showsDrawCount = true
             
         }
     }
@@ -83,9 +55,12 @@ class GameViewController: UIViewController, MenuSceneDelegate, ResultSceneDelega
         }
     }
     
-    func goToResult(sender: GameScene) {
+    func goToResult(sender: GameScene, won: Bool, scoreGot: Int, timeGot: String) {
         if let view = self.view as? SKView {
             let scene = ResultScene(size: view.frame.size)
+            scene.timeGot = timeGot
+            scene.won = won
+            scene.scoreGot = scoreGot
             scene.resultDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
