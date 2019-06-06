@@ -56,7 +56,7 @@ class CardSprite: SKSpriteNode {
         }
     }
     func SwipeCard(){
-        
+        Audio.shared.PLAY_PRESSED()
         let front = SKAction.setTexture(SKTexture(imageNamed: textureFront))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
@@ -64,6 +64,7 @@ class CardSprite: SKSpriteNode {
     }
     func SwipeBackCard(){
         //self.isUserInteractionEnabled = false
+        Audio.shared.PLAY_WRONG()
         let back = SKAction.setTexture(SKTexture(imageNamed: textureBack))
         let scaleSmallX = SKAction.scaleX(to: 0, duration: 0.2)
         let scaleBigX = SKAction.scaleX(to: xScale, duration: 0.2)
@@ -71,6 +72,7 @@ class CardSprite: SKSpriteNode {
         run(SKAction.sequence([wait, scaleSmallX, back, scaleBigX]), completion: UseInteractionTapada)
     }
     func MatchCard(){
+        Audio.shared.PLAY_MATCH()
         let scaleBig = SKAction.scale(by: 1.1, duration: 0.1)
         let scaleSmall = SKAction.scale(to: 1, duration: 0.1)
         run(SKAction.sequence([scaleBig, scaleSmall]), completion: UseInteractionMatch)
